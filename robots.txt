@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+# İç/çalışma dosyaları (deploy'a girmemeli; girerse de taranmasın)
+Disallow: /_
+Disallow: /*.md$
+Disallow: /kunye.json
+Disallow: /coords.json
+Disallow: /*geo_meta.json$
+Sitemap: https://mehmetakiftas.com/sitemap.xml

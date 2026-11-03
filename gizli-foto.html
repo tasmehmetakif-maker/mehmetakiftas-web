@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="color-scheme" content="dark" />
+<title>Modeller</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<!-- Eski yönetici paneli adresi (gizli.html / gizli-foto.html). 2026-11'den beri şifre kapısı yok: tüm modeller herkese
+     açık model sayfalarında (yalnız görüntüleme ve ölçüm). Bu sayfa yalnız model listesine yönlendirir. -->
+<script src="/admin-models.js"></script>
+<style>
+  :root{ --bg:#0b0f14; --fg:#eef3f8; --muted:#9fb0c0; --line:rgba(255,255,255,.12); --accent:#7fb0ff; }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+  main{max-width:640px;margin:0 auto;padding:48px 16px}
+  h1{font-size:20px;margin:0 0 6px}
+  p{color:var(--muted);margin:0 0 18px}
+  ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+  a{display:block;padding:11px 14px;border:1px solid var(--line);border-radius:10px;color:var(--fg);text-decoration:none;background:rgba(255,255,255,.03)}
+  a:hover{border-color:var(--accent)}
+  .home{margin-top:18px;color:var(--accent);border:0;padding:0;background:none}
+</style>
+</head>
+<body>
+<main>
+  <h1 data-l="Tüm modeller" data-e="All models">Tüm modeller</h1>
+  <p data-l="Yönetici paneli kaldırıldı: tüm modeller herkese açık model sayfalarında görüntülenir." data-e="The admin panel has been retired: all models are shown on their public model pages.">Yönetici paneli kaldırıldı: tüm modeller herkese açık model sayfalarında görüntülenir.</p>
+  <ul id="list"></ul>
+  <a class="home" href="/" data-l="← Ana sayfa" data-e="← Home page">← Ana sayfa</a>
+</main>
+<script>
+  (function () {
+    var en = false; try { en = localStorage.getItem('lang') === 'en'; } catch (e) {}
+    document.documentElement.lang = en ? 'en' : 'tr';
+    document.querySelectorAll('[data-l]').forEach(function (n) { n.textContent = en ? n.dataset.e : n.dataset.l; });
+    var ms = (window.ADMIN_MODELS && window.ADMIN_MODELS.models) || {}, ul = document.getElementById('list');
+    Object.keys(ms).forEach(function (s) {
+      var a = document.createElement('a'); a.href = ms[s].page; a.textContent = ms[s].title;
+      var li = document.createElement('li'); li.append(a); ul.append(li);
+    });
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>✨ Foto-gerçekçi Görünüm</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<script src="view-guard.js"></script>
+<style>
+  :root{
+    --bg:#0b0f14; --fg:#eef3f8; --muted:#9fb0c0;
+    --accent:#7cc4ff; --panel:rgba(14,20,28,.92); --line:rgba(255,255,255,.12);
+    --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:var(--bg);overflow:hidden;color:var(--fg);font-family:var(--font);-webkit-tap-highlight-color:transparent}
+  #stage{position:fixed;inset:0}
+  #stage canvas{display:block;width:100%!important;height:100%!important;outline:none}
+
+  /* Marka rozeti */
+  .badge{
+    position:fixed;top:14px;left:14px;z-index:30;display:flex;align-items:center;gap:8px;
+    padding:8px 13px;border-radius:999px;background:var(--panel);border:1px solid var(--line);
+    backdrop-filter:blur(8px);font-weight:650;font-size:14px;letter-spacing:.2px;
+    box-shadow:0 6px 24px rgba(0,0,0,.35)
+  }
+  .badge small{font-weight:500;color:var(--muted);font-size:11.5px}
+
+  /* Bilgi butonu */
+  .info-btn{
+    position:fixed;top:14px;right:14px;z-index:30;cursor:pointer;
+    display:flex;align-items:center;gap:7px;padding:8px 13px;border-radius:999px;
+    background:var(--panel);border:1px solid var(--line);backdrop-filter:blur(8px);
+    color:var(--fg);font-size:13.5px;font-weight:600;box-shadow:0 6px 24px rgba(0,0,0,.35);
+    transition:border-color .2s,transform .1s
+  }
+  .info-btn:hover{border-color:var(--accent)}
+  .info-btn:active{transform:scale(.97)}
+  .info-btn .q{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;
+    background:var(--accent);color:#06121e;font-weight:800;font-size:12px}
+
+  /* Bilgi paneli */
+  .scrim{position:fixed;inset:0;z-index:40;background:rgba(4,8,12,.55);backdrop-filter:blur(2px);
+    opacity:0;pointer-events:none;transition:opacity .22s}
+  .scrim.open{opacity:1;pointer-events:auto}
+  .panel{
+    position:fixed;z-index:41;right:14px;top:58px;width:min(380px,calc(100vw - 28px));
+    background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px 18px 16px;
+    box-shadow:0 20px 60px rgba(0,0,0,.5);transform:translateY(-8px) scale(.98);opacity:0;
+    pointer-events:none;transition:opacity .22s,transform .22s}
+  .panel.open{opacity:1;transform:none;pointer-events:auto}
+  .panel h2{margin:0 0 8px;font-size:16.5px;display:flex;align-items:center;gap:8px}
+  .panel p{margin:0 0 10px;font-size:13.5px;line-height:1.62;color:#dbe6f0}
+  .panel .tip{display:flex;gap:9px;align-items:flex-start;background:rgba(124,196,255,.10);
+    border:1px solid rgba(124,196,255,.25);border-radius:11px;padding:10px 12px;font-size:12.8px;
+    line-height:1.55;color:#cfe6ff;margin-top:4px}
+  .panel .close{position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:8px;border:1px solid var(--line);
+    background:transparent;color:var(--muted);cursor:pointer;font-size:16px;line-height:1}
+  .panel .close:hover{color:var(--fg);border-color:var(--accent)}
+
+  /* İpucu (kontroller) */
+  .hint{position:fixed;left:50%;bottom:calc(16px + var(--vg-ftr, 0px));transform:translateX(-50%);z-index:25;
+    padding:7px 14px;border-radius:999px;background:rgba(14,20,28,.8);border:1px solid var(--line);
+    backdrop-filter:blur(8px);font-size:12px;color:var(--muted);white-space:nowrap;
+    transition:opacity .5s}
+  .hint b{color:var(--fg);font-weight:600}
+
+  /* Yükleme katmanı (mkkellogg kendi progress'ini de gösterir; bu ilk anlık) */
+  #boot{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:var(--bg);
+    transition:opacity .5s}
+  #boot.gone{opacity:0;pointer-events:none}
+  .boot-card{text-align:center;max-width:300px;padding:0 20px}
+  .spinner{width:42px;height:42px;margin:0 auto 16px;border-radius:50%;
+    border:3px solid rgba(124,196,255,.22);border-top-color:var(--accent);animation:spin 1s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .boot-card h1{font-size:17px;margin:0 0 6px;font-weight:650}
+  .boot-card p{font-size:12.8px;color:var(--muted);margin:0;line-height:1.5}
+
+  #err{position:fixed;inset:0;z-index:60;display:none;place-items:center;background:var(--bg);padding:24px;text-align:center}
+  #err.show{display:grid}
+  #err .box{max-width:420px}
+  #err h1{font-size:16px;color:#ff9b9b;margin:0 0 8px}
+  #err pre{font-size:11.5px;color:var(--muted);white-space:pre-wrap;text-align:left;
+    background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:10px;padding:10px;max-height:40vh;overflow:auto}
+  #err .acts{display:flex;gap:8px;justify-content:center;margin-top:12px;flex-wrap:wrap}
+  #err .acts button{background:var(--panel);color:var(--fg);border:1px solid var(--line);border-radius:10px;padding:8px 14px;font:inherit;font-size:13px;cursor:pointer}
+  #err .acts button.pri{background:#2f6df0;border-color:#2f6df0;color:#fff}
+  .boot-card .pct{margin-top:10px;font-size:13px;color:var(--fg);font-variant-numeric:tabular-nums;min-height:18px}
+</style>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "@mkkellogg/gaussian-splats-3d": "https://cdn.jsdelivr.net/npm/@mkkellogg/gaussian-splats-3d@0.4.7/build/gaussian-splats-3d.module.js"
+  }
+}
+</script>
+</head>
+<body>
+  <div id="stage"></div>
+
+  <div class="badge">✨ <span data-t="badge">Foto-gerçekçi</span> <small>Gaussian Splatting</small></div>
+
+  <button class="info-btn" id="infoBtn"><span class="q">?</span> <span data-t="info">Bu görünüm nedir?</span></button>
+
+  <div class="scrim" id="scrim"></div>
+  <aside class="panel" id="panel" role="dialog" aria-label="Bilgi">
+    <button class="close" id="closeBtn" aria-label="Kapat" data-t-aria="close">×</button>
+    <h2 data-t="h2">✨ Foto-gerçekçi görünüm nedir?</h2>
+    <p data-t="p1">Bu sahne, alanın yüzlerce fotoğrafından 3B Gaussian Splatting yöntemiyle üretildi. Görüntü, üçgen yüzeylerden (mesh) değil, ışığı ve rengi taşıyan milyonlarca minik Gaussian noktasından oluşur.</p>
+    <p data-t="p2">Bu sayede gölgeler, yansımalar ve ince dokular fotoğraf gerçekliğinde görünür — klasik “3B Model” sekmesindeki katı modelin sunamadığı bir doğallıkla.</p>
+    <div class="tip">📐 <span data-t="tip">Bu görünüm yalnızca izlemek içindir. Ölçüm, kesit ve analiz için “3B Model” sekmesini kullanın.</span></div>
+  </aside>
+
+  <div class="hint" id="hint" data-t="hint">Sürükle döndür · Kaydır yakınlaş · Sağ tık kaydır</div>
+
+  <div id="boot"><div class="boot-card">
+    <div class="spinner"></div>
+    <h1 data-t="bootH">Foto-gerçekçi sahne yükleniyor</h1>
+    <p data-t="bootP">Yüksek kaliteli görüntü hazırlanıyor, bağlantıya göre birkaç saniye sürebilir.</p>
+    <div class="pct" id="bootPct" aria-live="polite"></div>
+  </div></div>
+
+  <div id="err"><div class="box">
+    <h1 data-t="errH">Sahne yüklenemedi</h1>
+    <pre id="errmsg"></pre>
+    <div class="acts">
+      <button type="button" class="pri" id="retryBtn" data-t="retry">Tekrar dene</button>
+      <button type="button" id="backBtn" data-t="back">3B Model sekmesine dön</button>
+    </div>
+  </div></div>
+
+  <script>
+  /* Satır-içi TR/EN (iframe; ayrı dil düğmesi basmaz). Paylaşımlı i18n.js'in
+     localStorage('lang')'ını okur; ebeveyn dili değiştirince 'storage' ile canlı güncellenir. textContent (XSS-güvenli). */
+  (function () {
+    const I18N = {
+      badge: ['Foto-gerçekçi', 'Photorealistic'],
+      info:  ['Bu görünüm nedir?', 'What is this view?'],
+      h2:    ['✨ Foto-gerçekçi görünüm nedir?', '✨ What is the photorealistic view?'],
+      p1:    ['Bu sahne, alanın yüzlerce fotoğrafından 3B Gaussian Splatting yöntemiyle üretildi. Görüntü, üçgen yüzeylerden (mesh) değil, ışığı ve rengi taşıyan milyonlarca minik Gaussian noktasından oluşur.',
+              'This scene was produced from hundreds of photos of the site using 3D Gaussian Splatting. The image is built not from triangle surfaces (mesh) but from millions of tiny Gaussian points that carry light and color.'],
+      p2:    ['Bu sayede gölgeler, yansımalar ve ince dokular fotoğraf gerçekliğinde görünür — klasik “3B Model” sekmesindeki katı modelin sunamadığı bir doğallıkla.',
+              'This makes shadows, reflections and fine textures appear with photographic realism — a naturalness the solid model in the classic “3D Model” tab cannot offer.'],
+      tip:   ['Bu görünüm yalnızca izlemek içindir. Ölçüm, kesit ve analiz için “3B Model” sekmesini kullanın.',
+              'This view is for viewing only. For measurement, cross-section and analysis, use the “3D Model” tab.'],
+      hint:  ['Sürükle döndür · Kaydır yakınlaş · Sağ tık kaydır', 'Drag rotate · Scroll zoom · Right-click pan'],
+      bootH: ['Foto-gerçekçi sahne yükleniyor', 'Loading photorealistic scene'],
+      bootP: ['Yüksek kaliteli görüntü hazırlanıyor, bağlantıya göre birkaç saniye sürebilir.', 'Preparing the high-quality image; this may take a few seconds depending on your connection.'],
+      errH:  ['Sahne yüklenemedi', 'Scene could not be loaded'],
+      close: ['Kapat', 'Close'],
+      retry: ['Tekrar dene', 'Try again'],
+      back:  ['3B Model sekmesine dön', 'Back to the 3D Model tab'],
+      pct:   ['İndiriliyor… %{p}', 'Downloading… {p}%'],
+      tamper: ['Geliştirici araçları açıldığı için sahne kapatıldı; araçları kapatıp sayfayı yenileyin.', 'The scene was closed because developer tools were opened; close them and reload the page.'],
+      prep:  ['Sahne hazırlanıyor…', 'Preparing the scene…'],
+      badsrc: ['Geçersiz sahne adresi.', 'Invalid scene address.'],
+      neterr: ['Bağlantı hatası: sahne dosyası indirilemedi.', 'Connection error: the scene file could not be downloaded.'],
+    };
+    function curLang() { try { return localStorage.getItem('lang') === 'en' ? 1 : 0; } catch (e) { return 0; } }
+    // Dinamik metinler için: window.ST('pct', {p: 42})
+    window.ST = (k, v) => { const e = I18N[k]; let s = e ? e[curLang()] : k; if (v) for (const n in v) s = s.split('{' + n + '}').join(v[n]); return s; };
+    function apply() {
+      const i = curLang();
+      document.querySelectorAll('[data-t]').forEach(el => { const v = I18N[el.getAttribute('data-t')]; if (v) el.textContent = v[i]; });
+      document.querySelectorAll('[data-t-aria]').forEach(el => { const v = I18N[el.getAttribute('data-t-aria')]; if (v) el.setAttribute('aria-label', v[i]); });
+      document.documentElement.lang = i ? 'en' : 'tr';
+    }
+    apply();
+    addEventListener('storage', e => { if (e.key === 'lang') apply(); });
+  })();
+  </script>
+
+  <script type="module">
+    import * as GaussianSplats3D from '@mkkellogg/gaussian-splats-3d';
+
+    const params = new URLSearchParams(location.search);
+    // Sahne R2'de şifreli (v2/<slug>/foto.enc); anahtarı Worker verir (view-guard.js → VG). m yalnız küçük harf/rakam.
+    const VG = window.__vgTake ? window.__vgTake() : null;
+    const slug = params.get('m') || '';
+    const SRC_OK = /^[a-z0-9]+$/.test(slug);
+    const ver   = (params.get('v') || '').replace(/[^\w]/g, '').slice(0, 32);   // üretecin içerik özeti (önbellek sürümü)
+    const rawSrc = slug + '/foto';
+    const shDeg = parseInt(params.get('sh') ?? '0', 10);     // 0=hızlı/normal, 1=yüksek(SH)
+    const up    = (params.get('up')   || '0,-1,0').split(',').map(Number);
+    const cpos  = (params.get('cpos') || '-2,-1.5,-3').split(',').map(Number);
+    const clook = (params.get('clook')|| '0,0,0').split(',').map(Number);
+    const alpha = parseInt(params.get('alpha') ?? '5', 10);   // floater temizliği (0-255)
+    // Kamera kısıtı (Google Earth gibi: kötü/hava-dışı açıları engelle) — derece & sahne birimi
+    const lim = {
+      minpol: parseFloat(params.get('minpol') ?? '0'),        // 0 = tam tepe serbest
+      maxpol: parseFloat(params.get('maxpol') ?? '72'),       // yatay/alttan bakışı engelle
+      mindist: parseFloat(params.get('mindist') ?? '1.6'),    // çok yaklaşmayı engelle
+      maxdist: parseFloat(params.get('maxdist') ?? '9'),      // çok uzaklaşmayı engelle
+      pan: params.get('pan') !== '0'                          // varsayılan: pan AÇIK (harita gibi sağa-sola)
+    };
+
+    // Bilgi paneli aç/kapat
+    const scrim=document.getElementById('scrim'), panel=document.getElementById('panel');
+    const open=()=>{scrim.classList.add('open');panel.classList.add('open')};
+    const close=()=>{scrim.classList.remove('open');panel.classList.remove('open')};
+    document.getElementById('infoBtn').onclick=open;
+    document.getElementById('closeBtn').onclick=close;
+    scrim.onclick=close;
+    addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+    // İpucunu birkaç sn sonra soldur
+    setTimeout(()=>{const h=document.getElementById('hint');if(h)h.style.opacity='0'},6000);
+
+    const fail=(e)=>{
+      console.error('[splat] hata:',e);
+      document.getElementById('boot').classList.add('gone');
+      document.getElementById('errmsg').textContent=(e&&e.userMsg)||(e&&e.message)||String(e);
+      document.getElementById('err').classList.add('show');
+    };
+    // Hata ekranı: yeniden dene (sayfayı yenile) · 3B Model sekmesine dön (iframe'deyse üst sayfaya haber ver)
+    document.getElementById('retryBtn').onclick=()=>location.reload();
+    document.getElementById('backBtn').onclick=()=>{
+      if (window.parent && window.parent !== window) { try { window.parent.postMessage({ splatCmd:'model' }, location.origin === 'null' ? '*' : location.origin); } catch(e){} }
+      else location.href='./';
+    };
+    // Üst sayfa sekme değiştirince render döngüsünü durdur/sürdür (gizli iframe GPU harcamasın).
+    let paused=false, loaded=false;
+    addEventListener('message', e=>{
+      if (e.source !== window.parent || window.parent === window) return;
+      const c = e.data && e.data.splat, v = window.__viewer;
+      if (c === 'pause') { paused = true; if (v && loaded) v.stop(); }
+      else if (c === 'resume') { paused = false; if (v && loaded && !v.selfDrivenModeRunning) v.start(); }
+    });
+    const pctEl=document.getElementById('bootPct');
+    // İndirme + çözme view-guard.js'te (VG.open): R2'deki şifreli dosya → düz sahne baytları.
+    async function getScene(){
+      if (!VG) { const er = new Error('VG yok'); er.userMsg = ST('neterr'); throw er; }
+      try {
+        return await VG.open(slug, 'foto', { v: ver, onPct: p => { pctEl.textContent = ST('pct', { p }); } });
+      } catch (e) {
+        if (e && e.kind === 'net') e.userMsg = ST('neterr');
+        else if (e && e.kind === 'http') e.userMsg = 'HTTP ' + e.status + ' — ' + rawSrc;
+        else if (e && e.kind === 'tamper') e.userMsg = ST('tamper');
+        throw e;
+      }
+    }
+
+    try{
+      if (!SRC_OK) { const er = new Error('src: ' + rawSrc); er.userMsg = ST('badsrc'); throw er; }
+      const viewer = new GaussianSplats3D.Viewer({
+        rootElement: document.getElementById('stage'),
+        cameraUp: up,
+        initialCameraPosition: cpos,
+        initialCameraLookAt: clook,
+        sphericalHarmonicsDegree: shDeg,
+        sharedMemoryForWorkers: false,   // GitHub Pages: COOP/COEP yok → SAB kapalı
+        dynamicScene: false,
+        antialiased: true,
+        // mkkellogg kendi yükleme arayüzü (ilerleme çubuğu) — büyük .ply için faydalı
+      });
+      window.__viewer = viewer;
+      // CDN (Cloudflare) büyük .splat'ı gzip'leyince Content-Length sıkıştırılmış boyut olur
+      // ve 32'ye tam bölünmez → mkkellogg "Could not load file" hatası verir. Çözüm: dosyayı
+      // kendimiz indir (tarayıcı gzip'i doğru çözer → gerçek baytlar) → blob URL ile yükle (CDN baypas).
+      let blobUrl = null;
+      addEventListener('vg:tamper', () => { try { viewer.dispose(); } catch (e) {} });
+      getScene()
+        .then(plain => {
+          pctEl.textContent = ST('prep');
+          blobUrl = URL.createObjectURL(new Blob([plain]));
+          const opts = { splatAlphaRemovalThreshold: alpha, showLoadingUI: true, progressiveLoad: false, format: GaussianSplats3D.SceneFormat.Splat };
+          return viewer.addSplatScene(blobUrl, opts);
+        })
+        .then(()=>{
+        if (blobUrl) { URL.revokeObjectURL(blobUrl); blobUrl = null; }   // sahne belleğe alındı; blob'a gerek yok
+        document.getElementById('boot').classList.add('gone');
+        loaded = true;
+        if (!paused) viewer.start();
+        // Kamera kısıtlaması: ziyaretçi yalnızca iyi (hava) açıları görsün — erimiş yatay/alt açılar erişilemez
+        const ctrl = viewer.controls;
+        if (ctrl) {
+          ctrl.enablePan         = lim.pan;
+          ctrl.screenSpacePanning = false;   // zemin düzleminde pan (harita gibi), ekran düzleminde değil
+          ctrl.panSpeed          = 1.2;
+          ctrl.minDistance       = lim.mindist;
+          ctrl.maxDistance       = lim.maxdist;
+          ctrl.minPolarAngle     = lim.minpol * Math.PI / 180;
+          ctrl.maxPolarAngle     = lim.maxpol * Math.PI / 180;
+          ctrl.update();
+        }
+        window.__ctrl = ctrl;
+        window.__loaded = true;
+        console.log('[splat] YÜKLENDİ');
+      }).catch(fail);
+    }catch(e){ fail(e); }
+  </script>
+</body>
+</html>
