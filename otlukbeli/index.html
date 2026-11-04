@@ -649,7 +649,14 @@
     const MIDZ = 1811;  // model orta rakımı (m, deniz seviyesinden); null ise bağıl yükseklik
     const readout = document.getElementById('measure-readout');
     function clearMeasure(){ measureGroup.clear(); mpts = []; readout.replaceChildren(); readout.style.display = 'none'; }
-    function dotMesh(p){ const r = Math.max(modelSize*0.004, 0.3); const m = new THREE.Mesh(new THREE.SphereGeometry(r,16,16), new THREE.MeshBasicMaterial({color:0xffcf33, depthTest:false})); m.position.copy(p); m.renderOrder = 999; return m; }
+    // Ölçüm işaretleri ekranda SABİT boyutta (yarıçap DOT_PX piksel): birim küre her karede kamera uzaklığına göre
+    // ölçeklenir (sizeDots). Dünya boyutlu küre yakınlaştıkça büyüyüp ölçülen noktayı örtüyordu.
+    const DOT_PX = 4, DOT_GEO = new THREE.SphereGeometry(1, 16, 16), _dotV = new THREE.Vector3();
+    function dotMesh(p, color = 0xffcf33){ const m = new THREE.Mesh(DOT_GEO, new THREE.MeshBasicMaterial({color, depthTest:false})); m.position.copy(p); m.renderOrder = 999; m.userData.dotPx = DOT_PX; return m; }
+    function sizeDots(groups){
+      const k = 2 * Math.tan(camera.fov * Math.PI / 360) / Math.max(1, renderer.domElement.clientHeight);   // dünya birimi / piksel (uzaklık 1'de)
+      for (const g of groups) for (const m of g.children) if (m.userData.dotPx) m.scale.setScalar(m.userData.dotPx * k * _dotV.copy(m.position).applyMatrix4(camera.matrixWorldInverse).negate().z);
+    }
     function fmt(v){ return v.toLocaleString(LOC(),{maximumFractionDigits:1}); }
     function showMeasure(a,b){
       const d=a.distanceTo(b), dv=Math.abs(a.y-b.y), dh=Math.hypot(a.x-b.x, a.z-b.z);
@@ -785,8 +792,7 @@
     function clearVol(){ volGroup.clear(); vpts = []; }
     function drawVolPoly(){
       volGroup.clear();
-      const r = Math.max(modelSize*0.004, 0.3);
-      vpts.forEach(p => { const m = new THREE.Mesh(new THREE.SphereGeometry(r,12,12), new THREE.MeshBasicMaterial({color:0x33d6ff, depthTest:false})); m.position.copy(p); m.renderOrder=999; volGroup.add(m); });
+      vpts.forEach(p => volGroup.add(dotMesh(p, 0x33d6ff)));
       if(vpts.length >= 2){ const pts = vpts.slice(); if(vpts.length >= 3) pts.push(vpts[0]); const ln = new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), new THREE.LineBasicMaterial({color:0x33d6ff, depthTest:false})); ln.renderOrder=999; volGroup.add(ln); }
     }
     function addVolPt(p){ vpts.push(p.clone()); drawVolPoly(); updateVolReadout(); }
@@ -847,8 +853,7 @@
     function clearArea(){ areaGroup.clear(); apts = []; }
     function drawAreaPoly(){
       areaGroup.clear();
-      const r = Math.max(modelSize*0.004, 0.3);
-      apts.forEach(p => { const m=new THREE.Mesh(new THREE.SphereGeometry(r,12,12), new THREE.MeshBasicMaterial({color:0xffa53d, depthTest:false})); m.position.copy(p); m.renderOrder=999; areaGroup.add(m); });
+      apts.forEach(p => areaGroup.add(dotMesh(p, 0xffa53d)));
       if(apts.length>=2){ const pts=apts.slice(); if(apts.length>=3) pts.push(apts[0]); const ln=new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), new THREE.LineBasicMaterial({color:0xffa53d, depthTest:false})); ln.renderOrder=999; areaGroup.add(ln); }
     }
     function addAreaPt(p){ apts.push(p.clone()); drawAreaPoly(); updateAreaReadout(); }
@@ -940,6 +945,7 @@
         }
         camera.lookAt(controls.target);
         setStatus(Tt('tour.run',{p:Math.round(p*100)}));
+        camera.updateMatrixWorld(); sizeDots([measureGroup, volGroup, areaGroup]);
         renderer.render(scene, camera);
         if(p < 1 && touring) requestAnimationFrame(step); else stopTour(true);
       }
@@ -1082,7 +1088,7 @@ ER  - `;
 
     function resize(){ const w=host.clientWidth, h=host.clientHeight; renderer.setSize(w,h); camera.aspect=w/h; camera.updateProjectionMatrix(); }
     addEventListener('resize', resize);
-    views.model.onActivate = () => { resize(); activeRender = () => { controls.update(); renderer.render(scene,camera); }; };
+    views.model.onActivate = () => { resize(); activeRender = () => { controls.update(); camera.updateMatrixWorld(); sizeDots([measureGroup, volGroup, areaGroup]); renderer.render(scene,camera); }; };
     resize();
     views.model.onActivate();
     // Şifre sorulmaz: anahtar Worker'dan (VG) gelir; ilk model yasal uyarı okunurken arkada yüklenir.
