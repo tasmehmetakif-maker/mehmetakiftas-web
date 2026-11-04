@@ -24,17 +24,17 @@ window.ADMIN_MODELS = {
     },
     "kemah": {
       "title": "Peribacaları-Kemah (Erzincan)",
-      "foto": false,
+      "foto": "r2",
       "page": "/kemah/"
     },
     "otlukbeli": {
       "title": "Otlukbeli Gölü-Otlukbeli (Erzincan)",
-      "foto": false,
+      "foto": "r2",
       "page": "/otlukbeli/"
     },
     "polat": {
       "title": "Polat Gölü-İliç (Erzincan)",
-      "foto": false,
+      "foto": "r2",
       "page": "/polat/"
     },
     "tomara": {
@@ -44,7 +44,7 @@ window.ADMIN_MODELS = {
     },
     "konarli": {
       "title": "Konarlı Şelalesi-Tercan (Erzincan)",
-      "foto": false,
+      "foto": "r2",
       "page": "/konarli/"
     },
     "okul": {

@@ -18,7 +18,7 @@
 <link rel="canonical" href="https://mehmetakiftas.com/kemah/" />
 <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
 <link rel="apple-touch-icon" href="../favicon.svg" />
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"Peribacaları-Kemah (Erzincan) — İHA fotogrametrisi 3B modeli","description":"Kemah peribacaları fotogrametri 3B modeli. Döndür, yakınlaş, gerçek metre ile ölç; ortofoto ve DEM (eğim/bakı).","url":"https://mehmetakiftas.com/kemah/","image":"https://mehmetakiftas.com/kemah-onizleme.jpg","creator":{"@type":"Person","name":"Mehmet Akif Taş"},"measurementTechnique":"SfM–MVS fotogrametri (Agisoft Metashape)","keywords":["fotogrametri","3B model","SfM","DEM","ortofoto","jeomorfoloji"],"isAccessibleForFree":true,"dateCreated":"2025-10-01","spatialCoverage":{"@type":"Place","geo":{"@type":"GeoCoordinates","latitude":39.576895,"longitude":38.949948}}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"Peribacaları-Kemah (Erzincan) — İHA fotogrametrisi 3B modeli","description":"Kemah peribacaları fotogrametri 3B modeli. Döndür, yakınlaş, gerçek metre ile ölç; ortofoto ve DEM (eğim/bakı).","url":"https://mehmetakiftas.com/kemah/","image":"https://mehmetakiftas.com/kemah-onizleme.jpg","creator":{"@type":"Person","name":"Mehmet Akif Taş"},"measurementTechnique":"SfM–MVS fotogrametri (Agisoft Metashape)","keywords":["fotogrametri","3B model","SfM","DEM","ortofoto","Gaussian Splatting","jeomorfoloji"],"isAccessibleForFree":true,"dateCreated":"2025-10-01","spatialCoverage":{"@type":"Place","geo":{"@type":"GeoCoordinates","latitude":39.576895,"longitude":38.949948}}}</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
 <script src="../openseadragon-scalebar.js"></script>
 <script src="../i18n.js"></script>
@@ -190,6 +190,7 @@
       <button class="tab active" type="button" data-view="model" data-i18n="tab.model">3B Model</button>
       <button class="tab" type="button" data-view="ortho" data-i18n="tab.ortho">Ortofoto</button>
       <button class="tab" type="button" data-view="dem2d" data-i18n="tab.dem2d">DEM (2B)</button>
+      <button class="tab" type="button" data-view="splat" data-i18n="tab.splat">✨ Foto-gerçekçi</button>
       <button class="tab" type="button" data-view="compare" data-i18n="tab.compare">⇋ Karşılaştır</button>
     </div>
     <div class="hdr-right">
@@ -409,6 +410,14 @@
     </div>
   </div>
 
+  <!-- ✨ Foto-gerçekçi (Gaussian Splatting) görünümü: splat.html iframe'de, sekme ilk açılınca yüklenir -->
+  <div class="view" id="view-splat">
+    <iframe id="splat-frame" title="Foto-gerçekçi görünüm (Gaussian Splatting)" data-vt-title="splat.title"
+      data-src="../splat.html?m=kemah&v=5b9b9f576e&up=0.014,0.008,-1.000&clook=-0.165,0.262,0.004&cpos=0.007,-2.539,-4.068&mindist=0.59&maxdist=10.88&minpol=0&maxpol=60&alpha=6"
+      style="width:100%; height:100%; border:0; display:block; background:#0b0f14;"
+      allow="fullscreen; xr-spatial-tracking" loading="lazy"></iframe>
+  </div>
+
 
   <script type="importmap">
   { "imports": {
@@ -471,7 +480,7 @@
   // ECDH ile sarılı alır, dışa aktarılamayan anahtarla çözer. API sayfaya bir kez verilir (__vgTake). =====
   const VG = window.__vgTake ? window.__vgTake() : null;
   const SLUG = 'kemah';
-  const ASSET_V = {"low":"bae383d1ac","medium":"38d22bc88e","high":"6e8604f411","ultra":"2c6978aaf2","ortho":"81204e1b4d","dem_relief":"a85d70ae40","slope":"f0112914f8","aspect":"0a9d5e36ba","contour_overlay":"f8fd43384b","contour":"d32d189b08"};      // varlık → R2 ETag'in ilk 10'u (?v=): dosya değişince URL değişir
+  const ASSET_V = {"low":"bae383d1ac","medium":"38d22bc88e","high":"6e8604f411","ultra":"2c6978aaf2","ortho":"81204e1b4d","dem_relief":"a85d70ae40","slope":"f0112914f8","aspect":"0a9d5e36ba","contour_overlay":"f8fd43384b","contour":"d32d189b08","foto":"5b9b9f576e"};      // varlık → R2 ETag'in ilk 10'u (?v=): dosya değişince URL değişir
   const base = name => name.split('?')[0].replace(/\.[^.]+$/, '');   // 'medium.glb' → 'medium'
   const CRYPTO_OK = !!(VG && window.isSecureContext !== false && window.crypto && window.crypto.subtle);
 
