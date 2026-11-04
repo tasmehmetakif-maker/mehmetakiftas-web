@@ -123,7 +123,7 @@
       + '#vg-shield{position:fixed;inset:0;z-index:2147483647;display:none;align-items:center;justify-content:center;background:#05070b;color:#c6d0da;'
       + 'font:500 15px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;text-align:center;padding:24px}#vg-shield.on{display:flex}'
       + '#vg-wm{position:fixed;inset:0;z-index:9;pointer-events:none;background-repeat:repeat;animation:vgdrift 90s linear infinite}'
-      + '@keyframes vgdrift{from{background-position:0 0}to{background-position:var(--vgw,440px) var(--vgh,250px)}}'
+      + '@keyframes vgdrift{from{background-position:0 0}to{background-position:var(--vgw,340px) var(--vgh,190px)}}'
       + '@media (prefers-reduced-motion:reduce){#vg-wm{animation:none}}'
       + '#vg-legal{position:fixed;left:0;right:0;bottom:0;height:var(--vg-ftr);z-index:31;display:flex;align-items:center;gap:6px;padding:0 10px env(safe-area-inset-bottom,0px);'
       + 'background:rgba(8,11,16,.96);border-top:1px solid rgba(255,255,255,.1);color:#9aa6b4;font:500 11px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;white-space:nowrap;box-sizing:border-box}'
@@ -213,13 +213,13 @@
     var d = new Date(), p = function (n) { return (n < 10 ? '0' : '') + n; };
     var when = p(d.getDate()) + '.' + p(d.getMonth() + 1) + '.' + d.getFullYear() + ' ' + p(d.getHours()) + ':' + p(d.getMinutes());
     var l1 = '© Mehmet Akif Taş · mehmetakiftas.com', l2 = L('İzinsiz kopyalanamaz', 'No copying without permission') + ' · ' + when + ' · #' + code;
-    var W = 440, H = 250;
+    var W = 340, H = 190;
     var txt = function (y, s, sz) {
       return '<text x="0" y="' + y + '" font-family="Segoe UI,system-ui,sans-serif" font-weight="700" font-size="' + sz + '" text-anchor="middle" '
-        + 'fill="#fff" fill-opacity=".30" stroke="#000" stroke-opacity=".34" stroke-width=".9" paint-order="stroke">' + esc(s) + '</text>';
+        + 'fill="#fff" fill-opacity=".30" stroke="#000" stroke-opacity=".34" stroke-width=".7" paint-order="stroke">' + esc(s) + '</text>';
     };
     var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + W + '" height="' + H + '"><g transform="translate(' + W / 2 + ' ' + H / 2 + ') rotate(-24)">'
-      + txt(-4, l1, 17) + txt(19, l2, 13) + '</g></svg>';
+      + txt(-3, l1, 13) + txt(14, l2, 10) + '</g></svg>';
     wm.style.backgroundImage = 'url("data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg) + '")';
     wm.style.setProperty('--vgw', W + 'px'); wm.style.setProperty('--vgh', H + 'px');
   }
