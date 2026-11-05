@@ -279,10 +279,13 @@
           ctrl.enablePan         = lim.pan;
           ctrl.screenSpacePanning = false;   // zemin düzleminde pan (harita gibi), ekran düzleminde değil
           ctrl.panSpeed          = 1.2;
-          ctrl.minDistance       = lim.mindist;
-          // Kütüphanenin kamerası 0,1 biriminden yakını kesiyor; küçük ölçekli sahnede (Okul: mindist 0,06) yakınlaşınca
-          // binalar kayboluyordu. Yakın düzlem sahnenin yakınlaşma sınırına bağlanır.
-          if (viewer.camera) { viewer.camera.near = Math.min(0.1, lim.mindist * 0.1); viewer.camera.updateProjectionMatrix(); }
+          // Yakınlaşma her sahnede aynı ölçüde serbest: en yakın mesafe açılış uzaklığının %2'si (eski sınırlar %8-38 idi).
+          const startDist = Math.hypot(cpos[0] - clook[0], cpos[1] - clook[1], cpos[2] - clook[2]) || 1;
+          const minD = Math.min(lim.mindist, startDist * 0.02);
+          ctrl.minDistance       = minD;
+          ctrl.zoomToCursor      = true;   // destekleyen sürümde tekerlek imlece doğru yakınlaştırır
+          // Kütüphanenin kamerası 0,1 biriminden yakını kesiyordu; küçük ölçekli sahnede (Okul) yakınlaşınca binalar kayboluyordu.
+          if (viewer.camera) { viewer.camera.near = Math.min(0.1, minD * 0.1); viewer.camera.updateProjectionMatrix(); }
           ctrl.maxDistance       = lim.maxdist;
           ctrl.minPolarAngle     = lim.minpol * Math.PI / 180;
           ctrl.maxPolarAngle     = lim.maxpol * Math.PI / 180;
