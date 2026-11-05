@@ -480,6 +480,7 @@
   const views = {};
   function registerView(name, onFirstShow) { views[name] = { init:false, onFirstShow }; }
   function showView(name) {
+    document.body.dataset.view = name;   // view-guard.js filigranı haritalarda küçültür/saydamlaştırır
     document.getElementById('warn').style.display = (name === 'model') ? 'block' : 'none';
     document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.view === name));
     document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === 'view-' + name));

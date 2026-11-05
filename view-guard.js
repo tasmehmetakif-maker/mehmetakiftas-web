@@ -122,7 +122,9 @@
       + '@media print{html,body{display:none!important}}'
       + '#vg-shield{position:fixed;inset:0;z-index:2147483647;display:none;align-items:center;justify-content:center;background:#05070b;color:#c6d0da;'
       + 'font:500 15px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;text-align:center;padding:24px}#vg-shield.on{display:flex}'
-      + '#vg-wm{position:fixed;inset:0;z-index:9;pointer-events:none;background-repeat:repeat;animation:vgdrift 90s linear infinite}'
+      + '#vg-wm{--vgw:340px;--vgh:190px;position:fixed;inset:0;z-index:9;pointer-events:none;background-repeat:repeat;background-size:var(--vgw) var(--vgh);animation:vgdrift 90s linear infinite}'
+      // Haritalarda (ortofoto, DEM, karşılaştırma; sayfa body[data-view]'i yazar) filigran daha küçük ve saydam
+      + 'body[data-view="ortho"] #vg-wm,body[data-view="dem2d"] #vg-wm,body[data-view="compare"] #vg-wm{--vgw:255px;--vgh:143px;opacity:.55}'
       + '@keyframes vgdrift{from{background-position:0 0}to{background-position:var(--vgw,340px) var(--vgh,190px)}}'
       + '@media (prefers-reduced-motion:reduce){#vg-wm{animation:none}}'
       + '#vg-legal{position:fixed;left:0;right:0;bottom:0;height:var(--vg-ftr);z-index:31;display:flex;align-items:center;gap:6px;padding:0 10px env(safe-area-inset-bottom,0px);'
@@ -221,7 +223,6 @@
     var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + W + '" height="' + H + '"><g transform="translate(' + W / 2 + ' ' + H / 2 + ') rotate(-24)">'
       + txt(-3, l1, 13) + txt(14, l2, 10) + '</g></svg>';
     wm.style.backgroundImage = 'url("data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg) + '")';
-    wm.style.setProperty('--vgw', W + 'px'); wm.style.setProperty('--vgh', H + 'px');
   }
 
   // ===================== 4) Yasal uyarı penceresi + 5) alt şerit =====================
