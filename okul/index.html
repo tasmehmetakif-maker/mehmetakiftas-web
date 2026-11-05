@@ -18,7 +18,7 @@
 <link rel="canonical" href="https://mehmetakiftas.com/okul/" />
 <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
 <link rel="apple-touch-icon" href="../favicon.svg" />
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"Fen-Edebiyat Fakültesi – EBYÜ (Erzincan) — İHA fotogrametrisi 3B modeli","description":"Erzincan Binali Yıldırım Üniversitesi Fen-Edebiyat Fakültesi ve çevresinin yüksek çözünürlüklü fotogrametri 3B modeli. Döndür, yakınlaş, gerçek metre ile ölç; ortofoto ve DEM (yükseklik/eğim/bakı).","url":"https://mehmetakiftas.com/okul/","image":"https://mehmetakiftas.com/okul-onizleme.jpg","creator":{"@type":"Person","name":"Mehmet Akif Taş"},"measurementTechnique":"SfM–MVS fotogrametri (Agisoft Metashape)","keywords":["fotogrametri","3B model","SfM","DEM","ortofoto"],"isAccessibleForFree":true,"dateCreated":"2026-07-05","spatialCoverage":{"@type":"Place","geo":{"@type":"GeoCoordinates","latitude":39.806276,"longitude":39.380373}}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"Fen-Edebiyat Fakültesi – EBYÜ (Erzincan) — İHA fotogrametrisi 3B modeli","description":"Erzincan Binali Yıldırım Üniversitesi Fen-Edebiyat Fakültesi ve çevresinin yüksek çözünürlüklü fotogrametri 3B modeli. Döndür, yakınlaş, gerçek metre ile ölç; ortofoto ve DEM (yükseklik/eğim/bakı).","url":"https://mehmetakiftas.com/okul/","image":"https://mehmetakiftas.com/okul-onizleme.jpg","creator":{"@type":"Person","name":"Mehmet Akif Taş"},"measurementTechnique":"SfM–MVS fotogrametri (Agisoft Metashape)","keywords":["fotogrametri","3B model","SfM","DEM","ortofoto","Gaussian Splatting"],"isAccessibleForFree":true,"dateCreated":"2026-07-05","spatialCoverage":{"@type":"Place","geo":{"@type":"GeoCoordinates","latitude":39.806276,"longitude":39.380373}}}</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
 <script src="../openseadragon-scalebar.js"></script>
 <script src="../i18n.js"></script>
@@ -190,6 +190,7 @@
       <button class="tab active" type="button" data-view="model" data-i18n="tab.model">3B Model</button>
       <button class="tab" type="button" data-view="ortho" data-i18n="tab.ortho">Ortofoto</button>
       <button class="tab" type="button" data-view="dem2d" data-i18n="tab.dem2d">DEM (2B)</button>
+      <button class="tab" type="button" data-view="splat" data-i18n="tab.splat">✨ Foto-gerçekçi</button>
       <button class="tab" type="button" data-view="compare" data-i18n="tab.compare">⇋ Karşılaştır</button>
     </div>
     <div class="hdr-right">
@@ -409,6 +410,14 @@
     </div>
   </div>
 
+  <!-- ✨ Foto-gerçekçi (Gaussian Splatting) görünümü: splat.html iframe'de, sekme ilk açılınca yüklenir -->
+  <div class="view" id="view-splat">
+    <iframe id="splat-frame" title="Foto-gerçekçi görünüm (Gaussian Splatting)" data-vt-title="splat.title"
+      data-src="../splat.html?m=okul&v=b1f4352841&up=-0.005,-0.005,1.000&clook=-0.027,-0.009,-0.002&cpos=-0.069,0.269,0.403&mindist=0.06&maxdist=1.08&minpol=0&maxpol=60&alpha=6"
+      style="width:100%; height:100%; border:0; display:block; background:#0b0f14;"
+      allow="fullscreen; xr-spatial-tracking" loading="lazy"></iframe>
+  </div>
+
 
   <script type="importmap">
   { "imports": {
@@ -471,7 +480,7 @@
   // ECDH ile sarılı alır, dışa aktarılamayan anahtarla çözer. API sayfaya bir kez verilir (__vgTake). =====
   const VG = window.__vgTake ? window.__vgTake() : null;
   const SLUG = 'okul';
-  const ASSET_V = {"low":"f57233afcd","medium":"fbc5d2d83b","high":"22fdb2e631","ultra":"9de85e4c98","ortho":"7c1b24ee16","dem_relief":"b560f7a04e","slope":"002ddf3012","aspect":"d0f6f55769","contour_overlay":"26bb1ae85e","contour":"4225caa73c"};      // varlık → R2 ETag'in ilk 10'u (?v=): dosya değişince URL değişir
+  const ASSET_V = {"low":"f57233afcd","medium":"fbc5d2d83b","high":"22fdb2e631","ultra":"9de85e4c98","ortho":"7c1b24ee16","dem_relief":"b560f7a04e","slope":"002ddf3012","aspect":"d0f6f55769","contour_overlay":"26bb1ae85e","contour":"4225caa73c","foto":"b1f4352841"};      // varlık → R2 ETag'in ilk 10'u (?v=): dosya değişince URL değişir
   const base = name => name.split('?')[0].replace(/\.[^.]+$/, '');   // 'medium.glb' → 'medium'
   const CRYPTO_OK = !!(VG && window.isSecureContext !== false && window.crypto && window.crypto.subtle);
 

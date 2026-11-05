@@ -39,7 +39,7 @@ window.ADMIN_MODELS = {
     },
     "tomara": {
       "title": "Tomara Şelalesi-Şiran (Gümüşhane)",
-      "foto": false,
+      "foto": "r2",
       "page": "/tomara/"
     },
     "konarli": {
@@ -49,7 +49,7 @@ window.ADMIN_MODELS = {
     },
     "okul": {
       "title": "Fen-Edebiyat Fakültesi – EBYÜ (Erzincan)",
-      "foto": false,
+      "foto": "r2",
       "page": "/okul/"
     }
   }
