@@ -48,7 +48,8 @@
     await tsLoad();
     return new Promise(function (res, rej) {
       var box = document.createElement('div');
-      box.style.cssText = 'position:fixed;right:10px;bottom:36px;z-index:2147483645';
+      // Etkileşim gerekirse kutu yasal pencerenin (2147483646) ÜSTÜNDE görünmeli; aksi hâlde ziyaretçi takılır.
+      box.style.cssText = 'position:fixed;left:50%;bottom:40px;transform:translateX(-50%);z-index:2147483647';
       document.body.appendChild(box);
       var id, end = function () { setTimeout(function () { try { window.turnstile.remove(id); } catch (e) {} box.remove(); }, 0); };
       id = window.turnstile.render(box, {
