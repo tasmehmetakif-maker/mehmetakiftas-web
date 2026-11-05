@@ -280,6 +280,9 @@
           ctrl.screenSpacePanning = false;   // zemin düzleminde pan (harita gibi), ekran düzleminde değil
           ctrl.panSpeed          = 1.2;
           ctrl.minDistance       = lim.mindist;
+          // Kütüphanenin kamerası 0,1 biriminden yakını kesiyor; küçük ölçekli sahnede (Okul: mindist 0,06) yakınlaşınca
+          // binalar kayboluyordu. Yakın düzlem sahnenin yakınlaşma sınırına bağlanır.
+          if (viewer.camera) { viewer.camera.near = Math.min(0.1, lim.mindist * 0.1); viewer.camera.updateProjectionMatrix(); }
           ctrl.maxDistance       = lim.maxdist;
           ctrl.minPolarAngle     = lim.minpol * Math.PI / 180;
           ctrl.maxPolarAngle     = lim.maxpol * Math.PI / 180;
