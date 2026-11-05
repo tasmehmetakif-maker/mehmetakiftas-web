@@ -442,6 +442,7 @@
     'err.mem': ['Cihaz belleği yetersiz; daha düşük bir kalite seçin.', 'Not enough device memory; choose a lower quality.'],
     'err.stale': ['Dosya çözülemedi; dosya bozuk olabilir ya da cihaz belleği yetersiz.', 'The file could not be decrypted; it may be corrupt or the device may be out of memory.'],
     'err.format': ['Dosya biçimi geçersiz (bozuk ya da eksik .enc).', 'Invalid file format (corrupt or truncated .enc).'],
+    'err.bot': ['Güvenlik doğrulaması tamamlanamadı; sayfayı yenileyip tekrar deneyin.', 'The security check could not be completed; reload the page and try again.'],
     'err.tamper': ['Geliştirici araçları açıldığı için modeller kapatıldı; araçları kapatıp sayfayı yenileyin.', 'Models were closed because developer tools were opened; close them and reload the page.'],
     'err.img': ['Görüntü yüklenemedi.', 'The image could not be loaded.'],
     'err.other': ['Beklenmeyen hata ({m}).', 'Unexpected error ({m}).'],
@@ -490,7 +491,7 @@
     if (k === 'pwd') return VT('err.stale');
     if (k === 'http') return VT('err.http', { s: e.status });
     if (k === 'img') return VT('err.img');
-    if (k === 'net' || k === 'crypto' || k === 'mem' || k === 'format' || k === 'tamper') return VT('err.' + k);
+    if (k === 'net' || k === 'crypto' || k === 'mem' || k === 'format' || k === 'tamper' || k === 'bot') return VT('err.' + k);
     return VT('err.other', { m: (e && (e.name || e.message)) || '?' });
   }
 

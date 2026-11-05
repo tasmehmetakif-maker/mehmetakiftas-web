@@ -30,13 +30,44 @@
   function b64u(buf) { var s = '', b = new Uint8Array(buf); for (var i = 0; i < b.length; i++) s += String.fromCharCode(b[i]); return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); }
   function unb64u(s) { var t = atob(String(s).replace(/-/g, '+').replace(/_/g, '/')), o = new Uint8Array(t.length); for (var i = 0; i < t.length; i++) o[i] = t.charCodeAt(i); return o; }
 
+  // Cloudflare Turnstile (görünmez bot denetimi): anahtar isteği tek kullanımlık bir bilet taşır. Widget yalnız Cloudflare
+  // etkileşim isterse görünür (appearance: interaction-only). TS_KEY boşsa denetim yok (Worker'da TURNSTILE_SECRET de yok).
+  var TS_KEY = '0x4AAAAAAF0lSfz0TeHqU9mH';   // Cloudflare Turnstile site anahtarı (herkese açık; widget "mehmetakiftas", Managed)
+  var tsReady = null;
+  function tsLoad() {
+    if (!tsReady) tsReady = new Promise(function (res, rej) {
+      var s = document.createElement('script');
+      s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit'; s.async = true;
+      s.onload = function () { res(); }; s.onerror = function () { tsReady = null; rej(err('net')); };
+      document.head.appendChild(s);
+    });
+    return tsReady;
+  }
+  async function tsToken() {
+    if (!TS_KEY) return '';
+    await tsLoad();
+    return new Promise(function (res, rej) {
+      var box = document.createElement('div');
+      box.style.cssText = 'position:fixed;right:10px;bottom:36px;z-index:2147483645';
+      document.body.appendChild(box);
+      var id, end = function () { setTimeout(function () { try { window.turnstile.remove(id); } catch (e) {} box.remove(); }, 0); };
+      id = window.turnstile.render(box, {
+        sitekey: TS_KEY, appearance: 'interaction-only', language: isEN() ? 'en' : 'tr',
+        callback: function (t) { end(); res(t); },
+        'error-callback': function () { end(); rej(err('bot')); },
+        'timeout-callback': function () { end(); rej(err('bot')); },
+      });
+    });
+  }
+
   async function newSession(slug) {
     if (!(window.isSecureContext !== false && window.crypto && crypto.subtle)) throw err('crypto');
     var pair = await crypto.subtle.generateKey({ name: 'ECDH', namedCurve: 'P-256' }, false, ['deriveKey']);
     var pub = await crypto.subtle.exportKey('raw', pair.publicKey);
+    var c = await tsToken();
     var r;
     try {
-      r = await fetch(WORKER + '/v2/k', { method: 'POST', headers: { 'content-type': 'text/plain' }, body: JSON.stringify({ s: slug, p: b64u(pub) }), cache: 'no-store', credentials: 'omit' });
+      r = await fetch(WORKER + '/v2/k', { method: 'POST', headers: { 'content-type': 'text/plain' }, body: JSON.stringify({ s: slug, p: b64u(pub), c: c }), cache: 'no-store', credentials: 'omit' });
     } catch (e) { throw err('net', { cause: e }); }
     if (!r.ok) throw err('http', { status: r.status });
     var j = await r.json();

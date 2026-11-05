@@ -152,6 +152,7 @@
       retry: ['Tekrar dene', 'Try again'],
       back:  ['3B Model sekmesine dön', 'Back to the 3D Model tab'],
       pct:   ['İndiriliyor… %{p}', 'Downloading… {p}%'],
+      bot: ['Güvenlik doğrulaması tamamlanamadı; sayfayı yenileyip tekrar deneyin.', 'The security check could not be completed; reload the page and try again.'],
       tamper: ['Geliştirici araçları açıldığı için sahne kapatıldı; araçları kapatıp sayfayı yenileyin.', 'The scene was closed because developer tools were opened; close them and reload the page.'],
       prep:  ['Sahne hazırlanıyor…', 'Preparing the scene…'],
       badsrc: ['Geçersiz sahne adresi.', 'Invalid scene address.'],
@@ -236,6 +237,7 @@
         if (e && e.kind === 'net') e.userMsg = ST('neterr');
         else if (e && e.kind === 'http') e.userMsg = 'HTTP ' + e.status + ' — ' + rawSrc;
         else if (e && e.kind === 'tamper') e.userMsg = ST('tamper');
+        else if (e && e.kind === 'bot') e.userMsg = ST('bot');
         throw e;
       }
     }
