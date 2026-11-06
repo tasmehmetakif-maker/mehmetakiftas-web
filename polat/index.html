@@ -413,7 +413,7 @@
   <!-- ✨ Foto-gerçekçi (Gaussian Splatting) görünümü: splat.html iframe'de, sekme ilk açılınca yüklenir -->
   <div class="view" id="view-splat">
     <iframe id="splat-frame" title="Foto-gerçekçi görünüm (Gaussian Splatting)" data-vt-title="splat.title"
-      data-src="../splat.html?m=polat&v=4f191ec807&up=0.002,0.023,1.000&clook=-0.045,-0.336,0.038&cpos=-1.076,1.987,3.517&mindist=0.52&maxdist=9.48&minpol=0&maxpol=60&alpha=6&g=cdb1f8ce84"
+      data-src="../splat.html?m=polat&v=63b4666f5c&up=-0.034,0.055,0.998&clook=0.004,-0.048,-0.010&cpos=-0.242,0.612,0.872&mindist=0.14&maxdist=2.48&minpol=0&maxpol=60&alpha=6&zmax=8&g=f7a862ffd2"
       style="width:100%; height:100%; border:0; display:block; background:#0b0f14;"
       allow="fullscreen; xr-spatial-tracking" loading="lazy"></iframe>
   </div>
@@ -481,7 +481,7 @@
   // ECDH ile sarılı alır, dışa aktarılamayan anahtarla çözer. API sayfaya bir kez verilir (__vgTake). =====
   const VG = window.__vgTake ? window.__vgTake() : null;
   const SLUG = 'polat';
-  const ASSET_V = {"low":"4ca33d4a0a","medium":"8e86a3a55c","high":"e764dcf54a","ultra":"0e44d66189","ortho":"435c1687bb","dem_relief":"37a1d2726e","slope":"696fa754e2","aspect":"d3ce0a2ba3","contour_overlay":"b5684148c7","contour":"609b0d57a7","foto":"4f191ec807"};      // varlık → R2 ETag'in ilk 10'u (?v=): dosya değişince URL değişir
+  const ASSET_V = {"low":"4ca33d4a0a","medium":"8e86a3a55c","high":"e764dcf54a","ultra":"0e44d66189","ortho":"435c1687bb","dem_relief":"37a1d2726e","slope":"696fa754e2","aspect":"d3ce0a2ba3","contour_overlay":"b5684148c7","contour":"609b0d57a7","foto":"63b4666f5c"};      // varlık → R2 ETag'in ilk 10'u (?v=): dosya değişince URL değişir
   const base = name => name.split('?')[0].replace(/\.[^.]+$/, '');   // 'medium.glb' → 'medium'
   const CRYPTO_OK = !!(VG && window.isSecureContext !== false && window.crypto && window.crypto.subtle);
 

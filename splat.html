@@ -192,6 +192,7 @@
       minpol: parseFloat(params.get('minpol') ?? '0'),        // 0 = tam tepe serbest
       maxpol: parseFloat(params.get('maxpol') ?? '72'),       // yatay/alttan bakışı engelle
       mindist: parseFloat(params.get('mindist') ?? '1.6'),    // çok yaklaşmayı engelle
+      zmax: parseFloat(params.get('zmax') ?? '0'),            // >0: en fazla açılışın zmax katı yakınlaşma (2026-11-06 Polat: ×8 üstünde Gaussian çizgileri)
       maxdist: parseFloat(params.get('maxdist') ?? '9'),      // çok uzaklaşmayı engelle
       pan: params.get('pan') !== '0'                          // varsayılan: pan AÇIK (harita gibi sağa-sola)
     };
@@ -281,7 +282,7 @@
           ctrl.panSpeed          = 1.2;
           // Yakınlaşma her sahnede aynı ölçüde serbest: en yakın mesafe açılış uzaklığının %2'si (eski sınırlar %8-38 idi).
           const startDist = Math.hypot(cpos[0] - clook[0], cpos[1] - clook[1], cpos[2] - clook[2]) || 1;
-          const minD = Math.min(lim.mindist, startDist * 0.02);
+          const minD = lim.zmax > 0 ? startDist / lim.zmax : Math.min(lim.mindist, startDist * 0.02);
           ctrl.minDistance       = minD;
           ctrl.zoomToCursor      = true;   // destekleyen sürümde tekerlek imlece doğru yakınlaştırır
           // Kütüphanenin kamerası 0,1 biriminden yakını kesiyordu; küçük ölçekli sahnede (Okul) yakınlaşınca binalar kayboluyordu.
