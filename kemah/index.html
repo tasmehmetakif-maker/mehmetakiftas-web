@@ -181,7 +181,7 @@
   @media (max-width:760px){ #cmp-legend { transform:scale(.86); transform-origin:bottom right; } #cmp-hint { bottom:104px; max-width:70vw; text-align:center; } }
 </style>
 <link rel="stylesheet" href="../viewer-premium.css" />
-<script src="../view-guard.js?v=c28adbc2a8"></script>
+<script src="../view-guard.js?v=cd2445e558"></script>
 </head>
 <body>
   <div id="tabs">
@@ -287,8 +287,11 @@
     </div>
   </div>
 
+
   <!-- ORTOFOTO -->
   <div class="view" id="view-ortho"><div class="osd" id="osd-ortho"></div></div>
+
+
 
   <!-- DEM 2B -->
   <div class="view" id="view-dem2d">
@@ -340,6 +343,8 @@
       </div>
     </div>
   </div>
+
+
 
   <!-- KARŞILAŞTIR: ortofoto ↔ DEM sürgülü karşılaştırma -->
   <div class="view" id="view-compare">
@@ -399,6 +404,7 @@
     </div>
   </div>
 
+
   <div id="warn" data-i18n="warn.perf">⚠️ "Yüksek" ve "En Yüksek" güçlü bir bilgisayar ister. Model açılmazsa veya takılırsa daha düşük bir kalite seçin.</div>
 
   <!-- Yardım paneli: tüm araçların ne işe yaradığı + nasıl kullanılacağı -->
@@ -410,13 +416,15 @@
     </div>
   </div>
 
+
   <!-- ✨ Foto-gerçekçi (Gaussian Splatting) görünümü: splat.html iframe'de, sekme ilk açılınca yüklenir -->
   <div class="view" id="view-splat">
     <iframe id="splat-frame" title="Foto-gerçekçi görünüm (Gaussian Splatting)" data-vt-title="splat.title"
-      data-src="../splat.html?m=kemah&v=710d998ae1&up=-0.028,0.084,-0.996&clook=-0.059,-0.114,0.009&cpos=0.105,-0.555,-0.810&mindist=0.11&maxdist=2.08&minpol=0&maxpol=60&alpha=6&zmax=12&g=f7a862ffd2"
+      data-src="../splat.html?m=kemah&v=710d998ae1&up=-0.028,0.084,-0.996&clook=-0.059,-0.114,0.009&cpos=0.105,-0.555,-0.810&mindist=0.11&maxdist=2.08&minpol=0&maxpol=60&alpha=6&zmax=12&g=a27208bd68"
       style="width:100%; height:100%; border:0; display:block; background:#0b0f14;"
       allow="fullscreen; xr-spatial-tracking" loading="lazy"></iframe>
   </div>
+
 
 
   <script type="importmap">
@@ -458,7 +466,7 @@
     'st.decrypting': ['şifre çözülüyor… ({u})', 'decrypting… ({u})'],
     'st.decfail': ['✗ "{u}" açılamadı: {r}', '✗ Could not open "{u}": {r}'],
     'view.loading': ['{n} yükleniyor…', 'Loading {n}…'],
-    'view.loadingpct': ['{n} yükleniyor… %{p}', 'Loading {n}… {p}%'],
+    'view.loadingpct': ['{n} yükleniyor… {p}', 'Loading {n}… {p}'],   // {p} = PG(): "%37 · 52,1 / 141,2 MB"
     'view.fail': ['✗ {n} açılamadı: {r}', '✗ Could not open {n}: {r}'],
     'view.retry': ['Tekrar dene', 'Try again'],
     'q.ultra.confirm': ['"En Yüksek" yaklaşık {mb} MB indirir ve çok bellek ister; mobil cihazlarda sekme kapanabilir. Devam edilsin mi?', '"Highest" downloads about {mb} MB and needs a lot of memory; on mobile devices the tab may crash. Continue?'],
@@ -504,7 +512,9 @@
     return VT('err.other', { m: (e && (e.name || e.message)) || '?' });
   }
 
-  // decPlain('medium.glb' …) → düz içerik (ArrayBuffer). o.onPct(p) / o.onDecrypt(): ilerleme bildirimleri.
+  // İlerleme metni: yüzde + inen/toplam MB (view-guard prog; 2026-11-07 kullanıcı isteği "tüm yüklenmelerde mb ve yüzde").
+  const PG = (p, g, t) => (VG ? VG.prog(p, g, t, isEN()) : '%' + p);
+  // decPlain('medium.glb' …) → düz içerik (ArrayBuffer). o.onPct(p, inen, toplam) / o.onDecrypt(): ilerleme bildirimleri.
   async function decPlain(name, o = {}){
     if (!CRYPTO_OK) throw mkErr(VG && VG.tampered() ? 'tamper' : 'crypto');
     const b = base(name);
@@ -617,7 +627,7 @@
       let plain;
       try {
         plain = await decPlain(name, {
-          onPct: p => { if (mine()) setStatus(Tt('st.loadingpct',{p})); },
+          onPct: (p, g, t) => { if (mine()) setStatus(Tt('st.loadingpct',{p: PG(p, g, t)})); },
           onDecrypt: () => { if (mine()) setStatus(VT('st.decrypting',{u:name})); } });
       } catch (er) { console.error(er); if (mine()) setStatus(VT('st.decfail',{u:name, r:errText(er)}), false); return; }
       if (!mine()) return;
@@ -1114,7 +1124,7 @@ ER  - `;
   registerView('ortho', async () => {
     const bd = viewBadge('ortho'), nm = Tt('tab.ortho');
     bd.show(VT('view.loading', { n: nm }));
-    const ou = await decAsset('ortho.jpg', { onPct: p => bd.show(VT('view.loadingpct', { n: nm, p })) });
+    const ou = await decAsset('ortho.jpg', { onPct: (p, g, t) => bd.show(VT('view.loadingpct', { n: nm, p: PG(p, g, t) })) });
     const ov = OpenSeadragon({ element: document.getElementById('osd-ortho'), tileSources:{ type:'image', url: ou }, showNavigationControl:false, gestureSettingsMouse:{clickToZoom:false} });
     ov.addHandler('open', () => bd.hide());
     ov.addHandler('open-failed', () => bd.show(VT('view.fail', { n: nm, r: VT('err.img') }), () => { bd.show(VT('view.loading', { n: nm })); ov.open({ type:'image', url: ou }); }));
@@ -1127,7 +1137,7 @@ ER  - `;
     const LNAME = { 'dem_relief.jpg':'dem.relief', 'slope.jpg':'dem.slope', 'aspect.jpg':'dem.aspect' };
     const lname = img => Tt(LNAME[img] || 'dem.relief');
     bd.show(VT('view.loading', { n: lname('dem_relief.jpg') }));
-    const du = await decAsset('dem_relief.jpg', { onPct: p => bd.show(VT('view.loadingpct', { n: lname('dem_relief.jpg'), p })) });
+    const du = await decAsset('dem_relief.jpg', { onPct: (p, g, t) => bd.show(VT('view.loadingpct', { n: lname('dem_relief.jpg'), p: PG(p, g, t) })) });
     const v = OpenSeadragon({ element: document.getElementById('osd-dem'), tileSources:{ type:'image', url: du }, showNavigationControl:false, gestureSettingsMouse:{clickToZoom:false} });
     // contourOn/ctSeq: hızlı aç-kapa'da yalnız son istek katman ekler. layerSeq: son tıklanan taban katmanı kazanır.
     let contourOn = false, ctSeq = 0, layerSeq = 0, pendLeg = 'dem', pendName = lname('dem_relief.jpg'), pendUrl = du;
@@ -1140,11 +1150,12 @@ ER  - `;
     async function addContour(){
       if (!contourOn) return;
       const my = ++ctSeq;
-      let cu;
-      try { cu = await decAsset('contour_overlay.png'); }
+      let cu, shown = false;
+      try { cu = await decAsset('contour_overlay.png', { onPct: (p, g, t) => { if (my === ctSeq) { shown = true; bd.show(VT('view.loadingpct', { n: Tt('dem.contour'), p: PG(p, g, t) })); } } }); }
       catch (e) { console.error(e); if (my === ctSeq) bd.show(VT('view.fail', { n: Tt('dem.contour'), r: errText(e) }), () => { bd.hide(); addContour(); }); return; }
       if (my !== ctSeq || !contourOn || !v.world.getItemAt(0)) return;   // bu arada kapatıldı / yeni istek geldi
       removeContour();
+      if (shown) bd.hide();
       v.addTiledImage({ tileSource:{type:'image', url: cu}, index:1, opacity:1 });
     }
     function showLeg(leg){ document.querySelectorAll('#dem-legend .leg').forEach(l => { if(l.dataset.leg!=='contour') l.style.display = (l.dataset.leg === leg) ? 'block' : 'none'; }); }
@@ -1159,7 +1170,7 @@ ER  - `;
       markDem(b.dataset.leg);
       bd.show(VT('view.loading', { n: nm }));
       let url;
-      try { url = await decAsset(b.dataset.img, { onPct: p => { if (my === layerSeq) bd.show(VT('view.loadingpct', { n: nm, p })); } }); }
+      try { url = await decAsset(b.dataset.img, { onPct: (p, g, t) => { if (my === layerSeq) bd.show(VT('view.loadingpct', { n: nm, p: PG(p, g, t) })); } }); }
       catch (e) { console.error(e); if (my === layerSeq) { markDem(pendLeg); bd.show(VT('view.fail', { n: nm, r: errText(e) }), () => b.onclick()); } return; }
       if (my !== layerSeq) return;            // daha yeni bir katman seçildi: eskisini açma
       pendLeg = b.dataset.leg; pendName = nm; pendUrl = url;
@@ -1181,7 +1192,7 @@ ER  - `;
           topImg=document.getElementById('cmp-top-img'), top=document.getElementById('cmp-top'),
           div=document.getElementById('cmp-divider'), lblR=document.getElementById('cmp-lbl-r');
     const bd = viewBadge('compare');
-    const pct = n => p => bd.show(VT('view.loadingpct', { n, p }));
+    const pct = n => (p, g, t) => bd.show(VT('view.loadingpct', { n, p: PG(p, g, t) }));
     bd.show(VT('view.loading', { n: Tt('tab.ortho') }));
     const bu = await decAsset('ortho.jpg', { onPct: pct(Tt('tab.ortho')) });
     bd.show(VT('view.loading', { n: Tt('dem.relief') }));
@@ -1209,7 +1220,7 @@ ER  - `;
       markCmp(b.dataset.img);
       bd.show(VT('view.loading', { n: nm }));
       try {
-        const u = await decAsset(b.dataset.img, { onPct: p => { if (my === cmpSeq) bd.show(VT('view.loadingpct', { n: nm, p })); } });
+        const u = await decAsset(b.dataset.img, { onPct: (p, g, t) => { if (my === cmpSeq) bd.show(VT('view.loadingpct', { n: nm, p: PG(p, g, t) })); } });
         if (my !== cmpSeq) return;
         await setImg(topImg, u);
         if (my !== cmpSeq) return;

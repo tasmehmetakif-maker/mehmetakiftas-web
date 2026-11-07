@@ -172,7 +172,7 @@
     'st.fallback': ['"En Yüksek" yükleniyor…', 'Loading "Highest"…'],
     'st.init': ['başlatılıyor…', 'starting…'],
     'st.loadingq': ['yükleniyor… ({u})', 'loading… ({u})'],
-    'st.loadingpct': ['yükleniyor… %{p}', 'loading… {p}%'],
+    'st.loadingpct': ['yükleniyor… {p}', 'loading… {p}'],   // {p} = view-guard prog(): "%37 · 52,1 / 141,2 MB"
     'st.loaded': ['✓ {u} yüklendi', '✓ {u} loaded'],
     'st.fail': ['✗ "{u}" açılamadı — daha DÜŞÜK kalite seçin', '✗ Could not open "{u}" — choose a LOWER quality'],
     'st.ctxlost': ['✗ Cihaz bu kaliteyi kaldıramadı — daha DÜŞÜK kalite seçin', '✗ Your device can’t handle this quality — choose a LOWER one'],

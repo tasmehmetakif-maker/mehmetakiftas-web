@@ -88,7 +88,8 @@
     return p;
   }
 
-  // fetch + akış: Content-Length biliniyorsa yüzde bildirir.
+  // fetch + akış: onPct(yüzde, inen_bayt, toplam_bayt). Content-Length yoksa yüzde = -1 ve her ~1 MB'ta bildirir.
+  // 2026-11-07 kullanıcı: "sitede tüm yüklenmelerde mb ve yüklenme yüzdesi görünmeli" → sayfalar prog() ile yazar.
   async function getBytes(url, onPct) {
     var r;
     try { r = await fetch(url, { credentials: 'omit' }); } catch (e) { throw err('net', { url: url, cause: e }); }
@@ -104,7 +105,10 @@
       if (buf && got + c.length <= buf.length) buf.set(c, got);
       else { if (buf) { chunks = [buf.subarray(0, got)]; buf = null; } chunks.push(c); }
       got += c.length;
-      if (onPct && total > 0) { var pc = Math.min(99, Math.floor(got / total * 100)); if (pc !== lastP) { lastP = pc; onPct(pc); } }
+      if (onPct) {
+        if (total > 0) { var pc = Math.min(99, Math.floor(got / total * 100)); if (pc !== lastP) { lastP = pc; onPct(pc, got, total); } }
+        else { var mbN = Math.floor(got / 1e6); if (mbN !== lastP) { lastP = mbN; onPct(-1, got, 0); } }
+      }
     }
     if (buf) return got === buf.length ? buf : buf.subarray(0, got);
     var out = new Uint8Array(got), o = 0;
@@ -131,7 +135,14 @@
     raw = null;
     return plain;
   }
-  var api = { open: open, tampered: function () { return tampered; } };
+  // prog(yüzde, inen, toplam, en) → "%37 · 52,1 / 141,2 MB" (TR) | "37% · 52.1 / 141.2 MB" (EN); toplam yoksa "52,1 MB".
+  // MB = 10^6 bayt (şifreli dosya boyutu; düz içerikten 32 bayt büyük).
+  function prog(p, got, total, en) {
+    var loc = en ? 'en-US' : 'tr-TR', f = function (b) { return (b / 1e6).toLocaleString(loc, { minimumFractionDigits: 1, maximumFractionDigits: 1 }); };
+    if (!(total > 0) || p < 0) return f(got || 0) + ' MB';
+    return (en ? p + '%' : '%' + p) + ' · ' + f(got) + ' / ' + f(total) + ' MB';
+  }
+  var api = { open: open, prog: prog, tampered: function () { return tampered; } };
   var taken = false;
   window.__vgTake = function () { if (taken) return null; taken = true; try { delete window.__vgTake; } catch (e) { window.__vgTake = undefined; } return api; };
 

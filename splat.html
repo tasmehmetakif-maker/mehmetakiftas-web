@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 <title>✨ Foto-gerçekçi Görünüm</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-<script src="view-guard.js?v=c28adbc2a8"></script>
+<script src="view-guard.js?v=cd2445e558"></script>
 <style>
   :root{
     --bg:#0b0f14; --fg:#eef3f8; --muted:#9fb0c0;
@@ -151,7 +151,7 @@
       close: ['Kapat', 'Close'],
       retry: ['Tekrar dene', 'Try again'],
       back:  ['3B Model sekmesine dön', 'Back to the 3D Model tab'],
-      pct:   ['İndiriliyor… %{p}', 'Downloading… {p}%'],
+      pct:   ['İndiriliyor… {p}', 'Downloading… {p}'],   // {p} = VG.prog(): "%37 · 52,1 / 141,2 MB"
       bot: ['Güvenlik doğrulaması tamamlanamadı; sayfayı yenileyip tekrar deneyin.', 'The security check could not be completed; reload the page and try again.'],
       tamper: ['Geliştirici araçları açıldığı için sahne kapatıldı; araçları kapatıp sayfayı yenileyin.', 'The scene was closed because developer tools were opened; close them and reload the page.'],
       prep:  ['Sahne hazırlanıyor…', 'Preparing the scene…'],
@@ -178,6 +178,7 @@
     const params = new URLSearchParams(location.search);
     // Sahne R2'de şifreli (v2/<slug>/foto.enc); anahtarı Worker verir (view-guard.js → VG). m yalnız küçük harf/rakam.
     const VG = window.__vgTake ? window.__vgTake() : null;
+    const enLang = () => { try { return localStorage.getItem('lang') === 'en'; } catch (e) { return false; } };   // üstteki curLang ile aynı kural
     const slug = params.get('m') || '';
     const SRC_OK = /^[a-z0-9]+$/.test(slug);
     const ver   = (params.get('v') || '').replace(/[^\w]/g, '').slice(0, 32);   // üretecin içerik özeti (önbellek sürümü)
@@ -233,7 +234,7 @@
     async function getScene(){
       if (!VG) { const er = new Error('VG yok'); er.userMsg = ST('neterr'); throw er; }
       try {
-        return await VG.open(slug, 'foto', { v: ver, onPct: p => { pctEl.textContent = ST('pct', { p }); } });
+        return await VG.open(slug, 'foto', { v: ver, onPct: (p, g, t) => { pctEl.textContent = ST('pct', { p: VG.prog(p, g, t, enLang()) }); } });
       } catch (e) {
         if (e && e.kind === 'net') e.userMsg = ST('neterr');
         else if (e && e.kind === 'http') e.userMsg = 'HTTP ' + e.status + ' — ' + rawSrc;
