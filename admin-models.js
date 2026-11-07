@@ -51,6 +51,11 @@ window.ADMIN_MODELS = {
       "title": "Fen-Edebiyat Fakültesi – EBYÜ (Erzincan)",
       "foto": "r2",
       "page": "/okul/"
+    },
+    "agnene": {
+      "title": "Ağnene Traverten Alanı-Otlukbeli (Erzincan)",
+      "foto": "r2",
+      "page": "/agnene/"
     }
   }
 };

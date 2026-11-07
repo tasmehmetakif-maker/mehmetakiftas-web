@@ -413,7 +413,7 @@
   <!-- ✨ Foto-gerçekçi (Gaussian Splatting) görünümü: splat.html iframe'de, sekme ilk açılınca yüklenir -->
   <div class="view" id="view-splat">
     <iframe id="splat-frame" title="Foto-gerçekçi görünüm (Gaussian Splatting)" data-vt-title="splat.title"
-      data-src="../splat.html?m=tomara&v=32407b3684&up=0.027,0.021,0.999&clook=-0.079,-0.183,0.021&cpos=-2.339,-0.365,3.464&mindist=0.49&maxdist=9.07&minpol=0&maxpol=60&alpha=6&g=f7a862ffd2"
+      data-src="../splat.html?m=tomara&v=78d79270e4&up=0.025,0.011,1.000&clook=-0.036,0.087,-0.025&cpos=0.327,0.681,0.924&mindist=0.14&maxdist=2.59&minpol=0&maxpol=60&alpha=6&zmax=8&g=f7a862ffd2"
       style="width:100%; height:100%; border:0; display:block; background:#0b0f14;"
       allow="fullscreen; xr-spatial-tracking" loading="lazy"></iframe>
   </div>
@@ -481,7 +481,7 @@
   // ECDH ile sarılı alır, dışa aktarılamayan anahtarla çözer. API sayfaya bir kez verilir (__vgTake). =====
   const VG = window.__vgTake ? window.__vgTake() : null;
   const SLUG = 'tomara';
-  const ASSET_V = {"low":"66c6b05556","medium":"f1063cac51","high":"eab13ccb43","ultra":"59491bca6d","ortho":"4cf2ba9b67","dem_relief":"b8f63fcf63","slope":"8562fe4430","aspect":"4859e83b36","contour_overlay":"dcd9117fce","contour":"a7b0849be3","foto":"32407b3684"};      // varlık → R2 ETag'in ilk 10'u (?v=): dosya değişince URL değişir
+  const ASSET_V = {"low":"66c6b05556","medium":"f1063cac51","high":"eab13ccb43","ultra":"59491bca6d","ortho":"4cf2ba9b67","dem_relief":"b8f63fcf63","slope":"8562fe4430","aspect":"4859e83b36","contour_overlay":"dcd9117fce","contour":"a7b0849be3","foto":"78d79270e4"};      // varlık → R2 ETag'in ilk 10'u (?v=): dosya değişince URL değişir
   const base = name => name.split('?')[0].replace(/\.[^.]+$/, '');   // 'medium.glb' → 'medium'
   const CRYPTO_OK = !!(VG && window.isSecureContext !== false && window.crypto && window.crypto.subtle);
 
