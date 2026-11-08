@@ -18,7 +18,7 @@
 <link rel="canonical" href="https://mehmetakiftas.com/buzul/" />
 <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
 <link rel="apple-touch-icon" href="../favicon.svg" />
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"Katır Buzul Gölleri-Kemah (Erzincan) — İHA fotogrametrisi 3B modeli","description":"Erzincan buzul (sirk) gölleri — yüksek irtifa fotogrametri 3B arazi modeli. Döndür, yakınlaş, gerçek metre ile ölç; ortofoto ve DEM (eğim/bakı).","url":"https://mehmetakiftas.com/buzul/","image":"https://mehmetakiftas.com/buzul-onizleme.jpg","creator":{"@type":"Person","name":"Mehmet Akif Taş"},"measurementTechnique":"SfM–MVS fotogrametri (Agisoft Metashape)","keywords":["fotogrametri","3B model","SfM","DEM","ortofoto","jeomorfoloji"],"isAccessibleForFree":true,"dateCreated":"2025-07-31","spatialCoverage":{"@type":"Place","geo":{"@type":"GeoCoordinates","latitude":39.490681,"longitude":39.394027}}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"Katır Buzul Gölleri-Kemah (Erzincan) — İHA fotogrametrisi 3B modeli","description":"Erzincan buzul (sirk) gölleri — yüksek irtifa fotogrametri 3B arazi modeli. Döndür, yakınlaş, gerçek metre ile ölç; ortofoto ve DEM (eğim/bakı).","url":"https://mehmetakiftas.com/buzul/","image":"https://mehmetakiftas.com/buzul-onizleme.jpg","creator":{"@type":"Person","name":"Mehmet Akif Taş"},"measurementTechnique":"SfM–MVS fotogrametri (Agisoft Metashape)","keywords":["fotogrametri","3B model","SfM","DEM","ortofoto","Gaussian Splatting","jeomorfoloji"],"isAccessibleForFree":true,"dateCreated":"2025-07-31","spatialCoverage":{"@type":"Place","geo":{"@type":"GeoCoordinates","latitude":39.490681,"longitude":39.394027}}}</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
 <script src="../openseadragon-scalebar.js"></script>
 <script src="../i18n.js"></script>
@@ -190,6 +190,7 @@
       <button class="tab active" type="button" data-view="model" data-i18n="tab.model">3B Model</button>
       <button class="tab" type="button" data-view="ortho" data-i18n="tab.ortho">Ortofoto</button>
       <button class="tab" type="button" data-view="dem2d" data-i18n="tab.dem2d">DEM (2B)</button>
+      <button class="tab" type="button" data-view="splat" data-i18n="tab.splat">✨ Foto-gerçekçi</button>
       <button class="tab" type="button" data-view="compare" data-i18n="tab.compare">⇋ Karşılaştır</button>
     </div>
     <div class="hdr-right">
@@ -416,6 +417,15 @@
   </div>
 
 
+  <!-- ✨ Foto-gerçekçi (Gaussian Splatting) görünümü: splat.html iframe'de, sekme ilk açılınca yüklenir -->
+  <div class="view" id="view-splat">
+    <iframe id="splat-frame" title="Foto-gerçekçi görünüm (Gaussian Splatting)" data-vt-title="splat.title"
+      data-src="../splat.html?m=buzul&v=cd53d8269d&up=0.003,0.003,1.000&clook=-0.218,-0.005,-0.003&cpos=-0.420,0.823,1.208&mindist=0.18&maxdist=3.26&minpol=0&maxpol=60&alpha=6&zmax=8&g=a27208bd68"
+      style="width:100%; height:100%; border:0; display:block; background:#0b0f14;"
+      allow="fullscreen; xr-spatial-tracking" loading="lazy"></iframe>
+  </div>
+
+
 
   <script type="importmap">
   { "imports": {
@@ -479,7 +489,7 @@
   // ECDH ile sarılı alır, dışa aktarılamayan anahtarla çözer. API sayfaya bir kez verilir (__vgTake). =====
   const VG = window.__vgTake ? window.__vgTake() : null;
   const SLUG = 'buzul';
-  const ASSET_V = {"low":"e24666077d","medium":"8b6ada6a90","high":"1b9b2ebb4d","ultra":"1ce8e7c6f4","ortho":"8471011f80","dem_relief":"1b146cff02","slope":"66a6af39ff","aspect":"18d0663057","contour_overlay":"9d7d86b27d","contour":"5c8945d1eb"};      // varlık → R2 ETag'in ilk 10'u (?v=): dosya değişince URL değişir
+  const ASSET_V = {"low":"e24666077d","medium":"8b6ada6a90","high":"1b9b2ebb4d","ultra":"1ce8e7c6f4","ortho":"8471011f80","dem_relief":"1b146cff02","slope":"66a6af39ff","aspect":"18d0663057","contour_overlay":"9d7d86b27d","contour":"5c8945d1eb","foto":"cd53d8269d"};      // varlık → R2 ETag'in ilk 10'u (?v=): dosya değişince URL değişir
   const base = name => name.split('?')[0].replace(/\.[^.]+$/, '');   // 'medium.glb' → 'medium'
   const CRYPTO_OK = !!(VG && window.isSecureContext !== false && window.crypto && window.crypto.subtle);
 

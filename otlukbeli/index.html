@@ -420,7 +420,7 @@
   <!-- ✨ Foto-gerçekçi (Gaussian Splatting) görünümü: splat.html iframe'de, sekme ilk açılınca yüklenir -->
   <div class="view" id="view-splat">
     <iframe id="splat-frame" title="Foto-gerçekçi görünüm (Gaussian Splatting)" data-vt-title="splat.title"
-      data-src="../splat.html?m=otlukbeli&v=1408377a87&up=-0.009,0.005,-1.000&clook=0.167,-0.314,-0.020&cpos=1.950,-3.118,-4.855&mindist=0.70&maxdist=12.91&minpol=0&maxpol=60&alpha=6&g=a27208bd68"
+      data-src="../splat.html?m=otlukbeli&v=de7d385cae&up=-0.007,-0.008,-1.000&clook=-0.059,0.010,0.000&cpos=-0.050,-0.308,-0.445&mindist=0.07&maxdist=1.20&minpol=0&maxpol=60&alpha=6&zmax=8&g=a27208bd68"
       style="width:100%; height:100%; border:0; display:block; background:#0b0f14;"
       allow="fullscreen; xr-spatial-tracking" loading="lazy"></iframe>
   </div>
@@ -489,7 +489,7 @@
   // ECDH ile sarılı alır, dışa aktarılamayan anahtarla çözer. API sayfaya bir kez verilir (__vgTake). =====
   const VG = window.__vgTake ? window.__vgTake() : null;
   const SLUG = 'otlukbeli';
-  const ASSET_V = {"low":"652a425ba2","medium":"0867a4987f","high":"7b697d129e","ultra":"ed4efab479","ortho":"ad7ea1d167","dem_relief":"16c0655dee","slope":"88a934d5d0","aspect":"904771444d","contour_overlay":"ee5f8551f2","contour":"a0a0bc9b56","foto":"1408377a87"};      // varlık → R2 ETag'in ilk 10'u (?v=): dosya değişince URL değişir
+  const ASSET_V = {"low":"652a425ba2","medium":"0867a4987f","high":"7b697d129e","ultra":"ed4efab479","ortho":"ad7ea1d167","dem_relief":"16c0655dee","slope":"88a934d5d0","aspect":"904771444d","contour_overlay":"ee5f8551f2","contour":"a0a0bc9b56","foto":"de7d385cae"};      // varlık → R2 ETag'in ilk 10'u (?v=): dosya değişince URL değişir
   const base = name => name.split('?')[0].replace(/\.[^.]+$/, '');   // 'medium.glb' → 'medium'
   const CRYPTO_OK = !!(VG && window.isSecureContext !== false && window.crypto && window.crypto.subtle);
 

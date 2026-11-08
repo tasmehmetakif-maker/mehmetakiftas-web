@@ -14,7 +14,7 @@ window.ADMIN_MODELS = {
     },
     "buzul": {
       "title": "Katır Buzul Gölleri-Kemah (Erzincan)",
-      "foto": false,
+      "foto": "r2",
       "page": "/buzul/"
     },
     "mezra": {
