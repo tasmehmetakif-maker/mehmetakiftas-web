@@ -15,74 +15,88 @@
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://mehmetakiftas.com/surek-onizleme.jpg" />
 <link rel="canonical" href="https://mehmetakiftas.com/yayinlar.html" />
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#F1EFE9" />
+<script>document.documentElement.classList.add('js');
+['pagereveal','pageswap'].forEach(function (n) { window.addEventListener(n, function (e) { var v = e.viewTransition; if (v) { v.finished.catch(function () {}); if (v.ready) v.ready.catch(function () {}); } }); });</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="doc.css?v=20261110" />
 <style>
-  :root { color-scheme: dark; --accent:#2f6df0; --bg:#0d1014; --card:#161b22; --line:rgba(255,255,255,.08); --muted:#9aa3af; }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  html { scroll-behavior:smooth; }
-  body { background:var(--bg); color:#e8edf2; font-family:system-ui,-apple-system,"Segoe UI",sans-serif; line-height:1.6; }
-  a { color:var(--accent); text-decoration:none; }
-  .wrap { max-width:940px; margin:0 auto; padding:0 22px; }
-  header { position:sticky; top:0; z-index:20; background:rgba(13,16,20,.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
-  nav { display:flex; align-items:center; justify-content:space-between; gap:10px; height:58px; }
-  nav .brand { font-weight:700; font-size:15px; color:#fff; white-space:nowrap; }
-  nav a.back { color:var(--muted); font-size:14px; }
-  nav a.back:hover { color:#fff; }
-  h1 { font-size:26px; margin:34px 0 4px; }
-  .lead { color:var(--muted); margin-bottom:8px; }
-  .stat { display:flex; gap:14px; flex-wrap:wrap; margin:14px 0 6px; }
-  .stat div { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:8px 14px; font-size:13px; }
-  .stat b { color:#fff; font-size:17px; display:block; }
-  h2 { font-size:19px; margin:30px 0 4px; padding-top:18px; border-top:1px solid var(--line); }
-  h2 .c { color:var(--muted); font-size:14px; font-weight:400; }
-  .pub { display:flex; gap:14px; padding:18px 0; border-bottom:1px solid var(--line); }
-  .pub:last-child { border-bottom:0; }
-  .yr { flex:0 0 50px; color:var(--accent); font-weight:700; font-size:15px; }
-  .det { flex:1; min-width:0; }
-  .pt { font-weight:600; color:#eef2f7; margin-bottom:2px; overflow-wrap:anywhere; }
-  .pa { color:var(--muted); font-size:13px; }
-  .tags { margin:8px 0 2px; display:flex; gap:5px; flex-wrap:wrap; }
-  .t { font-size:10.5px; padding:2px 8px; border-radius:20px; border:1px solid var(--line); color:#cdd5df; background:rgba(255,255,255,.03); max-width:100%; overflow-wrap:anywhere; }
-  .t.jrnl { color:#9fe0c0; border-color:rgba(80,200,150,.35); background:rgba(80,200,150,.1); font-weight:600; }
-  .t.ix { color:#a9c6ff; border-color:rgba(47,109,240,.32); background:rgba(47,109,240,.12); }
-  .t.doi { color:#d8c08a; border-color:rgba(200,160,70,.3); background:rgba(200,160,70,.1); font-family:ui-monospace,Consolas,monospace; }
-  .t.kw { color:#c9b6e8; border-color:rgba(150,110,210,.3); background:rgba(150,110,210,.1); }
-  .abs { font-size:13.5px; color:#c2cad4; margin:8px 0; }
-  .apa { font-size:12px; color:#aeb6c0; background:rgba(255,255,255,.035); border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:7px; padding:8px 11px; margin:8px 0; overflow-wrap:anywhere; }
+  /* ===== Yayınlar — dergi "içindekiler" düzeni (Pafta) ===== */
+  .phead { padding:clamp(44px,7vw,104px) 0 0; }
+  .phead .dlbl { display:flex; gap:14px; align-items:baseline; margin-bottom:clamp(14px,2vw,24px); }
+  .phead .dlbl .dmono { color:var(--acct); }
+  h1 { font:300 clamp(3rem,9.4vw,7.6rem)/.94 var(--serif); letter-spacing:-.038em; margin-bottom:clamp(18px,2.4vw,30px); }
+  .lead { max-width:60ch; color:var(--fg2); font-size:1.06rem; }
+  .stat { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); border-top:1px solid var(--fg); margin-top:clamp(30px,4.6vw,60px); }
+  .stat div { display:flex; flex-direction:column; gap:10px; padding:clamp(14px,1.8vw,22px) 12px clamp(14px,1.8vw,22px) 0; border-bottom:1px solid var(--rule);
+              font:500 .7rem/1.25 var(--sans); font-stretch:94%; letter-spacing:.17em; text-transform:uppercase; color:var(--fg2); }
+  .stat div + div { border-left:1px solid var(--rule); padding-left:clamp(12px,1.6vw,22px); }
+  .stat b { font:300 clamp(2.4rem,5.6vw,4.6rem)/.88 var(--serif); letter-spacing:-.035em; color:var(--fg); font-variant-numeric:lining-nums tabular-nums; }
+  h2 { display:flex; align-items:baseline; justify-content:space-between; gap:16px; font:300 clamp(1.9rem,3.8vw,3.1rem)/1.05 var(--serif); letter-spacing:-.026em;
+       margin-top:clamp(56px,8vw,112px); padding-bottom:clamp(12px,1.6vw,18px); border-bottom:1px solid var(--fg); }
+  h2 .c { font:400 .8rem/1 var(--mono); letter-spacing:0; color:var(--fg2); }
+  .pub { display:grid; grid-template-columns:minmax(0,2.1fr) minmax(0,9.9fr); column-gap:clamp(14px,2vw,28px); padding:clamp(20px,2.6vw,32px) 0; border-bottom:1px solid var(--rule); }
+  .js .pub { opacity:0; transform:translate3d(0,22px,0); transition:opacity .9s var(--ease), transform 1.1s var(--ease); }
+  .js .pub.in { opacity:1; transform:none; }
+  .yr { font:300 clamp(1.4rem,2.2vw,1.95rem)/1 var(--serif); letter-spacing:-.02em; font-variant-numeric:lining-nums tabular-nums; }
+  .det { min-width:0; }
+  .pt { font:400 clamp(1.16rem,1.6vw,1.44rem)/1.24 var(--serif); letter-spacing:-.012em; margin-bottom:7px; overflow-wrap:anywhere; text-wrap:pretty; }
+  .pt a { transition:color .3s ease; }
+  .pt a:hover { color:var(--acct); }
+  .pa { font-size:.9rem; color:var(--fg2); overflow-wrap:anywhere; }
+  .tags { margin:13px 0 4px; display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px; }
+  .t { font-size:.78rem; line-height:1.35; color:var(--fg2); max-width:100%; overflow-wrap:anywhere; }
+  .t.jrnl { font:italic 400 1rem/1.3 var(--serif); color:var(--fg); margin-right:2px; }
+  .t.ix { font-weight:500; font-size:.7rem; letter-spacing:.07em; color:var(--fg); border:1px solid var(--fg3); padding:2px 7px; }
+  .t.doi { font:400 .74rem/1.35 var(--mono); color:var(--fg2); }
+  .t.kw::before { content:'\00B7'; margin-right:9px; color:var(--fg3); }
+  .abs { font-size:.95rem; color:var(--fg2); margin:11px 0; max-width:76ch; }
+  .apa { font-size:.8rem; line-height:1.6; color:var(--fg2); background:var(--panel); border-left:2px solid var(--accent); padding:11px 14px; margin:13px 0 10px; overflow-wrap:anywhere; }
   .apa .apatext { display:inline; }
-  .cpy { margin-left:8px; background:#243; color:#dfe; border:1px solid #356; border-radius:5px; padding:2px 8px; font-size:11px; cursor:pointer; white-space:nowrap; }
-  .cpy:hover { background:#2f6df0; color:#fff; border-color:#2f6df0; }
-  .pl { display:flex; gap:8px; flex-wrap:wrap; margin-top:6px; }
-  .pl a { font-size:12px; border:1px solid var(--line); padding:3px 10px; border-radius:6px; color:#cdd5df; }
-  .pl a:hover { background:rgba(255,255,255,.07); color:#fff; }
-  .note { color:#6f7a88; font-size:12px; font-style:italic; margin-top:5px; }
-  footer { padding:30px 0 50px; color:var(--muted); font-size:13px; text-align:center; }
-  @media (max-width:420px) {
-    .wrap { padding:0 16px; }
-    nav .brand { font-size:13.5px; }
-    nav > div:last-child { gap:8px !important; }
-    nav a.back { font-size:13px; white-space:nowrap; }
-    .pub { flex-direction:column; gap:2px; }
-    .yr { flex:none; }
+  .cpy { margin-left:10px; vertical-align:baseline; background:none; border:1px solid var(--fg3); color:var(--fg); padding:3px 9px 2px; font:500 .62rem/1.5 var(--sans); letter-spacing:.14em; text-transform:uppercase; cursor:pointer; white-space:nowrap; transition:background-color .3s ease, border-color .3s ease; }
+  .cpy:hover, .cpy:focus-visible { background:var(--accent); border-color:var(--accent); color:#121413; }
+  .pl { display:flex; flex-wrap:wrap; gap:6px 20px; margin-top:8px; }
+  .pl a { font-size:.84rem; text-decoration:underline; text-underline-offset:3px; text-decoration-color:var(--fg3); transition:color .3s ease; }
+  .pl a:hover { color:var(--acct); text-decoration-color:currentColor; }
+  .note { font-size:.82rem; font-style:italic; color:var(--fg2); margin-top:8px; }
+  .note a { text-decoration:underline; text-underline-offset:3px; }
+  .note a:hover { color:var(--acct); }
+  @media (max-width:760px) {
+    .pub { grid-template-columns:1fr; row-gap:8px; }
+    .stat { grid-template-columns:1fr 1fr; }
+    .stat div:nth-child(3) { border-left:0; padding-left:0; }
   }
+  @media (prefers-reduced-motion:reduce) { .js .pub { opacity:1; transform:none; } }
+  @media print { .js .pub { opacity:1; transform:none; } .cpy { display:none; } }
 </style>
 </head>
 <body>
-  <header><div class="wrap"><nav>
-    <div class="brand">Mehmet Akif Taş</div>
-    <div style="display:flex;align-items:center;gap:14px">
+  <header class="dtop"><div class="dwrap">
+    <a class="dbrand" href="/" aria-label="Mehmet Akif Taş">
+      <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M9 2.2 16.3 15.2H1.7Z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="9" cy="10.8" r="1.7" fill="currentColor"/></svg>
+      Mehmet Akif Taş
+    </a>
+    <div class="dtop-r">
       <span id="lang-switch"></span>
-      <a class="back" href="/" data-i18n="ya.back">← Portföy</a>
+      <a class="dback" href="/" aria-label="Portföy" data-i18n-aria="ya.back"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11.2M8.8 3.6 13.2 8l-4.4 4.4"/></svg><span data-i18n="ya.back">Portföy</span></a>
     </div>
-  </nav></div></header>
-  <script src="i18n.js?v=q2"></script>
+  </div></header>
+  <script src="i18n.js?v=20261111"></script>
 <script defer src="/counter.js"></script>
 
-  <main class="wrap">
-    <h1 data-i18n="ya.h1">Yayınlar</h1>
-    <div class="lead" data-i18n="ya.lead">Coğrafi Bilgi Sistemleri, uzaktan algılama, doğal afet duyarlılığı ve jeomorfoloji. Her kayıtta özet, DOI, konu etiketleri ve kopyalanabilir APA atıfı.</div>
-    <div class="stat">
+  <main class="dwrap">
+    <div class="phead">
+    <div class="dlbl drise" style="--i:0"><span class="dmono">05</span><span data-i18n="ak.pub.eyebrow">Bilimsel Üretim</span></div>
+    <h1 class="drise" style="--i:1" data-i18n="ya.h1">Yayınlar</h1>
+    <div class="lead drise" style="--i:2" data-i18n="ya.lead">Coğrafi Bilgi Sistemleri, uzaktan algılama, doğal afet duyarlılığı ve jeomorfoloji. Her kayıtta özet, DOI, konu etiketleri ve kopyalanabilir APA atıfı.</div>
+    <div class="stat drise" style="--i:3">
       <div><b>11</b> <span data-i18n="ya.s.art">Makale</span></div><div><b>12</b> <span data-i18n="ya.s.proc">Bildiri</span></div><div><b>5</b> <span data-i18n="ya.s.book">Kitap Bölümü</span></div><div><b>28</b> <span data-i18n="ya.s.total">Toplam</span></div>
+    </div>
+
     </div>
 
     <!-- ===== MAKALELER ===== -->
@@ -93,7 +107,7 @@
       <div class="pa">Çelik Y., Tagliasacchi E., Taş M. A., Polat P.</div>
       <div class="tags"><span class="t jrnl">Türkiye Jeoloji Bülteni</span><span class="t ix">ESCI</span><span class="t ix">TR Dizin</span><span class="t doi">DOI: 10.25288/tjb.1800081</span><span class="t kw">Traverten</span><span class="t kw">Jeolojik Miras</span><span class="t kw">Jeomorfoloji</span></div>
       <div class="abs">Erzincan Otlukbeli travertenleri jeolojik ve kültürel miras (jeosit) açısından değerlendirilir. Bölgede nadir mineralli sularla oluşmuş traverten set gölü (Otlukbeli Gölü), traverten konileri, bacaları, terasları ve sırtları bulunur.</div>
-      <div class="apa"><span class="apatext">Çelik, Y., Tagliasacchi, E., Taş, M. A., &amp; Polat, P. (2026). Otlukbeli (Erzincan) travertenlerinin jeolojik-kültürel miras açısından önemi (Doğu Anadolu). Türkiye Jeoloji Bülteni, 69(4), 159–190. https://doi.org/10.25288/tjb.1800081</span><button class="cpy">⧉ APA</button></div>
+      <div class="apa"><span class="apatext">Çelik, Y., Tagliasacchi, E., Taş, M. A., &amp; Polat, P. (2026). Otlukbeli (Erzincan) travertenlerinin jeolojik-kültürel miras açısından önemi (Doğu Anadolu). Türkiye Jeoloji Bülteni, 69(4), 159–190. https://doi.org/10.25288/tjb.1800081</span><button class="cpy" type="button">APA</button></div>
       <div class="pl"><a href="https://doi.org/10.25288/tjb.1800081" target="_blank" rel="noopener">DOI</a> <a href="https://dergipark.org.tr/tr/pub/tjb/article/1800081" target="_blank" rel="noopener">DergiPark</a></div>
     </div></div>
 
@@ -102,7 +116,7 @@
       <div class="pa">Taş M. A.</div>
       <div class="tags"><span class="t jrnl">Turkish J. of Remote Sensing and GIS</span><span class="t ix">Açık Erişim</span><span class="t doi">DOI: 10.48123/rsgis.1745197</span><span class="t kw">Uzaktan Algılama</span><span class="t kw">Orman</span><span class="t kw">Makine Öğrenmesi</span><span class="t kw">LandTrendr</span></div>
       <div class="abs">Milas-Bodrum yöresinde 2013–2024 orman dinamiği uzaktan algılama ve makine öğrenmesiyle analiz edilir. 49 Landsat 8 görüntüsünden NBR zaman serisi LandTrendr ile işlenip Random Forest ile "Sağlıklı / Bozulma / İyileşme" sınıflarına ayrılır. 2014–2021 "Bozulma" %24'e gerilerken 2021 büyük yangınıyla %47'ye fırlamış, 2024'te "İyileşme" %29'a ulaşmıştır.</div>
-      <div class="apa"><span class="apatext">Taş, M. A. (2026). LandTrendr algoritması ve makine öğrenme kullanılarak orman tahribatı ve iyileşme süreçlerinin sınıflandırılması: Milas-Bodrum örneği. Turkish Journal of Remote Sensing and GIS, 7(1), 109–124. https://doi.org/10.48123/rsgis.1745197</span><button class="cpy">⧉ APA</button></div>
+      <div class="apa"><span class="apatext">Taş, M. A. (2026). LandTrendr algoritması ve makine öğrenme kullanılarak orman tahribatı ve iyileşme süreçlerinin sınıflandırılması: Milas-Bodrum örneği. Turkish Journal of Remote Sensing and GIS, 7(1), 109–124. https://doi.org/10.48123/rsgis.1745197</span><button class="cpy" type="button">APA</button></div>
       <div class="pl"><a href="https://doi.org/10.48123/rsgis.1745197" target="_blank" rel="noopener">DOI</a></div>
     </div></div>
 
@@ -111,7 +125,7 @@
       <div class="pa">Taş M. A.</div>
       <div class="tags"><span class="t jrnl">Ege Coğrafya Dergisi</span><span class="t ix">TR Dizin</span><span class="t doi">DOI: 10.51800/ecd.1761885</span><span class="t kw">Heyelan</span><span class="t kw">AHP</span><span class="t kw">Frekans Oranı</span><span class="t kw">CBS</span></div>
       <div class="abs">Kemah-Erzincan Kömür Deresi Havzası'nda heyelan duyarlılığı AHS ve Frekans Oranı (FR) yöntemleriyle haritalanıp karşılaştırılır. FR modeli (AUC=0,884, F1=0,87) AHS'ye (AUC=0,699, F1=0,68) göre üstün performans göstermiş; mevcut heyelanların %92,7'si FR, %73,7'si AHS haritasında "Yüksek/Çok Yüksek" sınıfa düşmüştür.</div>
-      <div class="apa"><span class="apatext">Taş, M. A. (2025). Comparison of analytical hierarchy process (AHP) and frequency ratio (FR) methods in landslide susceptibility assessment: A case study in Kemah-Kömür Stream Basin, Erzincan. Ege Coğrafya Dergisi, 34(2), 337–356. https://doi.org/10.51800/ecd.1761885</span><button class="cpy">⧉ APA</button></div>
+      <div class="apa"><span class="apatext">Taş, M. A. (2025). Comparison of analytical hierarchy process (AHP) and frequency ratio (FR) methods in landslide susceptibility assessment: A case study in Kemah-Kömür Stream Basin, Erzincan. Ege Coğrafya Dergisi, 34(2), 337–356. https://doi.org/10.51800/ecd.1761885</span><button class="cpy" type="button">APA</button></div>
       <div class="pl"><a href="https://doi.org/10.51800/ecd.1761885" target="_blank" rel="noopener">DOI</a> <a href="https://dergipark.org.tr/tr/pub/ecd/article/1761885" target="_blank" rel="noopener">DergiPark</a></div>
     </div></div>
 
@@ -120,7 +134,7 @@
       <div class="pa">Taş M. A.</div>
       <div class="tags"><span class="t jrnl">Menba Kastamonu Ü. Su Ürünleri Fak. Dergisi</span><span class="t ix">TR Dizin</span><span class="t doi">DOI: 10.58626/menba.1541329</span><span class="t kw">Taşkın</span><span class="t kw">Birim Hidrograf</span><span class="t kw">Hidroloji</span><span class="t kw">CBS</span></div>
       <div class="abs">Horasan-Erzurum Endek Çayı ve Kırmızı Dere havzalarında birim hidrograflar ve CBS ile taşkın tehlikesi değerlendirilir. 25 m SYM ile akış yönü/birikim/eğim üretilir. Pik deşarj Endek'te ~18,5 saatte 14.408 m³/s, Kırmızı Dere'de ~2,5 saatte 4.251 m³/s; model, 2010 Saçlık Köyü selini (6 can kaybı) doğru tahmin ederek doğrulanmıştır.</div>
-      <div class="apa"><span class="apatext">Taş, M. A. (2024). Assessment of potential flood magnitude in the Endek Stream Basin (Horasan-Erzurum) using unit hydrographs. Menba Kastamonu Üniversitesi Su Ürünleri Fakültesi Dergisi, 10(3), 129–147. https://doi.org/10.58626/menba.1541329</span><button class="cpy">⧉ APA</button></div>
+      <div class="apa"><span class="apatext">Taş, M. A. (2024). Assessment of potential flood magnitude in the Endek Stream Basin (Horasan-Erzurum) using unit hydrographs. Menba Kastamonu Üniversitesi Su Ürünleri Fakültesi Dergisi, 10(3), 129–147. https://doi.org/10.58626/menba.1541329</span><button class="cpy" type="button">APA</button></div>
       <div class="pl"><a href="https://doi.org/10.58626/menba.1541329" target="_blank" rel="noopener">DOI</a> <a href="https://dergipark.org.tr/en/pub/menba/article/1541329" target="_blank" rel="noopener">DergiPark</a></div>
     </div></div>
 
@@ -129,7 +143,7 @@
       <div class="pa">Taş M. A., Şenol C., Yanık M. E.</div>
       <div class="tags"><span class="t jrnl">Afet ve Risk Dergisi</span><span class="t ix">Scopus</span><span class="t ix">TR Dizin</span><span class="t doi">DOI: 10.35341/afet.1361149</span><span class="t kw">Heyelan</span><span class="t kw">AHS</span><span class="t kw">Risk Analizi</span><span class="t kw">CBS</span></div>
       <div class="abs">Trabzon Of ilçesinde heyelan riski CBS ile birleştirilen AHS yöntemiyle analiz edilir. İlçenin %23'üne karşılık 60 km² riskli/çok riskli, %26'sına 67,7 km² orta, %51'ine 132,4 km² düşük/çok düşük heyelan riski tespit edilmiştir.</div>
-      <div class="apa"><span class="apatext">Taş, M. A., Şenol, C., &amp; Yanık, M. E. (2024). Analitik hiyerarşi süreci (AHS) metodu ile Of ilçesi'nde (Trabzon) heyelan risk duyarlılığı analizi. Afet ve Risk Dergisi, 7(1), 279–302. https://doi.org/10.35341/afet.1361149</span><button class="cpy">⧉ APA</button></div>
+      <div class="apa"><span class="apatext">Taş, M. A., Şenol, C., &amp; Yanık, M. E. (2024). Analitik hiyerarşi süreci (AHS) metodu ile Of ilçesi'nde (Trabzon) heyelan risk duyarlılığı analizi. Afet ve Risk Dergisi, 7(1), 279–302. https://doi.org/10.35341/afet.1361149</span><button class="cpy" type="button">APA</button></div>
       <div class="pl"><a href="https://doi.org/10.35341/afet.1361149" target="_blank" rel="noopener">DOI</a> <a href="https://dergipark.org.tr/en/pub/afet/article/1361149" target="_blank" rel="noopener">DergiPark</a></div>
     </div></div>
 
@@ -138,7 +152,7 @@
       <div class="pa">Şenol C., Taş M. A.</div>
       <div class="tags"><span class="t jrnl">Frontiers in Life Sciences and Related Technologies</span><span class="t ix">TR Dizin</span><span class="t doi">DOI: 10.51753/flsrt.1250948</span><span class="t kw">Arazi Kullanımı</span><span class="t kw">Uzaktan Algılama</span><span class="t kw">Ekosistem</span></div>
       <div class="abs">İstanbul Terkos (Durusu) Gölü havzasında 1980–2023 arası nüfus, tarım, sanayi ve ulaşım baskısının doğal ekosistemleri bozması incelenir. Havaalanı genişlemesi, otoyol ve kentleşmenin etkilediği alanlar haritalanıp bitki örtüsündeki azalma belgelenir.</div>
-      <div class="apa"><span class="apatext">Şenol, C., &amp; Taş, M. A. (2023). Trends of changing land use dynamics in the Terkos Lake basin between 1980 and 2023 and their impact on natural ecosystems. Frontiers in Life Sciences and Related Technologies, 4(1), 20–31. https://doi.org/10.51753/flsrt.1250948</span><button class="cpy">⧉ APA</button></div>
+      <div class="apa"><span class="apatext">Şenol, C., &amp; Taş, M. A. (2023). Trends of changing land use dynamics in the Terkos Lake basin between 1980 and 2023 and their impact on natural ecosystems. Frontiers in Life Sciences and Related Technologies, 4(1), 20–31. https://doi.org/10.51753/flsrt.1250948</span><button class="cpy" type="button">APA</button></div>
       <div class="pl"><a href="https://doi.org/10.51753/flsrt.1250948" target="_blank" rel="noopener">DOI</a> <a href="https://dergipark.org.tr/en/pub/flsrt/article/1250948" target="_blank" rel="noopener">DergiPark</a></div>
     </div></div>
 
@@ -147,7 +161,7 @@
       <div class="pa">Taş M. A., Yanık M. E.</div>
       <div class="tags"><span class="t jrnl">Erzincan Ü. SBE Dergisi</span><span class="t ix">TR Dizin</span><span class="t doi">DOI: 10.46790/erzisosbil.1221464</span><span class="t kw">Taşkın</span><span class="t kw">AHS</span><span class="t kw">Risk</span><span class="t kw">CBS</span></div>
       <div class="abs">Tokat merkez güneyinde 1839–1961 arasında tekrarlı sel afetine maruz kalan Behzat Deresi Havzası AHS ile incelenir. ~25.041 ha havzanın güneybatı ve kuzey kesimleri yüksek kırılganlıkta; ~9.747 ha (%38,9) orta, ~1.372 ha (%5,4) yüksek sel riski taşıyan alan olarak belirlenmiştir.</div>
-      <div class="apa"><span class="apatext">Taş, M. A., &amp; Yanık, M. E. (2022). Analitik hiyerarşi süreci (AHS) metodu ile Behzat Deresi (Tokat) havzası taşkın risk analizi. Erzincan Üniversitesi Sosyal Bilimler Enstitüsü Dergisi, 15(2), 185–199. https://doi.org/10.46790/erzisosbil.1221464</span><button class="cpy">⧉ APA</button></div>
+      <div class="apa"><span class="apatext">Taş, M. A., &amp; Yanık, M. E. (2022). Analitik hiyerarşi süreci (AHS) metodu ile Behzat Deresi (Tokat) havzası taşkın risk analizi. Erzincan Üniversitesi Sosyal Bilimler Enstitüsü Dergisi, 15(2), 185–199. https://doi.org/10.46790/erzisosbil.1221464</span><button class="cpy" type="button">APA</button></div>
       <div class="pl"><a href="https://doi.org/10.46790/erzisosbil.1221464" target="_blank" rel="noopener">DOI</a> <a href="https://dergipark.org.tr/tr/pub/erzisosbil/article/1221464" target="_blank" rel="noopener">DergiPark</a></div>
     </div></div>
 
@@ -156,7 +170,7 @@
       <div class="pa">Taş M. A., Akpınar E.</div>
       <div class="tags"><span class="t jrnl">Doğu Coğrafya Dergisi</span><span class="t ix">TR Dizin</span><span class="t doi">DOI: 10.17295/ataunidcd.984268</span><span class="t kw">Göl Seviyesi</span><span class="t kw">Uzaktan Algılama</span><span class="t kw">Kuraklık</span><span class="t kw">CBS</span></div>
       <div class="abs">Burdur Havzası'nda altı gölde (Burdur, Acıgöl, Akgöl, Yarışlı, Karataş, Salda) 1985–2021 arası seviye değişimleri LANDSAT görüntüleriyle UA ve CBS kullanılarak araştırılır. Salda dışındaki göllerin sularının büyük ölçüde çekildiği, Acıgöl'ün %80 küçüldüğü ve Akgöl'ün tamamen kuruduğu bulunmuştur.</div>
-      <div class="apa"><span class="apatext">Taş, M. A., &amp; Akpınar, E. (2021). Burdur havzası'ndaki göllerde yaşanan seviye değişikliklerinin coğrafi bilgi sistemleri (CBS) ve uzaktan algılama (UA) ile tespiti. Doğu Coğrafya Dergisi, 26(46), 37–54. https://doi.org/10.17295/ataunidcd.984268</span><button class="cpy">⧉ APA</button></div>
+      <div class="apa"><span class="apatext">Taş, M. A., &amp; Akpınar, E. (2021). Burdur havzası'ndaki göllerde yaşanan seviye değişikliklerinin coğrafi bilgi sistemleri (CBS) ve uzaktan algılama (UA) ile tespiti. Doğu Coğrafya Dergisi, 26(46), 37–54. https://doi.org/10.17295/ataunidcd.984268</span><button class="cpy" type="button">APA</button></div>
       <div class="pl"><a href="https://doi.org/10.17295/ataunidcd.984268" target="_blank" rel="noopener">DOI</a> <a href="https://dergipark.org.tr/tr/pub/ataunidcd/article/984268" target="_blank" rel="noopener">DergiPark</a></div>
     </div></div>
 
@@ -165,7 +179,7 @@
       <div class="pa">Taş M. A., Ceylan M. A.</div>
       <div class="tags"><span class="t jrnl">The Journal of International Social Research</span><span class="t ix">Hakemli</span><span class="t doi">DOI: 10.17719/jisr.11220</span><span class="t kw">Sel</span><span class="t kw">Afet</span><span class="t kw">Uzaktan Algılama</span><span class="t kw">CBS</span></div>
       <div class="abs">Düzce Akçakoca'da 17–18 Temmuz 2019 selinin Esmahanım, Uğurlu, Davutağa ve Dilaver köylerine etkisi Landsat 8 ve Sentinel 2 görüntüleriyle haritalanır. İncelenen yerleşimlerin yaklaşık %50'sinin afetten zarar gördüğü ve ani yağışlara hazırlıksız olduğu sonucuna varılmıştır.</div>
-      <div class="apa"><span class="apatext">Taş, M. A., &amp; Ceylan, M. A. (2020). Melen Çayı havzası'nda 17-18 Temmuz 2019 tarihinde meydana gelen sel afetinin Uğurlu, Esmahanım, Dilaver ve Davutağa köylerine (Akçakoca) etkilerinin coğrafi bilgi sistemleri (CBS) yazılımlarıyla tespiti. The Journal of International Social Research, 13(74), 174–192. https://doi.org/10.17719/jisr.11220</span><button class="cpy">⧉ APA</button></div>
+      <div class="apa"><span class="apatext">Taş, M. A., &amp; Ceylan, M. A. (2020). Melen Çayı havzası'nda 17-18 Temmuz 2019 tarihinde meydana gelen sel afetinin Uğurlu, Esmahanım, Dilaver ve Davutağa köylerine (Akçakoca) etkilerinin coğrafi bilgi sistemleri (CBS) yazılımlarıyla tespiti. The Journal of International Social Research, 13(74), 174–192. https://doi.org/10.17719/jisr.11220</span><button class="cpy" type="button">APA</button></div>
       <div class="pl"><a href="https://doi.org/10.17719/jisr.11220" target="_blank" rel="noopener">DOI</a> <a href="https://www.sosyalarastirmalar.com/" target="_blank" rel="noopener" data-en="Journal (JISR)">Dergi (JISR)</a></div>
     </div></div>
 
@@ -174,7 +188,7 @@
       <div class="pa">Taş M. A., Sargın S.</div>
       <div class="tags"><span class="t jrnl">Int. J. of Geography and Geography Education</span><span class="t ix">TR Dizin</span><span class="t doi">DOI: 10.32003/iggei.519536</span><span class="t kw">Kentleşme</span><span class="t kw">Kapalı Site</span><span class="t kw">Şehir Coğrafyası</span><span class="t kw">CBS</span></div>
       <div class="abs">Üsküdar'da 1980–2017 arasında kurulan 260 kapalı/güvenlikli sitenin yayılışı, kat sayıları, bina türleri, kuruluş yılları ve rayiç değerleri ArcGIS Pro ile haritalanır. Sitelerin mahallelere homojen dağılmadığı ve eğilimin hızla arttığı bulunmuş; geleneksel mahalle yapısıyla farkları irdelenmiştir.</div>
-      <div class="apa"><span class="apatext">Taş, M. A., &amp; Sargın, S. (2019). Üsküdar'da kapalı sitelerin dağılışı, gelişimi ve mahalle yapısına etkileri. International Journal of Geography and Geography Education, (40), 208–229. https://doi.org/10.32003/iggei.519536</span><button class="cpy">⧉ APA</button></div>
+      <div class="apa"><span class="apatext">Taş, M. A., &amp; Sargın, S. (2019). Üsküdar'da kapalı sitelerin dağılışı, gelişimi ve mahalle yapısına etkileri. International Journal of Geography and Geography Education, (40), 208–229. https://doi.org/10.32003/iggei.519536</span><button class="cpy" type="button">APA</button></div>
       <div class="pl"><a href="https://doi.org/10.32003/iggei.519536" target="_blank" rel="noopener">DOI</a> <a href="https://dergipark.org.tr/tr/pub/igge/article/519536" target="_blank" rel="noopener">DergiPark</a></div>
     </div></div>
 
@@ -183,7 +197,7 @@
       <div class="pa">Taş M. A., Biricik A. S.</div>
       <div class="tags"><span class="t jrnl">Marmara Coğrafya Dergisi</span><span class="t ix">TR Dizin</span><span class="t doi">DOI: 10.14781/mcd.89157</span><span class="t kw">Kıyı</span><span class="t kw">Planlama</span><span class="t kw">Jeomorfoloji</span></div>
       <div class="abs">Kumköy ile İğneada arasındaki kıyı kesiminin fiziki potansiyeli (rölyef, iklim, toprak, bitki örtüsü, hidrografya) ve bu potansiyelin bölge planlaması ile kalkınmadaki rolü incelenir; bölgenin yapılaşmasını şekillendirecek hedef ve kriterler ortaya konur.</div>
-      <div class="apa"><span class="apatext">Taş, M. A., &amp; Biricik, A. S. (2015). Kumköy–İğneada arası sahil şeridi yakın çevresinin strüktür ve rölyefinin planlama kriterlerine etkisi. Marmara Coğrafya Dergisi, (32), 196–210. https://doi.org/10.14781/mcd.89157</span><button class="cpy">⧉ APA</button></div>
+      <div class="apa"><span class="apatext">Taş, M. A., &amp; Biricik, A. S. (2015). Kumköy–İğneada arası sahil şeridi yakın çevresinin strüktür ve rölyefinin planlama kriterlerine etkisi. Marmara Coğrafya Dergisi, (32), 196–210. https://doi.org/10.14781/mcd.89157</span><button class="cpy" type="button">APA</button></div>
       <div class="pl"><a href="https://doi.org/10.14781/mcd.89157" target="_blank" rel="noopener">DOI</a> <a href="https://dergipark.org.tr/tr/pub/marucog/article/4057" target="_blank" rel="noopener">DergiPark</a></div>
     </div></div>
 
@@ -194,28 +208,28 @@
       <div class="pt">Polat Gölü'nün Jeolojik-Jeomorfolojik Önemi ve Jeomiras Potansiyeli</div>
       <div class="pa">Taş M. A., Polat P., Çelik Y., Tagliasacchi E.</div>
       <div class="tags"><span class="t jrnl">Uluslararası Katılımlı Erzincan Jeolojik ve Kültürel Miras Çalıştayı, Erzincan</span><span class="t ix">Özet Bildiri</span><span class="t kw">Jeomiras</span><span class="t kw">Jeomorfoloji</span></div>
-      <div class="apa"><span class="apatext">Taş, M. A., Polat, P., Çelik, Y., &amp; Tagliasacchi, E. (2026). Polat Gölü'nün jeolojik-jeomorfolojik önemi ve jeomiras potansiyeli [Özet bildiri]. Uluslararası Katılımlı Erzincan Jeolojik ve Kültürel Miras Çalıştayı, Erzincan.</span><button class="cpy">⧉ APA</button></div>
+      <div class="apa"><span class="apatext">Taş, M. A., Polat, P., Çelik, Y., &amp; Tagliasacchi, E. (2026). Polat Gölü'nün jeolojik-jeomorfolojik önemi ve jeomiras potansiyeli [Özet bildiri]. Uluslararası Katılımlı Erzincan Jeolojik ve Kültürel Miras Çalıştayı, Erzincan.</span><button class="cpy" type="button">APA</button></div>
     </div></div>
 
     <div class="pub" data-id="p-otlukbeli-jeopark2026"><div class="yr">2026</div><div class="det">
       <div class="pt">Otlukbeli Travertenlerinin Jeolojik-Kültürel Mirası ve Erzincan-Otlukbeli Jeopark Potansiyeli</div>
       <div class="pa">Çelik Y., Tagliasacchi E., Polat P., Taş M. A.</div>
       <div class="tags"><span class="t jrnl">Uluslararası Katılımlı Erzincan Jeolojik ve Kültürel Miras Çalıştayı, Erzincan</span><span class="t ix">Özet Bildiri</span><span class="t kw">Traverten</span><span class="t kw">Jeopark</span></div>
-      <div class="apa"><span class="apatext">Çelik, Y., Tagliasacchi, E., Polat, P., &amp; Taş, M. A. (2026). Otlukbeli travertenlerinin jeolojik-kültürel mirası ve Erzincan-Otlukbeli jeopark potansiyeli [Özet bildiri]. Uluslararası Katılımlı Erzincan Jeolojik ve Kültürel Miras Çalıştayı, Erzincan.</span><button class="cpy">⧉ APA</button></div>
+      <div class="apa"><span class="apatext">Çelik, Y., Tagliasacchi, E., Polat, P., &amp; Taş, M. A. (2026). Otlukbeli travertenlerinin jeolojik-kültürel mirası ve Erzincan-Otlukbeli jeopark potansiyeli [Özet bildiri]. Uluslararası Katılımlı Erzincan Jeolojik ve Kültürel Miras Çalıştayı, Erzincan.</span><button class="cpy" type="button">APA</button></div>
     </div></div>
 
     <div class="pub" data-id="p-ergen2026"><div class="yr">2026</div><div class="det">
       <div class="pt">Erzincan'ın Jeolojik Miras Alanlarına İlişkin Yeni Örnekler</div>
       <div class="pa">Ergen A., Bozkurt A., Ilgar A., Tuncay E., Esirtgen T., Özkan E., … Taş M. A.</div>
       <div class="tags"><span class="t jrnl">Uluslararası Katılımlı Erzincan Jeolojik ve Kültürel Miras Çalıştayı, Erzincan</span><span class="t ix">Özet Bildiri</span><span class="t kw">Jeolojik Miras</span></div>
-      <div class="apa"><span class="apatext">Ergen, A., Bozkurt, A., Ilgar, A., Tuncay, E., Esirtgen, T., Özkan, E., … Taş, M. A. (2026). Erzincan'ın jeolojik miras alanlarına ilişkin yeni örnekler [Özet bildiri]. Uluslararası Katılımlı Erzincan Jeolojik ve Kültürel Miras Çalıştayı, Erzincan.</span><button class="cpy">⧉ APA</button></div>
+      <div class="apa"><span class="apatext">Ergen, A., Bozkurt, A., Ilgar, A., Tuncay, E., Esirtgen, T., Özkan, E., … Taş, M. A. (2026). Erzincan'ın jeolojik miras alanlarına ilişkin yeni örnekler [Özet bildiri]. Uluslararası Katılımlı Erzincan Jeolojik ve Kültürel Miras Çalıştayı, Erzincan.</span><button class="cpy" type="button">APA</button></div>
     </div></div>
 
     <div class="pub" data-id="p-konarli2026"><div class="yr">2026</div><div class="det">
       <div class="pt">Konarlı Şelalesi Saha Çalışması (Tercan, Erzincan) İlk Bulgular ve Jeoturizm Potansiyeli</div>
       <div class="pa">Polat P., Taş M. A., Çelik Y., Tagliasacchi E.</div>
       <div class="tags"><span class="t jrnl">Uluslararası Katılımlı Erzincan Jeolojik ve Kültürel Miras Çalıştayı, Erzincan</span><span class="t ix">Yayımlanmamış Bildiri</span><span class="t kw">Şelale</span><span class="t kw">Jeoturizm</span></div>
-      <div class="apa"><span class="apatext">Polat, P., Taş, M. A., Çelik, Y., &amp; Tagliasacchi, E. (2026, 18–20 Haziran). Konarlı Şelalesi saha çalışması (Tercan, Erzincan) ilk bulgular ve jeoturizm potansiyeli [Bildiri sunumu]. Uluslararası Katılımlı Erzincan Jeolojik ve Kültürel Miras Çalıştayı, Erzincan.</span><button class="cpy">⧉ APA</button></div>
+      <div class="apa"><span class="apatext">Polat, P., Taş, M. A., Çelik, Y., &amp; Tagliasacchi, E. (2026, 18–20 Haziran). Konarlı Şelalesi saha çalışması (Tercan, Erzincan) ilk bulgular ve jeoturizm potansiyeli [Bildiri sunumu]. Uluslararası Katılımlı Erzincan Jeolojik ve Kültürel Miras Çalıştayı, Erzincan.</span><button class="cpy" type="button">APA</button></div>
     </div></div>
 
     <div class="pub" data-id="p-tjk-kultur2026"><div class="yr">2026</div><div class="det">
@@ -223,7 +237,7 @@
       <div class="pa">Çelik Y., Tagliasacchi E., Polat P., Taş M. A.</div>
       <div class="tags"><span class="t jrnl">78. Türkiye Jeoloji Kurultayı, Ankara</span><span class="t ix">Özet Bildiri</span><span class="t kw">Traverten</span><span class="t kw">Kültürel Jeoloji</span><span class="t kw">Jeolojik Miras</span></div>
       <div class="abs">Otlukbeli travertenleri kültürel jeoloji ve jeolojik miras perspektifinden ele alınır (ilgili Türkiye Jeoloji Bülteni makalesinin kongre sunumu).</div>
-      <div class="apa"><span class="apatext">Çelik, Y., Tagliasacchi, E., Polat, P., &amp; Taş, M. A. (2026). Otlukbeli travertenlerinin (Erzincan, Doğu Anadolu) kültürel jeoloji ve jeolojik miras açısından incelemesi [Özet bildiri]. 78. Türkiye Jeoloji Kurultayı (s. 334), Ankara.</span><button class="cpy">⧉ APA</button></div>
+      <div class="apa"><span class="apatext">Çelik, Y., Tagliasacchi, E., Polat, P., &amp; Taş, M. A. (2026). Otlukbeli travertenlerinin (Erzincan, Doğu Anadolu) kültürel jeoloji ve jeolojik miras açısından incelemesi [Özet bildiri]. 78. Türkiye Jeoloji Kurultayı (s. 334), Ankara.</span><button class="cpy" type="button">APA</button></div>
     </div></div>
 
     <div class="pub" data-id="p-tjk-jeomorf2026"><div class="yr">2026</div><div class="det">
@@ -231,14 +245,14 @@
       <div class="pa">Tagliasacchi E., Çelik Y., Polat P., Taş M. A.</div>
       <div class="tags"><span class="t jrnl">78. Türkiye Jeoloji Kurultayı, Ankara</span><span class="t ix">Özet Bildiri</span><span class="t kw">Traverten</span><span class="t kw">Jeomorfoloji</span><span class="t kw">Sedimantoloji</span></div>
       <div class="abs">Otlukbeli travertenlerinin jeomorfolojik şekilleri (traverten konisi, bacası, terası) ve sedimantolojik özellikleri incelenir.</div>
-      <div class="apa"><span class="apatext">Tagliasacchi, E., Çelik, Y., Polat, P., &amp; Taş, M. A. (2026). Otlukbeli travertenlerinin (Erzincan, Doğu Anadolu) jeomorfolojik ve sedimantolojik incelemesi [Özet bildiri]. 78. Türkiye Jeoloji Kurultayı (s. 529), Ankara.</span><button class="cpy">⧉ APA</button></div>
+      <div class="apa"><span class="apatext">Tagliasacchi, E., Çelik, Y., Polat, P., &amp; Taş, M. A. (2026). Otlukbeli travertenlerinin (Erzincan, Doğu Anadolu) jeomorfolojik ve sedimantolojik incelemesi [Özet bildiri]. 78. Türkiye Jeoloji Kurultayı (s. 529), Ankara.</span><button class="cpy" type="button">APA</button></div>
     </div></div>
 
     <div class="pub" data-id="p-jeomorf-sem2024"><div class="yr">2024</div><div class="det">
       <div class="pt">Kömür Çayı (Kemah-Erzincan) Havzası'nın Analitik Hiyerarşi Süreci (AHS) ve Frequency Ratio (FR) Metotları ile Karşılaştırmalı Heyelan Duyarlılık Analizi</div>
       <div class="pa">Taş M. A.</div>
       <div class="tags"><span class="t jrnl">Uluslararası Jeomorfoloji Sempozyumu 2024, Antalya</span><span class="t ix">Özet Bildiri</span><span class="t kw">Heyelan</span><span class="t kw">AHS</span><span class="t kw">Frekans Oranı</span></div>
-      <div class="apa"><span class="apatext">Taş, M. A. (2024). Kömür Çayı (Kemah-Erzincan) havzası'nın analitik hiyerarşi süreci (AHS) ve frequency ratio (FR) metotları ile karşılaştırmalı heyelan duyarlılık analizi [Özet bildiri]. Uluslararası Jeomorfoloji Sempozyumu 2024, Antalya.</span><button class="cpy">⧉ APA</button></div>
+      <div class="apa"><span class="apatext">Taş, M. A. (2024). Kömür Çayı (Kemah-Erzincan) havzası'nın analitik hiyerarşi süreci (AHS) ve frequency ratio (FR) metotları ile karşılaştırmalı heyelan duyarlılık analizi [Özet bildiri]. Uluslararası Jeomorfoloji Sempozyumu 2024, Antalya.</span><button class="cpy" type="button">APA</button></div>
     </div></div>
 
     <div class="pub" data-id="p-iuck2023"><div class="yr">2023</div><div class="det">
@@ -246,7 +260,7 @@
       <div class="pa">Şenol C., Taş M. A., Yanık M. E.</div>
       <div class="tags"><span class="t jrnl">3. İstanbul Uluslararası Coğrafya Kongresi</span><span class="t ix">Özet Bildiri</span><span class="t kw">Heyelan</span><span class="t kw">AHS</span><span class="t kw">CBS</span></div>
       <div class="abs">Of ilçesinde AHS yöntemiyle heyelan risk analizi sunulur (ilgili Afet ve Risk Dergisi makalesinin kongre versiyonu).</div>
-      <div class="apa"><span class="apatext">Şenol, C., Taş, M. A., &amp; Yanık, M. E. (2023). Analitik hiyerarşi süreci (AHS) metodu ile Of ilçesi (Trabzon) heyelan risk analizi [Özet bildiri]. 3. İstanbul Uluslararası Coğrafya Kongresi, İstanbul.</span><button class="cpy">⧉ APA</button></div>
+      <div class="apa"><span class="apatext">Şenol, C., Taş, M. A., &amp; Yanık, M. E. (2023). Analitik hiyerarşi süreci (AHS) metodu ile Of ilçesi (Trabzon) heyelan risk analizi [Özet bildiri]. 3. İstanbul Uluslararası Coğrafya Kongresi, İstanbul.</span><button class="cpy" type="button">APA</button></div>
     </div></div>
 
     <div class="pub" data-id="p-ucek2022"><div class="yr">2022</div><div class="det">
@@ -254,7 +268,7 @@
       <div class="pa">Taş M. A.</div>
       <div class="tags"><span class="t jrnl">4. Uluslararası Coğrafya Eğitimi Kongresi, Karabük</span><span class="t ix">Özet Bildiri</span><span class="t kw">Yerleşme</span><span class="t kw">Uzaktan Algılama</span><span class="t kw">CBS</span></div>
       <div class="abs">Erzincan'da doğal ve beşeri nedenlerle yer değiştiren (taşınan) yerleşmelerin CBS ve uzaktan algılama ile tespiti.</div>
-      <div class="apa"><span class="apatext">Taş, M. A. (2022). Erzincan ilinde yer değiştiren yerleşmelerin coğrafi bilgi sistemleri (CBS) ve uzaktan algılama (UA) ile tespiti [Özet bildiri]. 4. Uluslararası Coğrafya Eğitimi Kongresi (ss. 166–168), Karabük.</span><button class="cpy">⧉ APA</button></div>
+      <div class="apa"><span class="apatext">Taş, M. A. (2022). Erzincan ilinde yer değiştiren yerleşmelerin coğrafi bilgi sistemleri (CBS) ve uzaktan algılama (UA) ile tespiti [Özet bildiri]. 4. Uluslararası Coğrafya Eğitimi Kongresi (ss. 166–168), Karabük.</span><button class="cpy" type="button">APA</button></div>
     </div></div>
 
     <div class="pub" data-id="p-ucek2021"><div class="yr">2021</div><div class="det">
@@ -262,7 +276,7 @@
       <div class="pa">Taş M. A., Akpınar E.</div>
       <div class="tags"><span class="t jrnl">Uluslararası Coğrafya Eğitimi Kongresi (UCEK), Sivas</span><span class="t ix">Özet Bildiri</span><span class="t kw">Göl Seviyesi</span><span class="t kw">Uzaktan Algılama</span><span class="t kw">CBS</span></div>
       <div class="abs">Burdur havzası göllerindeki seviye değişimlerinin CBS ve uzaktan algılama ile tespiti (ilgili Doğu Coğrafya Dergisi makalesinin kongre versiyonu).</div>
-      <div class="apa"><span class="apatext">Taş, M. A., &amp; Akpınar, E. (2021). Burdur havzası'ndaki göllerde yaşanan seviye değişikliklerinin coğrafi bilgi sistemleri (CBS) ve uzaktan algılama (UA) ile tespiti [Özet bildiri]. Uluslararası Coğrafya Eğitimi Kongresi (UCEK) (ss. 192–193), Sivas.</span><button class="cpy">⧉ APA</button></div>
+      <div class="apa"><span class="apatext">Taş, M. A., &amp; Akpınar, E. (2021). Burdur havzası'ndaki göllerde yaşanan seviye değişikliklerinin coğrafi bilgi sistemleri (CBS) ve uzaktan algılama (UA) ile tespiti [Özet bildiri]. Uluslararası Coğrafya Eğitimi Kongresi (UCEK) (ss. 192–193), Sivas.</span><button class="cpy" type="button">APA</button></div>
     </div></div>
 
     <div class="pub" data-id="p-turkdunya2020"><div class="yr">2020</div><div class="det">
@@ -270,7 +284,7 @@
       <div class="pa">Bekar Ö. A., Yanık M. E., Taş M. A.</div>
       <div class="tags"><span class="t jrnl">III. Uluslararası Türk Dünyası Eğitim Bilimleri ve Sosyal Bilimler Kongresi, Antalya</span><span class="t ix">Özet Bildiri</span><span class="t kw">Arazi Kullanımı</span><span class="t kw">Erzincan</span></div>
       <div class="abs">Erzincan Ovası'nda 1955–2018 döneminde arazi kullanımındaki değişimler ele alınır.</div>
-      <div class="apa"><span class="apatext">Bekar, Ö. A., Yanık, M. E., &amp; Taş, M. A. (2020). Erzincan Ovası'nda 1955-2018 yılları arasında arazi kullanımındaki değişmeler [Özet bildiri]. III. Uluslararası Türk Dünyası Eğitim Bilimleri ve Sosyal Bilimler Kongresi (s. 67), Antalya.</span><button class="cpy">⧉ APA</button></div>
+      <div class="apa"><span class="apatext">Bekar, Ö. A., Yanık, M. E., &amp; Taş, M. A. (2020). Erzincan Ovası'nda 1955-2018 yılları arasında arazi kullanımındaki değişmeler [Özet bildiri]. III. Uluslararası Türk Dünyası Eğitim Bilimleri ve Sosyal Bilimler Kongresi (s. 67), Antalya.</span><button class="cpy" type="button">APA</button></div>
     </div></div>
 
     <div class="pub" data-id="p-cudes2017"><div class="yr">2017</div><div class="det">
@@ -278,7 +292,7 @@
       <div class="pa">Taş M. A., Sargın S.</div>
       <div class="tags"><span class="t jrnl">CUDES, İstanbul</span><span class="t ix">Özet Bildiri</span><span class="t kw">Kentleşme</span><span class="t kw">Kapalı Site</span></div>
       <div class="abs">Üsküdar'daki konut alanlarında kapalı site eğilimine coğrafi yaklaşım (ilgili IGGE makalesinin erken/kongre versiyonu).</div>
-      <div class="apa"><span class="apatext">Taş, M. A., &amp; Sargın, S. (2017). Üsküdar'da konut alanlarında kapalı site eğilimine coğrafi bir yaklaşım [Özet bildiri]. International Congress on Current Debates in Social Sciences (CUDES), İstanbul.</span><button class="cpy">⧉ APA</button></div>
+      <div class="apa"><span class="apatext">Taş, M. A., &amp; Sargın, S. (2017). Üsküdar'da konut alanlarında kapalı site eğilimine coğrafi bir yaklaşım [Özet bildiri]. International Congress on Current Debates in Social Sciences (CUDES), İstanbul.</span><button class="cpy" type="button">APA</button></div>
     </div></div>
 
     <!-- ===== KİTAP BÖLÜMLERİ ===== -->
@@ -289,7 +303,7 @@
       <div class="pa">Taş M. A., Polat P.</div>
       <div class="tags"><span class="t jrnl">Ekolojik, Politik ve Yönetsel Açıdan Türkiye'de Kıyı Alanları (Efil Yayınevi)</span><span class="t ix">Kitap Bölümü</span><span class="t kw">Kıyı</span><span class="t kw">Uzaktan Algılama</span><span class="t kw">Kıyı Çizgisi</span></div>
       <div class="abs">Rize'deki kıyı değişimleri multispektral uydu görüntüleriyle 40 yıllık dönemde, geniş coğrafi kapsam ve farklı bir perspektifle yeniden değerlendirilir.</div>
-      <div class="apa"><span class="apatext">Taş, M. A., &amp; Polat, P. (2023). Multispektral uydu görüntüleri ile Rize sahil şeridi ve kıyı çizgisinin 1983-2023 yılları arası değişim trendi. A. Yazar (Ed.), Ekolojik, politik ve yönetsel açıdan Türkiye'de kıyı alanları içinde (ss. 137–160). Efil Yayınevi.</span><button class="cpy">⧉ APA</button></div>
+      <div class="apa"><span class="apatext">Taş, M. A., &amp; Polat, P. (2023). Multispektral uydu görüntüleri ile Rize sahil şeridi ve kıyı çizgisinin 1983-2023 yılları arası değişim trendi. A. Yazar (Ed.), Ekolojik, politik ve yönetsel açıdan Türkiye'de kıyı alanları içinde (ss. 137–160). Efil Yayınevi.</span><button class="cpy" type="button">APA</button></div>
     </div></div>
 
     <div class="pub" data-id="b-erzincan2022"><div class="yr">2022</div><div class="det">
@@ -297,7 +311,7 @@
       <div class="pa">Taş M. A.</div>
       <div class="tags"><span class="t jrnl">Türkiye'de Yer Değiştiren Yerleşmeler (Kriter Yayınevi)</span><span class="t ix">Kitap Bölümü</span><span class="t kw">Yerleşme</span><span class="t kw">Erzincan</span></div>
       <div class="abs">Erzincan ilinde doğal ve beşeri nedenlerle yer değiştiren yerleşmeler incelenir.</div>
-      <div class="apa"><span class="apatext">Taş, M. A. (2022). Erzincan ilinde yer değiştiren yerleşmeler. M. A. Ceylan &amp; Y. Dinç (Ed.), Seçilmiş örneklerle Türkiye'de yer değiştiren yerleşmeler içinde (ss. 181–244). Kriter Yayınevi.</span><button class="cpy">⧉ APA</button></div>
+      <div class="apa"><span class="apatext">Taş, M. A. (2022). Erzincan ilinde yer değiştiren yerleşmeler. M. A. Ceylan &amp; Y. Dinç (Ed.), Seçilmiş örneklerle Türkiye'de yer değiştiren yerleşmeler içinde (ss. 181–244). Kriter Yayınevi.</span><button class="cpy" type="button">APA</button></div>
     </div></div>
 
     <div class="pub" data-id="b-tokat-afet2022"><div class="yr">2022</div><div class="det">
@@ -305,7 +319,7 @@
       <div class="pa">Taş M. A.</div>
       <div class="tags"><span class="t jrnl">6000 Yılda Tokat (Paradigma Akademi)</span><span class="t ix">Kitap Bölümü</span><span class="t kw">Doğal Afet</span><span class="t kw">Tokat</span></div>
       <div class="abs">Tokat ilinde görülen doğal afetler (taşkın/sel, kütle hareketleri/heyelan, deprem) coğrafi açıdan ele alınır.</div>
-      <div class="apa"><span class="apatext">Taş, M. A. (2022). Tokat ilinde doğal afetler. C. Şenol (Ed.), Horoztepe'den günümüze 6000 yılda Tokat içinde (ss. 319–342). Paradigma Akademi.</span><button class="cpy">⧉ APA</button></div>
+      <div class="apa"><span class="apatext">Taş, M. A. (2022). Tokat ilinde doğal afetler. C. Şenol (Ed.), Horoztepe'den günümüze 6000 yılda Tokat içinde (ss. 319–342). Paradigma Akademi.</span><button class="cpy" type="button">APA</button></div>
     </div></div>
 
     <div class="pub" data-id="b-tokat-toprak2022"><div class="yr">2022</div><div class="det">
@@ -313,7 +327,7 @@
       <div class="pa">Taş M. A., Yanık M. E.</div>
       <div class="tags"><span class="t jrnl">6000 Yılda Tokat (Paradigma Akademi)</span><span class="t ix">Kitap Bölümü</span><span class="t kw">Toprak</span><span class="t kw">Tokat</span></div>
       <div class="abs">Tokat ilinin toprak türleri, dağılışı ve coğrafi nitelikleri ele alınır.</div>
-      <div class="apa"><span class="apatext">Taş, M. A., &amp; Yanık, M. E. (2022). Tokat ili toprak özellikleri. C. Şenol (Ed.), Horoztepe'den günümüze 6000 yılda Tokat içinde (ss. 287–300). Paradigma Akademi.</span><button class="cpy">⧉ APA</button></div>
+      <div class="apa"><span class="apatext">Taş, M. A., &amp; Yanık, M. E. (2022). Tokat ili toprak özellikleri. C. Şenol (Ed.), Horoztepe'den günümüze 6000 yılda Tokat içinde (ss. 287–300). Paradigma Akademi.</span><button class="cpy" type="button">APA</button></div>
     </div></div>
 
     <div class="pub" data-id="b-duzce2022"><div class="yr">2022</div><div class="det">
@@ -321,7 +335,7 @@
       <div class="pa">Ceylan M. A., Taş M. A.</div>
       <div class="tags"><span class="t jrnl">Coğrafyada Yeni Yaklaşımlar (Gazi Kitabevi)</span><span class="t ix">Kitap Bölümü</span><span class="t kw">Şelale</span><span class="t kw">Turizm</span><span class="t kw">Düzce</span></div>
       <div class="abs">Düzce ilindeki başlıca şelaleler ve bunların turizm potansiyeli coğrafi açıdan değerlendirilir.</div>
-      <div class="apa"><span class="apatext">Ceylan, M. A., &amp; Taş, M. A. (2022). Düzce ilinde başlıca şelaleler ve turizm potansiyeli. E. Kapluhan, F. Akbaş, &amp; Ş. Demir (Ed.), Coğrafyada yeni yaklaşımlar &amp; güncel araştırma ve incelemeler içinde (ss. 137–178). Gazi Kitabevi.</span><button class="cpy">⧉ APA</button></div>
+      <div class="apa"><span class="apatext">Ceylan, M. A., &amp; Taş, M. A. (2022). Düzce ilinde başlıca şelaleler ve turizm potansiyeli. E. Kapluhan, F. Akbaş, &amp; Ş. Demir (Ed.), Coğrafyada yeni yaklaşımlar &amp; güncel araştırma ve incelemeler içinde (ss. 137–178). Gazi Kitabevi.</span><button class="cpy" type="button">APA</button></div>
     </div></div>
 
     <!-- ===== VERİ SETLERİ ===== -->
@@ -331,7 +345,7 @@
       <div class="pt"><a href="https://doi.org/10.17632/g3th763mrj" target="_blank" rel="noopener">Polat Lake high-resolution environmental baseline: UAV-SfM, spatially validated classification, geomorphometry, wetness and solar-radiation data</a></div>
       <div class="pa">Taş M. A., Polat P., Çelik Y., Tagliasacchi E.</div>
       <div class="tags"><span class="t jrnl">Mendeley Data</span><span class="t ix">Veri Seti</span><span class="t ix">CC BY 4.0</span><span class="t doi">DOI: 10.17632/g3th763mrj</span><span class="t kw">İHA-SfM</span><span class="t kw">Polat Gölü</span><span class="t kw">Jeomorfometri</span></div>
-      <div class="apa"><span class="apatext">Taş, M. A., Polat, P., Çelik, Y., &amp; Tagliasacchi, E. (2026). Polat Lake high-resolution environmental baseline: UAV-SfM, spatially validated classification, geomorphometry, wetness and solar-radiation data [Veri seti]. Mendeley Data. https://doi.org/10.17632/g3th763mrj</span><button class="cpy">⧉ APA</button></div>
+      <div class="apa"><span class="apatext">Taş, M. A., Polat, P., Çelik, Y., &amp; Tagliasacchi, E. (2026). Polat Lake high-resolution environmental baseline: UAV-SfM, spatially validated classification, geomorphometry, wetness and solar-radiation data [Veri seti]. Mendeley Data. https://doi.org/10.17632/g3th763mrj</span><button class="cpy" type="button">APA</button></div>
       <div class="pl"><a href="https://doi.org/10.17632/g3th763mrj" target="_blank" rel="noopener">DOI</a> <a href="https://data.mendeley.com/datasets/g3th763mrj" target="_blank" rel="noopener">Mendeley Data</a></div>
     </div></div>
 
@@ -341,14 +355,20 @@
       <div class="pt">Melen Çayı Havzası'nın Coğrafi Planlanması ve Entegre Havza Yönetimi</div>
       <div class="pa" data-en="Marmara University, Institute of Social Sciences, Department of Geography">Marmara Üniversitesi Sosyal Bilimler Enstitüsü, Coğrafya Anabilim Dalı</div>
       <div class="tags"><span class="t jrnl">Marmara Üniversitesi</span><span class="t ix">Doktora Tezi</span><span class="t kw">Havza Yönetimi</span><span class="t kw">Coğrafi Planlama</span></div>
-      <div class="apa"><span class="apatext">Taş, M. A. (2021). Melen Çayı havzası'nın coğrafi planlanması ve entegre havza yönetimi [Doktora tezi, Marmara Üniversitesi].</span><button class="cpy">⧉ APA</button></div>
+      <div class="apa"><span class="apatext">Taş, M. A. (2021). Melen Çayı havzası'nın coğrafi planlanması ve entegre havza yönetimi [Doktora tezi, Marmara Üniversitesi].</span><button class="cpy" type="button">APA</button></div>
     </div></div>
 
     <div class="note" style="margin-top:18px;"><span data-en="This list is compiled from AVESİS, DergiPark and Google Scholar. Official / up-to-date list:">Liste AVESİS, DergiPark ve Google Scholar kaynaklarından derlenmiştir. Resmî/güncel liste:</span> <a href="https://avesis.ebyu.edu.tr/akif.tas" target="_blank" rel="noopener">AVESİS</a> · <a href="https://scholar.google.com/citations?user=zmL04OYAAAAJ" target="_blank" rel="noopener">Google Scholar</a></div>
   </main>
-  <footer class="wrap">© <span id="yr"></span> Mehmet Akif Taş</footer>
+  <footer class="dfoot"><div class="dwrap"><span>© <span id="yr"></span> · <b>Mehmet Akif Taş</b></span><a class="dback" href="/"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11.2M8.8 3.6 13.2 8l-4.4 4.4"/></svg><span data-i18n="ya.back">Portföy</span></a></div></footer>
   <script>
     document.getElementById('yr').textContent = '2026';
+    (function(){
+      var rows = document.querySelectorAll('.pub');
+      if (!('IntersectionObserver' in window)) { rows.forEach(function(r){ r.classList.add('in'); }); return; }
+      var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold:0.08, rootMargin:'0px 0px -4% 0px' });
+      rows.forEach(function(r){ io.observe(r); });
+    })();
     document.querySelectorAll('.cpy').forEach(b => b.onclick = () => {
       const t = b.parentElement.querySelector('.apatext'); if(!t) return;
       navigator.clipboard.writeText(t.textContent.trim()).then(() => {
@@ -357,7 +377,6 @@
       }).catch(() => {});
     });
   </script>
-<style>.pt a{color:inherit;text-decoration:none}.pt a:hover{color:#7fe9dc;text-decoration:underline}.pt a::after{content:" ↗";opacity:.5;font-size:.85em}</style>
 <script>
 /* Her yayın başlığını Google Scholar aramasına bağla -> tıklayınca makaleye gider.
    Başlıkta zaten bağlantı varsa (ör. veri setinin DOI'si) ona dokunulmaz. */

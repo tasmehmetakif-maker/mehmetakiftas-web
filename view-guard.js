@@ -18,9 +18,34 @@
   var lite = !!(me && me.dataset.mode === 'lite');
   var legalOn = !lite && !(me && me.dataset.legal === 'off');
   var inFrame = window.top !== window;
-  var tampered = false;
+  // Yabancı çerçeve koruması: sayfa başka bir sitenin içine (iframe) gömülmüşse içerik HİÇ açılmaz. GitHub Pages
+  // X-Frame-Options / frame-ancestors başlığı veremediği için denetim burada yapılır: üstteki HER pencere bizim
+  // kökenimizde olmalı (foto-gerçekçi sayfanın kendi model sayfamızın içinde açılması serbest). Kökeni okunamayan
+  // (başka siteye ait) bir üst pencere varsa güvenli yükleyici baştan kapalıdır (open -> 'tamper') ve sayfanın
+  // üstüne açıklama örtüsü konur. Aksi halde filigran ve yasal uyarı "üst sayfada" sanılıp hiç gösterilmezdi.
+  var foreignFrame = (function () {
+    try { for (var w = window; w !== w.parent;) { w = w.parent; if (w.location.origin !== window.location.origin) return true; } return false; }
+    catch (e) { return true; }
+  })();
+  var tampered = foreignFrame;
   var isEN = function () { try { return localStorage.getItem('lang') === 'en'; } catch (e) { return false; } };
   var L = function (tr, en) { return isEN() ? en : tr; };
+  if (foreignFrame) {
+    var blockFrame = function () {
+      var d = document.createElement('div');
+      d.id = 'vg-frame'; d.setAttribute('role', 'alert');
+      d.style.cssText = 'position:fixed;inset:0;z-index:2147483647;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;'
+        + 'text-align:center;background:#0C0E0D;color:#ECE9E1;font:500 15px/1.6 Archivo,system-ui,-apple-system,"Segoe UI",sans-serif';
+      var p = document.createElement('p'); p.style.margin = '0';
+      p.textContent = L('Bu içerik başka bir sitenin içinde görüntülenemez. Modeller yalnız mehmetakiftas.com üzerinde açılır.',
+        'This content cannot be displayed inside another site. The models open only on mehmetakiftas.com.');
+      var a = document.createElement('a'); a.href = location.href; a.target = '_top'; a.rel = 'noopener';
+      a.textContent = 'mehmetakiftas.com'; a.style.cssText = 'color:#FF6A3D;text-decoration:underline;text-underline-offset:3px';
+      d.appendChild(p); d.appendChild(a);
+      (document.body || document.documentElement).appendChild(d);
+    };
+    if (document.body) blockFrame(); else document.addEventListener('DOMContentLoaded', blockFrame);
+  }
 
   // ===================== 1) Güvenli yükleyici =====================
   var te = new TextEncoder();
@@ -163,7 +188,7 @@
     + (lite ? '' : 'body{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}'
       + 'input,textarea{user-select:text;-webkit-user-select:text}'
       + '@media print{html,body{display:none!important}}'
-      + '#vg-shield{position:fixed;inset:0;z-index:2147483647;display:none;align-items:center;justify-content:center;background:#05070b;color:#c6d0da;'
+      + '#vg-shield{position:fixed;inset:0;z-index:2147483647;display:none;align-items:center;justify-content:center;background:#0C0E0D;color:#D9D6CE;'
       + 'font:500 15px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;text-align:center;padding:24px}#vg-shield.on{display:flex}'
       + '#vg-wm{--vgw:340px;--vgh:190px;position:fixed;inset:0;z-index:9;pointer-events:none;background-repeat:repeat;background-size:var(--vgw) var(--vgh);animation:vgdrift 90s linear infinite}'
       // Haritalarda (ortofoto, DEM, karşılaştırma; sayfa body[data-view]'i yazar) filigran daha küçük ve saydam
@@ -171,24 +196,24 @@
       + '@keyframes vgdrift{from{background-position:0 0}to{background-position:var(--vgw,340px) var(--vgh,190px)}}'
       + '@media (prefers-reduced-motion:reduce){#vg-wm{animation:none}}'
       + '#vg-legal{position:fixed;left:0;right:0;bottom:0;height:var(--vg-ftr);z-index:31;display:flex;align-items:center;gap:6px;padding:0 10px env(safe-area-inset-bottom,0px);'
-      + 'background:rgba(8,11,16,.96);border-top:1px solid rgba(255,255,255,.1);color:#9aa6b4;font:500 11px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;white-space:nowrap;box-sizing:border-box}'
+      + 'background:rgba(12,14,13,.97);border-top:1px solid rgba(236,233,225,.16);color:#A9ACA5;font:500 11px/1.5 Archivo,system-ui,-apple-system,"Segoe UI",sans-serif;white-space:nowrap;box-sizing:border-box}'
       + '#vg-legal .t{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;line-height:1.5}#vg-legal .t span{display:none}'
       + '#vg-legal .t .l{display:inline}@media (max-width:1179px){#vg-legal .t .l{display:none}#vg-legal .t .m{display:inline}}'
       + '@media (max-width:639px){#vg-legal .t .m{display:none}#vg-legal .t .s{display:inline}}'
-      + '#vg-legal button{flex:0 0 auto;background:none;border:0;padding:0;color:#7fb0ff;font:inherit;cursor:pointer;text-decoration:underline;text-underline-offset:2px}'
+      + '#vg-legal button{flex:0 0 auto;background:none;border:0;padding:0;color:#FF6A3D;font:inherit;cursor:pointer;text-decoration:underline;text-underline-offset:2px}'
       + '#vg-terms{position:fixed;inset:0;z-index:2147483646;display:flex;align-items:center;justify-content:center;padding:16px;'
-      + 'background:rgba(4,7,11,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}'
+      + 'background:rgba(6,7,7,.9);font-family:Archivo,system-ui,-apple-system,"Segoe UI",sans-serif}'
       + '#vg-terms[hidden]{display:none}'
-      + '#vg-terms .card{width:min(620px,100%);max-height:calc(100dvh - 32px);overflow:auto;background:#10151d;border:1px solid rgba(255,255,255,.14);border-radius:14px;'
-      + 'padding:22px 22px 0;color:#dbe3ec;box-shadow:0 30px 80px -30px #000}'
-      + '#vg-terms h2{margin:0 0 12px;font-size:18px;line-height:1.3;color:#fff;display:flex;gap:9px;align-items:center}'
-      + '#vg-terms p{margin:0 0 10px;font-size:13.5px;line-height:1.6}#vg-terms p.f{margin-top:14px;color:#ffd28a;font-weight:600}'
+      + '#vg-terms .card{width:min(620px,100%);max-height:calc(100dvh - 32px);overflow:auto;background:#121413;border:1px solid rgba(236,233,225,.2);border-radius:0;'
+      + 'padding:24px 24px 0;color:#D9D6CE}'
+      + '#vg-terms h2{margin:0 0 14px;font:400 23px/1.2 Newsreader,Georgia,serif;letter-spacing:-.015em;color:#ECE9E1;display:flex;gap:9px;align-items:center}'
+      + '#vg-terms p{margin:0 0 10px;font-size:13.5px;line-height:1.6}#vg-terms p.f{margin-top:14px;color:#FF8A5C;font-weight:600}'
       + '#vg-terms .acts{position:sticky;bottom:0;display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:4px;padding:12px 0 18px;'
-      + 'background:linear-gradient(rgba(16,21,29,0),#10151d 14px)}'
-      + '#vg-terms .acts button{font:600 14px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif;padding:11px 16px;border-radius:10px;cursor:pointer;border:1px solid rgba(255,255,255,.16);background:#1b222d;color:#dbe3ec}'
-      + '#vg-terms .acts button.ok{background:#2f6df0;border-color:#2f6df0;color:#fff}'
+      + 'background:linear-gradient(rgba(18,20,19,0),#121413 14px)}'
+      + '#vg-terms .acts button{font:500 11.5px/1.2 Archivo,system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.11em;text-transform:uppercase;padding:13px 16px 12px;border-radius:0;cursor:pointer;border:1px solid rgba(236,233,225,.3);background:transparent;color:#ECE9E1}'
+      + '#vg-terms .acts button.ok{background:#E8491D;border-color:#E8491D;color:#121413;font-weight:600}'
       + '@media (max-width:520px){#vg-terms{padding:10px}#vg-terms .card{padding:16px 15px 0;max-height:calc(100dvh - 20px)}#vg-terms h2{font-size:16px}'
-      + '#vg-terms p{font-size:12.8px;line-height:1.55}#vg-terms .acts{flex-wrap:nowrap}#vg-terms .acts button{flex:1 1 0;padding:11px 8px;font-size:13px}}');
+      + '#vg-terms p{font-size:12.8px;line-height:1.55}#vg-terms .acts{flex-wrap:nowrap}#vg-terms .acts button{flex:1 1 0;padding:12px 8px 11px;font-size:10.5px;letter-spacing:.06em}}');
   document.head.appendChild(st);
 
   var isMedia = function (t) { return t && t.closest && t.closest('img,canvas,video,svg,.view,#stage'); };
@@ -270,13 +295,13 @@
 
   // ===================== 4) Yasal uyarı penceresi + 5) alt şerit =====================
   var T = {
-    title: ['⚖️ Yasal Uyarı ve Kullanım Koşulları', '⚖️ Legal Notice and Terms of Use'],
+    title: ['Yasal Uyarı ve Kullanım Koşulları', 'Legal Notice and Terms of Use'],
     p1: ['Bu sayfadaki üç boyutlu modeller, ortofotolar, sayısal yükseklik modelleri, türev haritalar ve foto-gerçekçi sahneler Dr. Öğr. Üyesi Mehmet Akif Taş’ın bilimsel çalışmalarının ürünüdür ve 5846 sayılı Fikir ve Sanat Eserleri Kanunu kapsamında korunmaktadır. Tüm hakları saklıdır.',
       'The 3D models, orthophotos, digital elevation models, derived maps and photorealistic scenes on this page are products of the scientific work of Asst. Prof. Dr. Mehmet Akif Taş and are protected under Turkish Law No. 5846 on Intellectual and Artistic Works. All rights reserved.'],
     p2: ['İçerik yalnızca bu sitede, tarayıcı üzerinden görüntüleme ve ölçüm amacıyla sunulur. Yazılı izin olmaksızın indirilmesi, ekran görüntüsü ya da ekran videosu alınması, kopyalanması, çoğaltılması, yeniden yayımlanması, başka bir ortama aktarılması, tersine mühendislikle elde edilmesi ve ticari amaçla kullanılması yasaktır.',
       'The content is provided solely for viewing and measurement in the browser on this site. Without written permission, downloading, taking screenshots or screen recordings, copying, reproducing, republishing, transferring to another medium, extracting by reverse engineering and commercial use are prohibited.'],
     p3: ['Görüntüler, görüntüleme anının tarih ve saatini taşıyan filigranla işaretlenir. İzinsiz kullanım tespit edildiğinde yasal yollara başvurulur.',
-      'Images are marked with a watermark showing the date and time of viewing. Unauthorised use will be pursued through legal channels.'],
+      'Images are marked with a watermark showing the date and time of viewing. Unauthorized use will be pursued through legal channels.'],
     p4: ['Ölçüm araçlarıyla elde edilen mesafe, alan, hacim, rakım ve profil değerleri bilgi amaçlıdır; doğrulukları garanti edilmez. Bu değerlerin mühendislik, hukuki, resmî ya da ticari işlemlerde kullanılmasından doğabilecek sonuçlardan yazar sorumlu tutulamaz.',
       'Distance, area, volume, elevation and profile values obtained with the measurement tools are for information only and their accuracy is not guaranteed. The author accepts no liability for consequences arising from their use in engineering, legal, official or commercial matters.'],
     p5: ['Bilimsel atıf ve kullanım izni talepleri için sitedeki iletişim bilgilerini kullanabilirsiniz.', 'For scientific citation and permission requests, please use the contact details on this site.'],

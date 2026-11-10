@@ -3,65 +3,67 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-<title>✨ Foto-gerçekçi Görünüm</title>
+<title>Foto-gerçekçi Görünüm</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-<script src="view-guard.js?v=cd2445e558"></script>
+<script src="view-guard.js?v=7fee5a829a"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
 <style>
+  /* ===== PAFTA — foto-gerçekçi görünüm (iframe). Renkler görüntüleyiciyle aynı. ===== */
   :root{
-    --bg:#0b0f14; --fg:#eef3f8; --muted:#9fb0c0;
-    --accent:#7cc4ff; --panel:rgba(14,20,28,.92); --line:rgba(255,255,255,.12);
-    --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --bg:#0C0E0D; --fg:#ECE9E1; --muted:#A9ACA5;
+    --accent:#E8491D; --acct:#FF6A3D; --ink:#121413; --panel:rgba(14,16,15,.95); --line:rgba(236,233,225,.16);
+    --font:'Archivo','Helvetica Neue',Arial,sans-serif; --serif:'Newsreader','Iowan Old Style',Georgia,serif;
   }
   *{box-sizing:border-box}
-  html,body{margin:0;height:100%;background:var(--bg);overflow:hidden;color:var(--fg);font-family:var(--font);-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;height:100%;background:var(--bg);overflow:hidden;color:var(--fg);font-family:var(--font);-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
   #stage{position:fixed;inset:0}
   #stage canvas{display:block;width:100%!important;height:100%!important;outline:none}
 
   /* Marka rozeti */
   .badge{
-    position:fixed;top:14px;left:14px;z-index:30;display:flex;align-items:center;gap:8px;
-    padding:8px 13px;border-radius:999px;background:var(--panel);border:1px solid var(--line);
-    backdrop-filter:blur(8px);font-weight:650;font-size:14px;letter-spacing:.2px;
-    box-shadow:0 6px 24px rgba(0,0,0,.35)
+    position:fixed;top:14px;left:14px;z-index:30;display:flex;align-items:baseline;gap:9px;
+    padding:8px 12px 7px;border-radius:0;background:var(--panel);border:1px solid var(--line);
+    font:500 10.5px/1.3 var(--font);letter-spacing:.14em;text-transform:uppercase
   }
-  .badge small{font-weight:500;color:var(--muted);font-size:11.5px}
+  .badge small{font-weight:400;color:var(--muted);font-size:10px;letter-spacing:.06em;text-transform:none}
 
   /* Bilgi butonu */
   .info-btn{
     position:fixed;top:14px;right:14px;z-index:30;cursor:pointer;
-    display:flex;align-items:center;gap:7px;padding:8px 13px;border-radius:999px;
-    background:var(--panel);border:1px solid var(--line);backdrop-filter:blur(8px);
-    color:var(--fg);font-size:13.5px;font-weight:600;box-shadow:0 6px 24px rgba(0,0,0,.35);
-    transition:border-color .2s,transform .1s
+    display:flex;align-items:center;gap:8px;padding:7px 12px 6px;border-radius:0;
+    background:var(--panel);border:1px solid var(--line);
+    color:var(--fg);font:500 10.5px/1.3 var(--font);letter-spacing:.12em;text-transform:uppercase;
+    transition:border-color .2s
   }
-  .info-btn:hover{border-color:var(--accent)}
-  .info-btn:active{transform:scale(.97)}
-  .info-btn .q{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;
-    background:var(--accent);color:#06121e;font-weight:800;font-size:12px}
+  .info-btn:hover{border-color:var(--acct)}
+  .info-btn .q{display:inline-grid;place-items:center;width:17px;height:17px;border-radius:50%;
+    background:var(--accent);color:var(--ink);font-weight:700;font-size:11px;letter-spacing:0}
 
   /* Bilgi paneli */
-  .scrim{position:fixed;inset:0;z-index:40;background:rgba(4,8,12,.55);backdrop-filter:blur(2px);
+  .scrim{position:fixed;inset:0;z-index:40;background:rgba(6,7,7,.6);
     opacity:0;pointer-events:none;transition:opacity .22s}
   .scrim.open{opacity:1;pointer-events:auto}
   .panel{
-    position:fixed;z-index:41;right:14px;top:58px;width:min(380px,calc(100vw - 28px));
-    background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px 18px 16px;
-    box-shadow:0 20px 60px rgba(0,0,0,.5);transform:translateY(-8px) scale(.98);opacity:0;
+    position:fixed;z-index:41;right:14px;top:58px;width:min(390px,calc(100vw - 28px));
+    background:#121413;border:1px solid var(--line);border-radius:0;padding:20px 20px 18px;
+    transform:translateY(-8px);opacity:0;
     pointer-events:none;transition:opacity .22s,transform .22s}
   .panel.open{opacity:1;transform:none;pointer-events:auto}
-  .panel h2{margin:0 0 8px;font-size:16.5px;display:flex;align-items:center;gap:8px}
-  .panel p{margin:0 0 10px;font-size:13.5px;line-height:1.62;color:#dbe6f0}
-  .panel .tip{display:flex;gap:9px;align-items:flex-start;background:rgba(124,196,255,.10);
-    border:1px solid rgba(124,196,255,.25);border-radius:11px;padding:10px 12px;font-size:12.8px;
-    line-height:1.55;color:#cfe6ff;margin-top:4px}
-  .panel .close{position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:8px;border:1px solid var(--line);
-    background:transparent;color:var(--muted);cursor:pointer;font-size:16px;line-height:1}
-  .panel .close:hover{color:var(--fg);border-color:var(--accent)}
+  .panel h2{margin:0 34px 10px 0;font:400 21px/1.2 var(--serif);letter-spacing:-.015em}
+  .panel p{margin:0 0 10px;font-size:13.5px;line-height:1.62;color:#D9D6CE}
+  .panel .tip{background:rgba(232,73,29,.08);
+    border-left:2px solid var(--accent);border-radius:0;padding:10px 12px;font-size:12.8px;
+    line-height:1.55;color:#D9D6CE;margin-top:4px}
+  .panel .close{position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:0;border:1px solid var(--line);
+    background:transparent;color:var(--muted);cursor:pointer;font-size:18px;line-height:1}
+  .panel .close:hover{color:var(--fg);border-color:var(--acct)}
 
   /* İpucu (kontroller) */
   .hint{position:fixed;left:50%;bottom:calc(16px + var(--vg-ftr, 0px));transform:translateX(-50%);z-index:25;
-    padding:7px 14px;border-radius:999px;background:rgba(14,20,28,.8);border:1px solid var(--line);
-    backdrop-filter:blur(8px);font-size:12px;color:var(--muted);white-space:nowrap;
+    padding:6px 13px;border-radius:0;background:rgba(14,16,15,.82);border:1px solid var(--line);
+    font-size:12px;color:var(--muted);white-space:nowrap;
     transition:opacity .5s}
   .hint b{color:var(--fg);font-weight:600}
 
@@ -69,23 +71,23 @@
   #boot{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:var(--bg);
     transition:opacity .5s}
   #boot.gone{opacity:0;pointer-events:none}
-  .boot-card{text-align:center;max-width:300px;padding:0 20px}
-  .spinner{width:42px;height:42px;margin:0 auto 16px;border-radius:50%;
-    border:3px solid rgba(124,196,255,.22);border-top-color:var(--accent);animation:spin 1s linear infinite}
+  .boot-card{text-align:center;max-width:330px;padding:0 20px}
+  .spinner{width:38px;height:38px;margin:0 auto 18px;border-radius:50%;
+    border:1.5px solid rgba(236,233,225,.2);border-top-color:var(--accent);animation:spin 1s linear infinite}
   @keyframes spin{to{transform:rotate(360deg)}}
-  .boot-card h1{font-size:17px;margin:0 0 6px;font-weight:650}
+  .boot-card h1{font:400 21px/1.2 var(--serif);letter-spacing:-.015em;margin:0 0 8px}
   .boot-card p{font-size:12.8px;color:var(--muted);margin:0;line-height:1.5}
 
   #err{position:fixed;inset:0;z-index:60;display:none;place-items:center;background:var(--bg);padding:24px;text-align:center}
   #err.show{display:grid}
   #err .box{max-width:420px}
-  #err h1{font-size:16px;color:#ff9b9b;margin:0 0 8px}
+  #err h1{font:400 21px/1.2 var(--serif);color:#ff9b9b;margin:0 0 10px}
   #err pre{font-size:11.5px;color:var(--muted);white-space:pre-wrap;text-align:left;
-    background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:10px;padding:10px;max-height:40vh;overflow:auto}
-  #err .acts{display:flex;gap:8px;justify-content:center;margin-top:12px;flex-wrap:wrap}
-  #err .acts button{background:var(--panel);color:var(--fg);border:1px solid var(--line);border-radius:10px;padding:8px 14px;font:inherit;font-size:13px;cursor:pointer}
-  #err .acts button.pri{background:#2f6df0;border-color:#2f6df0;color:#fff}
-  .boot-card .pct{margin-top:10px;font-size:13px;color:var(--fg);font-variant-numeric:tabular-nums;min-height:18px}
+    background:rgba(236,233,225,.05);border:1px solid var(--line);border-radius:0;padding:10px;max-height:40vh;overflow:auto}
+  #err .acts{display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+  #err .acts button{background:transparent;color:var(--fg);border:1px solid var(--line);border-radius:0;padding:9px 14px 8px;font:500 10.5px/1.3 var(--font);letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
+  #err .acts button.pri{background:var(--accent);border-color:var(--accent);color:var(--ink)}
+  .boot-card .pct{margin-top:12px;font:400 12.5px/1.4 'IBM Plex Mono',ui-monospace,Consolas,monospace;color:var(--fg);font-variant-numeric:tabular-nums;min-height:18px}
 </style>
 <script type="importmap">
 {
@@ -99,17 +101,17 @@
 <body>
   <div id="stage"></div>
 
-  <div class="badge">✨ <span data-t="badge">Foto-gerçekçi</span> <small>Gaussian Splatting</small></div>
+  <div class="badge"><span data-t="badge">Foto-gerçekçi</span> <small>Gaussian Splatting</small></div>
 
   <button class="info-btn" id="infoBtn"><span class="q">?</span> <span data-t="info">Bu görünüm nedir?</span></button>
 
   <div class="scrim" id="scrim"></div>
   <aside class="panel" id="panel" role="dialog" aria-label="Bilgi">
     <button class="close" id="closeBtn" aria-label="Kapat" data-t-aria="close">×</button>
-    <h2 data-t="h2">✨ Foto-gerçekçi görünüm nedir?</h2>
+    <h2 data-t="h2">Foto-gerçekçi görünüm nedir?</h2>
     <p data-t="p1">Bu sahne, alanın yüzlerce fotoğrafından 3B Gaussian Splatting yöntemiyle üretildi. Görüntü, üçgen yüzeylerden (mesh) değil, ışığı ve rengi taşıyan milyonlarca minik Gaussian noktasından oluşur.</p>
     <p data-t="p2">Bu sayede gölgeler, yansımalar ve ince dokular fotoğraf gerçekliğinde görünür — klasik “3B Model” sekmesindeki katı modelin sunamadığı bir doğallıkla.</p>
-    <div class="tip">📐 <span data-t="tip">Bu görünüm yalnızca izlemek içindir. Ölçüm, kesit ve analiz için “3B Model” sekmesini kullanın.</span></div>
+    <div class="tip"><span data-t="tip">Bu görünüm yalnızca izlemek içindir. Ölçüm, kesit ve analiz için “3B Model” sekmesini kullanın.</span></div>
   </aside>
 
   <div class="hint" id="hint" data-t="hint">Sürükle döndür · Kaydır yakınlaş · Sağ tık kaydır</div>
@@ -137,14 +139,14 @@
     const I18N = {
       badge: ['Foto-gerçekçi', 'Photorealistic'],
       info:  ['Bu görünüm nedir?', 'What is this view?'],
-      h2:    ['✨ Foto-gerçekçi görünüm nedir?', '✨ What is the photorealistic view?'],
+      h2:    ['Foto-gerçekçi görünüm nedir?', 'What is the photorealistic view?'],
       p1:    ['Bu sahne, alanın yüzlerce fotoğrafından 3B Gaussian Splatting yöntemiyle üretildi. Görüntü, üçgen yüzeylerden (mesh) değil, ışığı ve rengi taşıyan milyonlarca minik Gaussian noktasından oluşur.',
               'This scene was produced from hundreds of photos of the site using 3D Gaussian Splatting. The image is built not from triangle surfaces (mesh) but from millions of tiny Gaussian points that carry light and color.'],
       p2:    ['Bu sayede gölgeler, yansımalar ve ince dokular fotoğraf gerçekliğinde görünür — klasik “3B Model” sekmesindeki katı modelin sunamadığı bir doğallıkla.',
               'This makes shadows, reflections and fine textures appear with photographic realism — a naturalness the solid model in the classic “3D Model” tab cannot offer.'],
       tip:   ['Bu görünüm yalnızca izlemek içindir. Ölçüm, kesit ve analiz için “3B Model” sekmesini kullanın.',
               'This view is for viewing only. For measurement, cross-section and analysis, use the “3D Model” tab.'],
-      hint:  ['Sürükle döndür · Kaydır yakınlaş · Sağ tık kaydır', 'Drag rotate · Scroll zoom · Right-click pan'],
+      hint:  ['Sürükle döndür · Kaydır yakınlaş · Sağ tık kaydır', 'Drag to rotate · Scroll to zoom · Right-click to pan'],
       bootH: ['Foto-gerçekçi sahne yükleniyor', 'Loading photorealistic scene'],
       bootP: ['Yüksek kaliteli görüntü hazırlanıyor, bağlantıya göre birkaç saniye sürebilir.', 'Preparing the high-quality image; this may take a few seconds depending on your connection.'],
       errH:  ['Sahne yüklenemedi', 'Scene could not be loaded'],

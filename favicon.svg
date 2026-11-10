@@ -1,11 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#2f6df0"/>
-      <stop offset="1" stop-color="#38e8d0"/>
-    </linearGradient>
-  </defs>
-  <rect width="64" height="64" rx="14" fill="url(#g)"/>
-  <text x="32" y="43" font-family="Segoe UI, system-ui, sans-serif" font-size="30" font-weight="700"
-        text-anchor="middle" fill="#0e1116">MT</text>
+  <rect width="64" height="64" fill="#121413"/>
+  <path d="M32 12.5 53.5 50.5H10.5Z" fill="none" stroke="#E8491D" stroke-width="5" stroke-linejoin="miter"/>
+  <circle cx="32" cy="38.5" r="4.8" fill="#E8491D"/>
 </svg>

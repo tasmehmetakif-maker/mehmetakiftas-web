@@ -17,185 +17,204 @@
 <meta name="twitter:image" content="https://mehmetakiftas.com/polat-onizleme.jpg" />
 <link rel="canonical" href="https://mehmetakiftas.com/polat/" />
 <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
-<link rel="apple-touch-icon" href="../favicon.svg" />
+<link rel="apple-touch-icon" href="../apple-touch-icon.png" />
+<meta name="theme-color" content="#0C0E0D" />
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"Polat Gölü-İliç (Erzincan) — İHA fotogrametrisi 3B modeli","description":"Polat Gölü (jips karstı / dolin gölü) ve çevresinin fotogrametri 3B arazi modeli. Döndür, yakınlaş, gerçek metre ile ölç; DEM (yükseklik/eğim/bakı).","url":"https://mehmetakiftas.com/polat/","image":"https://mehmetakiftas.com/polat-onizleme.jpg","creator":{"@type":"Person","name":"Mehmet Akif Taş"},"measurementTechnique":"SfM–MVS fotogrametri (Agisoft Metashape)","keywords":["fotogrametri","3B model","SfM","DEM","ortofoto","Gaussian Splatting","jeomorfoloji"],"isAccessibleForFree":true,"dateCreated":"2025-10-11","spatialCoverage":{"@type":"Place","geo":{"@type":"GeoCoordinates","latitude":39.530576,"longitude":38.626022}}}</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js" integrity="sha384-4BsIv4BUV37POdA1NZ6UcVAsFk96MQXmFLog7pWs+JP+a8k2XjilfManEVdWDxTe" crossorigin="anonymous"></script>
 <script src="../openseadragon-scalebar.js"></script>
-<script src="../i18n.js"></script>
+<script src="../i18n.js?v=20261111"></script>
+<script>/* Sekme başlığı dile göre: "<model adı> — 3B Model" / "<model name> — 3D Model" */
+(function () { function tt() { if (!window.T) return; var n = window.T('ak.mn.polat'); if (n && n.indexOf('ak.mn.') !== 0) document.title = n + ' — ' + window.T('tab.model'); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', tt); else tt(); window.addEventListener('langchange', tt); })();</script>
 <script defer src="/counter.js"></script>
 <style>
-  :root { color-scheme: dark; --hdr:46px; }
+  /* ===== PAFTA — görüntüleyici arayüzü. Renkler site.css ile aynı: gece zemin, kemik yazı, ölçme turuncusu.
+     Köşeler düz, paneller opak (cam/bulanıklık yok), ayrım ince çizgiyle. ===== */
+  :root { color-scheme: dark; --hdr:46px;
+          --night:#0C0E0D; --bone:#ECE9E1; --fg2:#A9ACA5; --fg3:#7C807A; --soft:#D9D6CE; --ink:#121413;
+          --rule:rgba(236,233,225,.16); --rule2:rgba(236,233,225,.32);
+          --panel:rgba(14,16,15,.95); --btn:rgba(22,25,24,.92); --btnh:rgba(44,48,46,.97);
+          --accent:#E8491D; --acct:#FF6A3D;
+          --sans:'Archivo','Helvetica Neue',Arial,sans-serif; --serif:'Newsreader','Iowan Old Style',Georgia,serif; --mono:'IBM Plex Mono',ui-monospace,Consolas,monospace; }
   * { margin:0; padding:0; box-sizing:border-box; }
   [hidden] { display:none !important; }
-  html,body { width:100%; height:100%; overflow:hidden; background:#0e1116; color:#e8edf2; font-family:system-ui,-apple-system,"Segoe UI",sans-serif; }
+  html,body { width:100%; height:100%; overflow:hidden; background:var(--night); color:var(--bone); font-family:var(--sans); -webkit-font-smoothing:antialiased; }
+  ::selection { background:var(--accent); color:var(--ink); }
+  button, input { font-family:inherit; }
+  :focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
   /* Üst çubuk: [başlık][sekmeler][TR/EN · Portföy]. Başlık önce kısalır (…); sekmeler gerekirse yatay kayar. */
-  #tabs { position:fixed; top:0; left:0; right:0; height:var(--hdr); display:flex; gap:6px; align-items:center; padding:0 10px; background:rgba(16,20,26,.95); border-bottom:1px solid rgba(255,255,255,.08); z-index:20; }
-  #tabs strong { font-size:14px; margin-right:8px; flex:0 1000 auto; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .tabbar { display:flex; gap:4px; align-items:center; flex:0 1 auto; min-width:0; overflow-x:auto; overflow-y:hidden; scrollbar-width:none; -webkit-overflow-scrolling:touch; }
+  #tabs { position:fixed; top:0; left:0; right:0; height:var(--hdr); display:flex; gap:6px; align-items:center; padding:0 12px; background:var(--night); border-bottom:1px solid var(--rule); z-index:20; }
+  #tabs strong { font:400 17px/1.2 var(--serif); letter-spacing:-.01em; margin-right:10px; flex:0 1000 auto; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .tabbar { display:flex; gap:2px; align-items:center; flex:0 1 auto; min-width:0; overflow-x:auto; overflow-y:hidden; scrollbar-width:none; -webkit-overflow-scrolling:touch; }
   .tabbar::-webkit-scrollbar { display:none; }
-  .tab { flex:0 0 auto; white-space:nowrap; background:transparent; color:#9aa3af; border:0; padding:8px 14px; border-radius:8px; font:inherit; font-size:13px; cursor:pointer; }
-  .tab:hover { color:#fff; background:rgba(255,255,255,.06); }
-  .tab.active { color:#fff; background:#2f6df0; }
+  .tab { flex:0 0 auto; white-space:nowrap; background:transparent; color:var(--fg2); border:0; padding:9px 13px 8px; border-radius:0; font:500 11px/1 var(--sans); letter-spacing:.11em; text-transform:uppercase; cursor:pointer; transition:color .25s ease, background-color .25s ease; }
+  .tab:hover { color:var(--bone); background:rgba(236,233,225,.07); }
+  .tab.active { color:var(--ink); background:var(--accent); }
   .hdr-right { margin-left:auto; display:flex; gap:8px; align-items:center; flex:0 0 auto; }
-  .homelink { color:#9aa3af; background:transparent; border:1px solid rgba(255,255,255,.12); padding:6px 12px; border-radius:8px; font:inherit; font-size:13px; text-decoration:none; white-space:nowrap; cursor:pointer; }
-  .homelink:hover { color:#fff; background:rgba(255,255,255,.07); }
+  #lang-switch { --ls-line:var(--rule); --ls-bg:transparent; --ls-fg:var(--fg2); --ls-on-bg:var(--bone); --ls-on-fg:var(--ink); --ls-radius:0; font-family:var(--mono); }
+  .homelink { color:var(--fg2); background:transparent; border:1px solid var(--rule); padding:8px 12px 7px; border-radius:0; font:500 10.5px/1 var(--sans); letter-spacing:.13em; text-transform:uppercase; text-decoration:none; white-space:nowrap; cursor:pointer; transition:color .25s ease, border-color .25s ease; }
+  .homelink:hover { color:var(--bone); border-color:var(--rule2); }
   .view { position:fixed; top:var(--hdr); left:0; right:0; bottom:var(--vg-ftr, 0px); display:none; }
   .view.active { display:block; }
   /* Dar ekran (≤760 px): iki satır — 1) başlık (…) + TR-EN/Portföy, 2) yatay kaydırılan sekmeler. */
   @media (max-width:760px){
     :root { --hdr:80px; }
     #tabs { flex-wrap:wrap; align-content:center; row-gap:6px; column-gap:6px; padding:6px 10px; }
-    #tabs strong { flex:1 1 0; font-size:13px; margin-right:0; }
+    #tabs strong { flex:1 1 0; font-size:15px; margin-right:0; }
     .tabbar { order:3; flex:1 0 100%; }
-    .tabbar { gap:3px; }
-    .tab { padding:6px 9px; font-size:12.5px; }
-    .homelink { padding:5px 9px; font-size:12px; }
+    .tabbar { gap:2px; }
+    .tab { padding:8px 9px 7px; font-size:10px; letter-spacing:.08em; }
+    .homelink { padding:7px 9px 6px; font-size:9.5px; }
   }
   /* İki dilli satır içi metinler (künye değerleri, "Bu nedir?"): i18n.js <html lang>'ı değiştirir. */
   .l-en { display:none; }
   html[lang="en"] .l-en { display:inline; }
   html[lang="en"] .l-tr { display:none; }
   /* Görünüm içi yükleme/hata rozeti (ortofoto, DEM, karşılaştır) */
-  .loadbadge { position:absolute; top:12px; left:50%; transform:translateX(-50%); z-index:15; display:none; max-width:92vw; text-align:center; font-size:12.5px; color:#e8edf2; background:rgba(12,15,21,.92); border:1px solid rgba(255,255,255,.14); padding:7px 12px; border-radius:10px; box-shadow:0 10px 28px -14px #000; }
+  .loadbadge { position:absolute; top:12px; left:50%; transform:translateX(-50%); z-index:15; display:none; max-width:92vw; text-align:center; font-size:12.5px; color:var(--bone); background:var(--panel); border:1px solid var(--rule); padding:7px 12px; border-radius:0; }
   .loadbadge.on { display:block; }
   .loadbadge.err { color:#ffb3b3; border-color:rgba(255,120,120,.35); }
-  .loadbadge button { margin-left:8px; background:#2f6df0; color:#fff; border:0; border-radius:7px; padding:3px 10px; font:inherit; font-size:12px; cursor:pointer; }
+  .loadbadge button { margin-left:8px; background:var(--accent); color:var(--ink); border:0; border-radius:0; padding:3px 10px; font:inherit; font-size:12px; cursor:pointer; }
   #view-dem2d .loadbadge { top:54px; }
   canvas { display:block; }
-  #quality { position:absolute; top:10px; right:14px; display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; max-width:60vw; z-index:10; }
-  #quality button { background:rgba(30,35,44,.82); color:#cdd5df; border:1px solid rgba(255,255,255,.12); padding:7px 12px; border-radius:9px; font-size:13px; cursor:pointer; backdrop-filter:blur(6px); }
-  #quality button:hover { background:rgba(54,62,76,.95); color:#fff; }
-  #quality button.active { background:#2f6df0; color:#fff; border-color:#2f6df0; }
-  #quality button.ultra.active { background:#b3471d; border-color:#b3471d; }
-  #quality .qlabel { flex-basis:100%; text-align:right; font-size:10.5px; letter-spacing:.3px; text-transform:uppercase; color:#8b94a3; margin-bottom:1px; }
-  .hud { position:absolute; top:10px; left:14px; font-size:12px; opacity:.8; text-shadow:0 1px 4px rgba(0,0,0,.6); z-index:10; }
-  .status { position:absolute; left:14px; bottom:40px; font-size:13px; background:rgba(20,24,30,.85); padding:7px 11px; border-radius:8px; z-index:10; max-width:80vw; }
+  #quality { position:absolute; top:10px; right:14px; display:flex; gap:0; flex-wrap:wrap; justify-content:flex-end; max-width:60vw; z-index:10; }
+  #quality button { background:var(--btn); color:var(--soft); border:1px solid var(--rule); margin-left:-1px; padding:7px 12px; border-radius:0; font-size:12.5px; cursor:pointer; transition:background-color .25s ease, color .25s ease; }
+  #quality button:hover { background:var(--btnh); color:#fff; }
+  #quality button.active { background:var(--accent); color:var(--ink); border-color:var(--accent); font-weight:600; position:relative; }
+  #quality button.ultra.active { background:var(--bone); border-color:var(--bone); color:var(--ink); }
+  #quality .qlabel { flex-basis:100%; text-align:right; font:500 9.5px/1.3 var(--sans); letter-spacing:.16em; text-transform:uppercase; color:var(--fg2); margin-bottom:4px; text-shadow:0 1px 2px #000, 0 0 6px rgba(0,0,0,.85); }
+  .hud { position:absolute; top:10px; left:14px; font:400 11px/1.4 var(--mono); opacity:.85; text-shadow:0 1px 4px rgba(0,0,0,.6); z-index:10; }
+  .status { position:absolute; left:14px; bottom:40px; font-size:12.5px; background:rgba(16,18,17,.9); padding:7px 11px; border-radius:0; z-index:10; max-width:80vw; }
   .osd { width:100%; height:100%; background:#000; }   /* siyah: JPEG'lerin kenarındaki nodata (siyah) dişleri zeminle birleşir */
-  #warn { position:fixed; left:0; right:0; bottom:var(--vg-ftr, 0px); text-align:center; color:#f0d9a8; font-size:12px; background:rgba(40,30,12,.92); padding:6px 14px; z-index:30; }
-  .hint { position:absolute; right:14px; bottom:40px; font-size:12px; color:#9aa3af; background:rgba(20,24,30,.7); padding:5px 11px; border-radius:14px; z-index:10; }
+  #warn { position:fixed; left:0; right:0; bottom:var(--vg-ftr, 0px); text-align:center; color:#E9D9B4; font-size:12px; background:rgba(18,20,19,.95); border-top:1px solid rgba(233,217,180,.22); padding:6px 14px; z-index:30; }
+  .hint { position:absolute; right:14px; bottom:40px; font-size:11.5px; color:var(--fg2); background:rgba(16,18,17,.74); padding:5px 11px; border-radius:0; z-index:10; }
   /* Araç çubuğu: alttaki geniş çubuk yerine DİKEY yan raylar — Görünüm+Bilgi SOLDA, Ölçüm SAĞDA.
-     Alttaki yer açılır, model daha ferah görünür. Mobilde alt yatay-kaydırılır şeride döner. */
+     Alttaki yer açılır, model daha ferah görünür. Düğmeler lejant satırı gibi: ince çizgiyle ayrılır. */
   #tools { position:absolute; inset:0; pointer-events:none; z-index:12; }
-  .trail { position:absolute; top:50%; transform:translateY(-50%); display:flex; flex-direction:column; gap:11px;
+  .trail { position:absolute; top:50%; transform:translateY(-50%); display:flex; flex-direction:column; gap:12px;
            max-height:calc(100% - 92px); overflow-y:auto; overflow-x:hidden; pointer-events:none; padding:2px; scrollbar-width:none; }
   .trail::-webkit-scrollbar { width:0; height:0; }
   .trail-left { left:12px; align-items:flex-start; }
   .trail-right { right:12px; align-items:flex-end; }
-  .tgroup { display:flex; flex-direction:column; gap:4px; align-items:stretch; pointer-events:auto; }
+  .tgroup { display:flex; flex-direction:column; gap:5px; align-items:stretch; pointer-events:auto; }
   .tgroup { flex:0 0 auto; }   /* kısa ekranda gruplar ezilip üst üste binmesin: ray kayar */
-  .tglabel { font-size:9.5px; letter-spacing:.7px; text-transform:uppercase; color:#9aa3af; font-weight:700; padding:0 4px; text-shadow:0 1px 2px #000, 0 0 6px rgba(0,0,0,.85); }
+  .tglabel { font:500 9.5px/1.3 var(--sans); letter-spacing:.16em; text-transform:uppercase; color:var(--fg2); padding:0 2px; text-shadow:0 1px 2px #000, 0 0 6px rgba(0,0,0,.85); }
   .trail-right .tglabel { text-align:right; }
-  .tgbtns { display:flex; flex-direction:column; gap:5px; width:130px; background:rgba(12,15,21,.62); border:1px solid rgba(255,255,255,.08); padding:5px; border-radius:13px; backdrop-filter:blur(6px); }
-  #tools button { background:rgba(34,40,50,.92); color:#cdd5df; border:1px solid rgba(255,255,255,.12); padding:7px 10px; border-radius:9px; font-size:12.5px; cursor:pointer; white-space:nowrap; text-align:left; width:100%; }
-  #tools button:hover { background:rgba(58,66,80,.98); color:#fff; }
-  #tools button.on { background:#2f6df0; color:#fff; border-color:#2f6df0; }
+  .tgbtns { display:flex; flex-direction:column; gap:0; width:130px; background:var(--panel); border:1px solid var(--rule); padding:0; border-radius:0; }
+  #tools button { background:transparent; color:var(--soft); border:0; border-bottom:1px solid var(--rule); padding:8px 11px; border-radius:0; font-size:12.5px; cursor:pointer; white-space:nowrap; text-align:left; width:100%; transition:background-color .2s ease, color .2s ease; }
+  #tools .tgbtns button:last-child { border-bottom:0; }
+  #tools button:hover { background:rgba(236,233,225,.09); color:#fff; }
+  #tools button.on { background:var(--accent); color:var(--ink); font-weight:600; }
   @media (max-width:760px){
     /* Mobilde de DİKEY yan raylar (alt taraf boş kalsın); sadece daha dar/kompakt. */
     .trail { gap:9px; max-height:calc(100% - 66px); }
-    .tgbtns { width:104px; padding:4px; gap:4px; }
-    #tools button { font-size:11.5px; padding:6px 8px; }
+    .tgbtns { width:104px; }
+    #tools button { font-size:11.5px; padding:7px 8px; }
     .hint { display:none; }   /* "Sürükle: döndür" fare ipucu — dokunmatikte gereksiz, yer açar */
   }
-  #tools button.thelp { background:rgba(47,109,240,.16); border-color:rgba(47,109,240,.4); }
-  #tools button.thelp:hover { background:rgba(47,109,240,.34); color:#fff; }
+  #tools button.thelp { color:var(--acct); }
+  #tools button.thelp:hover { background:rgba(232,73,29,.18); color:#fff; }
   /* Ölçüm/okuma kutusu ÜST-ORTADA (tabs'ın altında) — alttaki çok-satırlı kategorili
      toolbar ne kadar yüksek olursa olsun menü adlarıyla ASLA çakışmaz. */
-  #measure-readout { position:absolute; left:50%; top:56px; transform:translateX(-50%); display:none; max-width:94vw; text-align:center; background:rgba(20,24,30,.96); border:1px solid rgba(255,255,255,.14); padding:8px 13px; border-radius:9px; font-size:13px; z-index:16; white-space:normal; box-shadow:0 8px 24px -10px #000; }
-  #measure-readout b { color:#ffcf66; }
-  #profile-panel { position:absolute; top:62px; right:14px; width:380px; max-width:46vw; display:none; background:rgba(12,15,21,.94); border:1px solid rgba(255,255,255,.12); border-radius:13px; padding:11px 13px; z-index:14; box-shadow:0 20px 46px -26px #000; backdrop-filter:blur(14px); }
-  #profile-panel h5 { font-size:12.5px; font-weight:600; color:#cdd5df; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; }
-  #profile-panel .pclose { cursor:pointer; color:#9aa3af; font-size:15px; }
+  #measure-readout { position:absolute; left:50%; top:56px; transform:translateX(-50%); display:none; max-width:94vw; text-align:center; background:var(--panel); border:1px solid var(--rule); padding:8px 13px; border-radius:0; font-size:13px; z-index:16; white-space:normal; }
+  #measure-readout b { color:var(--acct); font-weight:600; }
+  #profile-panel { position:absolute; top:62px; right:14px; width:380px; max-width:46vw; display:none; background:var(--panel); border:1px solid var(--rule); border-radius:0; padding:11px 13px; z-index:14; }
+  #profile-panel h5 { font:500 10px/1.3 var(--sans); letter-spacing:.15em; text-transform:uppercase; color:var(--soft); margin-bottom:9px; display:flex; justify-content:space-between; align-items:center; }
+  #profile-panel .pclose { cursor:pointer; color:var(--fg2); font-size:18px; line-height:1; }
   #profile-panel .pclose:hover { color:#fff; }
-  #profile-panel canvas { width:100%; height:150px; display:block; background:rgba(0,0,0,.28); border-radius:8px; }
-  #profile-panel .psum { margin-top:8px; font-size:11.5px; color:#9aa3af; display:flex; gap:14px; flex-wrap:wrap; }
-  #profile-panel .psum b { color:#7fe9dc; }
-  #sun-panel { position:absolute; top:62px; right:14px; width:300px; max-width:46vw; display:none; background:rgba(12,15,21,.94); border:1px solid rgba(255,255,255,.12); border-radius:13px; padding:12px 14px; z-index:14; box-shadow:0 20px 46px -26px #000; backdrop-filter:blur(14px); }
-  #sun-panel h5 { font-size:12.5px; font-weight:600; color:#cdd5df; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; }
-  #sun-panel .pclose { cursor:pointer; color:#9aa3af; font-size:15px; }
+  #profile-panel canvas { width:100%; height:150px; display:block; background:rgba(0,0,0,.3); border-radius:0; }
+  #profile-panel .psum { margin-top:8px; font:400 11px/1.5 var(--mono); color:var(--fg2); display:flex; gap:14px; flex-wrap:wrap; }
+  #profile-panel .psum b { color:var(--bone); font-weight:500; }
+  #sun-panel { position:absolute; top:62px; right:14px; width:300px; max-width:46vw; display:none; background:var(--panel); border:1px solid var(--rule); border-radius:0; padding:12px 14px; z-index:14; }
+  #sun-panel h5 { font:500 10px/1.3 var(--sans); letter-spacing:.15em; text-transform:uppercase; color:var(--soft); margin-bottom:11px; display:flex; justify-content:space-between; align-items:center; }
+  #sun-panel .pclose { cursor:pointer; color:var(--fg2); font-size:18px; line-height:1; }
   #sun-panel .pclose:hover { color:#fff; }
-  #sun-panel .sun-row { display:flex; align-items:center; gap:9px; margin-bottom:9px; font-size:12.5px; color:#cdd5df; }
-  #sun-panel .sun-row label { width:42px; color:#9aa3af; flex:0 0 auto; }
+  #sun-panel .sun-row { display:flex; align-items:center; gap:9px; margin-bottom:9px; font-size:12.5px; color:var(--soft); }
+  #sun-panel .sun-row label { width:42px; color:var(--fg2); flex:0 0 auto; }
   #sun-panel .sun-row input[type=range] { flex:1; accent-color:#ffb52e; }
-  #sun-panel .sun-row input[type=date] { flex:1; background:rgba(30,35,44,.85); color:#e8edf2; border:1px solid rgba(255,255,255,.14); border-radius:7px; padding:4px 7px; font-size:12.5px; color-scheme:dark; }
-  #sun-panel .sun-row b { color:#ffcf66; min-width:46px; text-align:right; }
-  #sun-panel .sun-info { font-size:12px; color:#ffcf66; background:rgba(255,181,46,.08); border:1px solid rgba(255,181,46,.2); border-radius:8px; padding:6px 9px; margin-top:2px; }
-  #sun-panel .sun-note { margin-top:8px; font-size:10.5px; line-height:1.5; color:#6f7a88; }
+  #sun-panel .sun-row input[type=date] { flex:1; background:var(--btn); color:var(--bone); border:1px solid var(--rule); border-radius:0; padding:4px 7px; font-size:12.5px; color-scheme:dark; }
+  #sun-panel .sun-row b { color:#ffcf66; min-width:46px; text-align:right; font:500 12.5px/1 var(--mono); }
+  #sun-panel .sun-info { font-size:12px; color:#ffcf66; background:rgba(255,181,46,.08); border-left:2px solid rgba(255,181,46,.55); border-radius:0; padding:6px 9px; margin-top:2px; }
+  #sun-panel .sun-note { margin-top:8px; font-size:10.5px; line-height:1.5; color:var(--fg3); }
   #cmp-wrap { position:absolute; inset:0; overflow:hidden; background:#000; user-select:none; touch-action:none; }
   #cmp-base, #cmp-top-img { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; }
   #cmp-top { position:absolute; inset:0; overflow:hidden; will-change:clip-path; }
-  #cmp-divider { position:absolute; top:0; bottom:0; left:50%; width:2px; background:#fff; box-shadow:0 0 8px rgba(0,0,0,.6); cursor:ew-resize; z-index:5; }
-  #cmp-handle { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:40px; height:40px; border-radius:50%; background:#2f6df0; color:#fff; display:flex; align-items:center; justify-content:center; font-size:19px; box-shadow:0 2px 12px rgba(0,0,0,.55); cursor:ew-resize; }
-  .cmp-lbl { position:absolute; top:14px; padding:5px 11px; background:rgba(18,22,28,.85); border:1px solid rgba(255,255,255,.12); border-radius:8px; font-size:13px; color:#e8edf2; z-index:4; pointer-events:none; }
+  #cmp-divider { position:absolute; top:0; bottom:0; left:50%; width:2px; background:var(--bone); box-shadow:0 0 8px rgba(0,0,0,.6); cursor:ew-resize; z-index:5; }
+  #cmp-handle { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:42px; height:42px; border-radius:50%; background:var(--accent); color:var(--ink); display:flex; align-items:center; justify-content:center; font-size:19px; box-shadow:0 2px 12px rgba(0,0,0,.55); cursor:ew-resize; }
+  .cmp-lbl { position:absolute; top:14px; padding:6px 11px 5px; background:rgba(14,16,15,.9); border:1px solid var(--rule); border-radius:0; font:500 10px/1.3 var(--sans); letter-spacing:.13em; text-transform:uppercase; color:var(--bone); z-index:4; pointer-events:none; }
   .cmp-lbl-l { left:14px; } .cmp-lbl-r { right:14px; }
-  #cmp-pick { position:absolute; bottom:14px; left:50%; transform:translateX(-50%); display:flex; gap:5px; z-index:6; flex-wrap:wrap; justify-content:center; max-width:90vw; }
-  #cmp-pick .cdl { background:rgba(30,35,44,.85); color:#cdd5df; border:1px solid rgba(255,255,255,.12); padding:6px 12px; border-radius:8px; font-size:13px; cursor:pointer; }
-  #cmp-pick .cdl:hover { background:rgba(54,62,76,.95); color:#fff; }
-  #cmp-pick .cdl.active { background:#2f6df0; color:#fff; border-color:#2f6df0; }
-  #cmp-hint { position:absolute; bottom:56px; left:50%; transform:translateX(-50%); font-size:11.5px; color:#9aa3af; background:rgba(20,24,30,.7); padding:4px 10px; border-radius:12px; z-index:4; pointer-events:none; }
-  #help-panel { position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(6,8,12,.66); z-index:40; backdrop-filter:blur(3px); }
+  #cmp-pick { position:absolute; bottom:14px; left:50%; transform:translateX(-50%); display:flex; gap:0; z-index:6; flex-wrap:wrap; justify-content:center; max-width:90vw; }
+  #cmp-pick .cdl { background:var(--btn); color:var(--soft); border:1px solid var(--rule); margin-left:-1px; padding:7px 12px; border-radius:0; font-size:12.5px; cursor:pointer; transition:background-color .25s ease, color .25s ease; }
+  #cmp-pick .cdl:hover { background:var(--btnh); color:#fff; }
+  #cmp-pick .cdl.active { background:var(--accent); color:var(--ink); border-color:var(--accent); font-weight:600; position:relative; }
+  #cmp-hint { position:absolute; bottom:58px; left:50%; transform:translateX(-50%); font-size:11.5px; color:var(--fg2); background:rgba(16,18,17,.74); padding:4px 10px; border-radius:0; z-index:4; pointer-events:none; }
+  #help-panel { position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(6,7,7,.74); z-index:40; }
   #help-panel.on { display:flex; }
-  #help-panel .hp-card { width:min(560px,92vw); max-height:82vh; overflow:auto; background:rgba(16,20,27,.98); border:1px solid rgba(255,255,255,.13); border-radius:16px; padding:18px 20px; box-shadow:0 30px 70px -30px #000; }
-  #help-panel h4 { display:flex; justify-content:space-between; align-items:center; font-size:15px; color:#fff; margin-bottom:6px; }
-  #help-panel .pclose { cursor:pointer; color:#9aa3af; font-size:17px; }
+  #help-panel .hp-card { width:min(580px,92vw); max-height:82vh; overflow:auto; background:#121413; border:1px solid var(--rule); border-radius:0; padding:22px 24px; }
+  #help-panel h4 { display:flex; justify-content:space-between; align-items:center; font:400 23px/1.2 var(--serif); letter-spacing:-.016em; color:var(--bone); margin-bottom:8px; }
+  #help-panel .pclose { cursor:pointer; color:var(--fg2); font:400 22px/1 var(--sans); }
   #help-panel .pclose:hover { color:#fff; }
-  #help-panel .hp-intro { font-size:12.5px; color:#9aa3af; margin-bottom:8px; line-height:1.55; }
-  #help-panel .hp-grp { font-size:10.5px; text-transform:uppercase; letter-spacing:.6px; color:#7fe9dc; font-weight:700; margin:14px 0 4px; }
-  #help-panel .hp-item { display:flex; gap:11px; align-items:flex-start; padding:7px 0; border-top:1px solid rgba(255,255,255,.06); }
-  #help-panel .hp-name { flex:0 0 120px; font-size:13px; color:#e8edf2; font-weight:600; }
-  #help-panel .hp-desc { flex:1; font-size:12.5px; color:#aab2bf; line-height:1.5; }
-  #kunye { position:absolute; left:14px; top:40px; width:280px; display:none; background:rgba(18,22,28,.96); border:1px solid rgba(255,255,255,.12); padding:12px 14px; border-radius:11px; font-size:12.5px; line-height:1.65; z-index:13; box-shadow:0 4px 18px rgba(0,0,0,.5); }
-  #kunye h4 { font-size:13px; margin-bottom:7px; color:#fff; padding-right:26px; }
-  #kunye-close { position:absolute; top:8px; right:8px; width:26px; height:26px; background:rgba(255,255,255,.08); color:#c6d0da; border:0; border-radius:7px; cursor:pointer; font-size:13px; line-height:1; }
-  #kunye-close:hover { background:rgba(255,255,255,.18); color:#fff; }
-  #kunye .row { display:flex; justify-content:space-between; gap:12px; }
-  #kunye .row > span:first-child { color:#9aa3af; }
-  #kunye .row > span:last-child { color:#e8edf2; text-align:right; }
-  #kunye .note { margin-top:8px; color:#6f7a88; font-size:11px; }
-  #kunye .kpaper { margin-top:9px; padding:8px 10px; font-size:11px; line-height:1.55; color:#cdd5df; background:rgba(47,109,240,.09); border:1px solid rgba(47,109,240,.22); border-radius:8px; }
-  #kunye .kpaper-lbl { color:#7fb0ff; font-weight:700; font-size:9.5px; text-transform:uppercase; letter-spacing:.5px; margin-bottom:3px; }
-  #kunye .kpaper-cite i { color:#cdd5df; }
-  #kunye .kpaper-cite a { color:#7fe9dc; text-decoration:none; font-weight:700; margin-left:3px; }
-  #kunye .edu-blurb { margin:0 0 9px; padding:8px 10px; font-size:11.5px; line-height:1.55; color:#d6dde6; background:rgba(56,232,208,.07); border:1px solid rgba(56,232,208,.18); border-radius:8px; }
-  #kunye .edu-blurb b { color:#7fe9dc; }
-  #kunye .cite { margin-top:9px; display:flex; gap:6px; }
-  #kunye .cite button { flex:1; background:rgba(47,109,240,.18); color:#cdd5df; border:1px solid rgba(255,255,255,.14); padding:5px 8px; border-radius:7px; font-size:11px; cursor:pointer; }
-  #kunye .cite button:hover { background:rgba(47,109,240,.36); color:#fff; }
-  #dem-layers { position:absolute; top:10px; left:50%; transform:translateX(-50%); display:flex; gap:5px; z-index:11; }
-  #dem-layers .dl { background:rgba(30,35,44,.85); color:#cdd5df; border:1px solid rgba(255,255,255,.12); padding:6px 12px; border-radius:8px; font-size:13px; cursor:pointer; }
-  #dem-layers .dl:hover { background:rgba(54,62,76,.95); color:#fff; }
-  #dem-layers .dl.active { background:#2f6df0; color:#fff; border-color:#2f6df0; }
+  #help-panel .hp-intro { font-size:12.5px; color:var(--fg2); margin-bottom:8px; line-height:1.55; }
+  #help-panel .hp-grp { font:500 9.5px/1.3 var(--sans); text-transform:uppercase; letter-spacing:.16em; color:var(--acct); margin:16px 0 5px; }
+  #help-panel .hp-item { display:flex; gap:11px; align-items:flex-start; padding:8px 0; border-top:1px solid var(--rule); }
+  #help-panel .hp-name { flex:0 0 120px; font-size:13px; color:var(--bone); font-weight:500; }
+  #help-panel .hp-desc { flex:1; font-size:12.5px; color:#B5B8B0; line-height:1.5; }
+  #kunye { position:absolute; left:14px; top:40px; width:292px; display:none; background:rgba(14,16,15,.97); border:1px solid var(--rule); padding:14px 15px; border-radius:0; font-size:12.5px; line-height:1.65; z-index:13; }
+  #kunye h4 { font:400 16.5px/1.25 var(--serif); letter-spacing:-.01em; margin-bottom:10px; color:var(--bone); padding-right:30px; }
+  #kunye-close { position:absolute; top:9px; right:9px; width:26px; height:26px; background:transparent; color:var(--fg2); border:1px solid var(--rule); border-radius:0; cursor:pointer; font-size:17px; line-height:1; }
+  #kunye-close:hover { color:#fff; border-color:var(--rule2); }
+  #kunye .row { display:flex; justify-content:space-between; gap:12px; padding:1px 0; border-top:1px solid rgba(236,233,225,.08); }
+  #kunye .row > span:first-child { color:var(--fg2); }
+  #kunye .row > span:last-child { color:var(--bone); text-align:right; }
+  #kunye .note { margin-top:8px; color:var(--fg3); font-size:11px; }
+  #kunye .kpaper { margin-top:9px; padding:8px 10px; font-size:11px; line-height:1.55; color:var(--soft); background:rgba(232,73,29,.08); border-left:2px solid var(--accent); border-radius:0; }
+  #kunye .kpaper-lbl { color:var(--acct); font-weight:500; font-size:9.5px; text-transform:uppercase; letter-spacing:.14em; margin-bottom:3px; }
+  #kunye .kpaper-cite i { color:var(--soft); }
+  #kunye .kpaper-cite a { color:var(--acct); text-decoration:none; font-weight:600; margin-left:3px; }
+  #kunye .edu-blurb { margin:0 0 10px; padding:8px 10px; font-size:11.5px; line-height:1.55; color:var(--soft); background:rgba(236,233,225,.06); border-left:2px solid var(--rule2); border-radius:0; }
+  #kunye .edu-blurb b { color:var(--bone); font-weight:600; }
+  #kunye .cite { margin-top:10px; display:flex; gap:6px; }
+  #kunye .cite button { flex:1; background:transparent; color:var(--soft); border:1px solid var(--rule); padding:6px 8px; border-radius:0; font-size:11px; cursor:pointer; transition:background-color .25s ease, color .25s ease, border-color .25s ease; }
+  #kunye .cite button:hover { background:var(--accent); border-color:var(--accent); color:var(--ink); }
+  #dem-layers { position:absolute; top:10px; left:50%; transform:translateX(-50%); display:flex; gap:0; z-index:11; }
+  #dem-layers .dl { background:var(--btn); color:var(--soft); border:1px solid var(--rule); margin-left:-1px; padding:7px 12px; border-radius:0; font-size:12.5px; cursor:pointer; white-space:nowrap; transition:background-color .25s ease, color .25s ease; }
+  #dem-layers .dl:hover { background:var(--btnh); color:#fff; }
+  #dem-layers .dl.active { background:var(--accent); color:var(--ink); border-color:var(--accent); font-weight:600; position:relative; }
   /* Harita lejantı: hem DEM 2B view'inde (#dem-legend, sol) hem Karşılaştır'da (#cmp-legend, sağ) paylaşılır. */
-  .maplegend { position:absolute; background:rgba(18,22,28,.9); padding:9px 11px; border-radius:9px; z-index:10; }
+  .maplegend { position:absolute; background:rgba(14,16,15,.93); border:1px solid var(--rule); padding:9px 11px; border-radius:0; z-index:10; }
   #dem-legend { left:14px; bottom:22px; }
   #cmp-legend { right:14px; bottom:14px; }
-  .maplegend .lt { color:#cdd5df; margin-bottom:6px; font-size:11.5px; }
+  .maplegend .lt { color:var(--soft); margin-bottom:6px; font-size:11.5px; }
   .maplegend .lbar { display:flex; gap:6px; height:124px; }
-  .maplegend .lg { width:16px; border-radius:3px; }
+  .maplegend .lg { width:16px; border-radius:0; }
   .maplegend .lg-dem { background:linear-gradient(to top, rgb(60,120,60), rgb(180,170,90) 40%, rgb(140,100,60) 75%, rgb(235,235,235)); }
   .maplegend .slopecls { display:flex; flex-direction:column; gap:2px; }
-  .maplegend .slopecls div { display:flex; align-items:center; gap:6px; color:#cdd5df; font-size:10.5px; }
-  .maplegend .slopecls i { width:15px; height:11px; border-radius:2px; flex:0 0 auto; }
-  .maplegend .ll { display:flex; flex-direction:column; justify-content:space-between; color:#9aa3af; font-size:11px; }
-  .maplegend .abar { width:154px; height:16px; border-radius:3px; background:linear-gradient(to right, rgb(255,97,97), rgb(176,255,97) 25%, rgb(97,255,255) 50%, rgb(176,97,255) 75%, rgb(255,97,97)); }
-  .maplegend .al { display:flex; justify-content:space-between; width:154px; color:#9aa3af; font-size:11px; margin-top:3px; }
+  .maplegend .slopecls div { display:flex; align-items:center; gap:6px; color:var(--soft); font-size:10.5px; }
+  .maplegend .slopecls i { width:15px; height:11px; border-radius:0; flex:0 0 auto; }
+  .maplegend .ll { display:flex; flex-direction:column; justify-content:space-between; color:var(--fg2); font:400 10.5px/1.2 var(--mono); }
+  .maplegend .abar { width:154px; height:16px; border-radius:0; background:linear-gradient(to right, rgb(255,97,97), rgb(176,255,97) 25%, rgb(97,255,255) 50%, rgb(176,97,255) 75%, rgb(255,97,97)); }
+  .maplegend .al { display:flex; justify-content:space-between; width:154px; color:var(--fg2); font:400 10.5px/1.2 var(--mono); margin-top:3px; }
   @media (max-width:760px){ #cmp-legend { transform:scale(.86); transform-origin:bottom right; } #cmp-hint { bottom:104px; max-width:70vw; text-align:center; } }
 </style>
-<link rel="stylesheet" href="../viewer-premium.css" />
-<script src="../view-guard.js?v=cd2445e558"></script>
+<link rel="stylesheet" href="../viewer-premium.css?v=20261111" />
+<script src="../view-guard.js?v=7fee5a829a"></script>
 </head>
 <body>
   <div id="tabs">
-    <strong title="Polat Gölü-İliç (Erzincan)">Polat Gölü-İliç (Erzincan)</strong>
+    <strong title="Polat Gölü-İliç (Erzincan)" data-i18n="ak.mn.polat" data-i18n-title="ak.mn.polat">Polat Gölü-İliç (Erzincan)</strong>
     <div class="tabbar">
       <button class="tab active" type="button" data-view="model" data-i18n="tab.model">3B Model</button>
       <button class="tab" type="button" data-view="ortho" data-i18n="tab.ortho">Ortofoto</button>
       <button class="tab" type="button" data-view="dem2d" data-i18n="tab.dem2d">DEM (2B)</button>
-      <button class="tab" type="button" data-view="splat" data-i18n="tab.splat">✨ Foto-gerçekçi</button>
-      <button class="tab" type="button" data-view="compare" data-i18n="tab.compare">⇋ Karşılaştır</button>
+      <button class="tab" type="button" data-view="splat" data-i18n="tab.splat">Foto-gerçekçi</button>
+      <button class="tab" type="button" data-view="compare" data-i18n="tab.compare">Karşılaştır</button>
     </div>
     <div class="hdr-right">
       <span id="lang-switch"></span>
-      <a href="/" class="homelink" data-i18n="nav.portfolio" title="Akademik portföy / tüm modeller">🏛 Portföy</a>
+      <a href="/" class="homelink" data-i18n="nav.portfolio" data-i18n-title="nav.portfolio.t" title="Akademik portföy / tüm modeller">Portföy</a>
     </div>
   </div>
 
@@ -217,19 +236,19 @@
         <div class="tgroup">
           <span class="tglabel" data-i18n="grp.view">Görünüm</span>
           <div class="tgbtns">
-            <button id="t-wire" data-i18n="tool.wire" data-i18n-title="tool.wire.t" title="Modeli üçgen ağ (wireframe) göster">△ Üçgenler</button>
-            <button id="t-rotate" data-i18n="tool.rotate" data-i18n-title="tool.rotate.t" title="Otomatik döndür">🔄 Döndür</button>
-            <button id="t-tour" data-i18n="tool.tour" data-i18n-title="tool.tour.t" title="Sinematik tur: rota noktası yoksa 360° döner, varsa rotayı izler">🎬 Tur</button>
-            <button id="t-waypoint" data-i18n="tool.wp" data-i18n-title="tool.wp.t" title="Şu anki kamera açısını tur rotasına ekle">📍 Rota +</button>
-            <button id="t-sun" data-i18n="tool.sun" data-i18n-title="tool.sun.t" title="Güneş/gölge: tarih-saate göre gerçek güneş ve gölgeler">☀️ Güneş</button>
+            <button id="t-wire" data-i18n="tool.wire" data-i18n-title="tool.wire.t" title="Modeli üçgen ağ (wireframe) göster">Üçgenler</button>
+            <button id="t-rotate" data-i18n="tool.rotate" data-i18n-title="tool.rotate.t" title="Otomatik döndür">Döndür</button>
+            <button id="t-tour" data-i18n="tool.tour" data-i18n-title="tool.tour.t" title="Sinematik tur: rota noktası yoksa 360° döner, varsa rotayı izler">Tur</button>
+            <button id="t-waypoint" data-i18n="tool.wp" data-i18n-title="tool.wp.t" title="Şu anki kamera açısını tur rotasına ekle">Rota +</button>
+            <button id="t-sun" data-i18n="tool.sun" data-i18n-title="tool.sun.t" title="Güneş/gölge: tarih-saate göre gerçek güneş ve gölgeler">Güneş</button>
           </div>
         </div>
         <div class="tgroup">
           <span class="tglabel" data-i18n="grp.share">Paylaşım & Bilgi</span>
           <div class="tgbtns">
-            <button id="t-share" data-i18n="tool.share" data-i18n-title="tool.share.t" title="Bu kamera görünümünün bağlantısını kopyala">🔗 Bağlantı</button>
-            <button id="t-kunye" data-i18n="tool.info" data-i18n-title="tool.info.t" title="Künye / teknik bilgi">ℹ️ Künye</button>
-            <button id="t-help" class="thelp" data-i18n="tool.help" data-i18n-title="tool.help.t" title="Araçların ne işe yaradığı ve nasıl kullanılacağı">❔ Yardım</button>
+            <button id="t-share" data-i18n="tool.share" data-i18n-title="tool.share.t" title="Bu kamera görünümünün bağlantısını kopyala">Bağlantı</button>
+            <button id="t-kunye" data-i18n="tool.info" data-i18n-title="tool.info.t" title="Künye / teknik bilgi">Künye</button>
+            <button id="t-help" class="thelp" data-i18n="tool.help" data-i18n-title="tool.help.t" title="Araçların ne işe yaradığı ve nasıl kullanılacağı">Yardım</button>
           </div>
         </div>
       </div>
@@ -238,32 +257,32 @@
         <div class="tgroup">
           <span class="tglabel" data-i18n="grp.measure">Ölçüm</span>
           <div class="tgbtns">
-            <button id="t-measure" data-i18n="tool.measure" data-i18n-title="tool.measure.t" title="İki noktaya tıkla: mesafe ve yükseklik farkı">📏 Mesafe</button>
-            <button id="t-vol" data-i18n="tool.vol" data-i18n-title="tool.vol.t" title="Alanı çevrele: taban üstü hacim (m³)">📦 Hacim</button>
-            <button id="t-area" data-i18n="tool.area" data-i18n-title="tool.area.t" title="Alanı çevrele: düzlemsel + gerçek 3B yüzey alanı (m²)">📐 Alan</button>
-            <button id="t-elev" data-i18n="tool.elev" data-i18n-title="tool.elev.t" title="Bir noktaya tıkla: o noktanın rakımı (m)">📍 Rakım</button>
-            <button id="t-profile" data-i18n="tool.profile" data-i18n-title="tool.profile.t" title="İki nokta seç: aradaki yükseklik profili">📈 Profil</button>
-            <button id="t-clear" data-i18n="tool.clear" data-i18n-title="tool.clear.t" title="Tüm ölçüm/işaretleri temizle">🗑 Temizle</button>
+            <button id="t-measure" data-i18n="tool.measure" data-i18n-title="tool.measure.t" title="İki noktaya tıkla: mesafe ve yükseklik farkı">Mesafe</button>
+            <button id="t-vol" data-i18n="tool.vol" data-i18n-title="tool.vol.t" title="Alanı çevrele: taban üstü hacim (m³)">Hacim</button>
+            <button id="t-area" data-i18n="tool.area" data-i18n-title="tool.area.t" title="Alanı çevrele: düzlemsel + gerçek 3B yüzey alanı (m²)">Alan</button>
+            <button id="t-elev" data-i18n="tool.elev" data-i18n-title="tool.elev.t" title="Bir noktaya tıkla: o noktanın rakımı (m)">Rakım</button>
+            <button id="t-profile" data-i18n="tool.profile" data-i18n-title="tool.profile.t" title="İki nokta seç: aradaki yükseklik profili">Profil</button>
+            <button id="t-clear" data-i18n="tool.clear" data-i18n-title="tool.clear.t" title="Tüm ölçüm/işaretleri temizle">Temizle</button>
           </div>
         </div>
       </div>
     </div>
     <div id="measure-readout"></div>
     <div id="profile-panel">
-      <h5><span data-i18n="profile.title">📈 Yükseklik Profili</span><span><span class="pclose" id="t-profile-close" data-i18n-title="common.close.t" title="Kapat">✕</span></span></h5>
+      <h5><span data-i18n="profile.title">Yükseklik Profili</span><span><span class="pclose" id="t-profile-close" data-i18n-title="common.close.t" title="Kapat">×</span></span></h5>
       <canvas id="profile-canvas" width="740" height="300"></canvas>
       <div class="psum" id="profile-sum"></div>
     </div>
     <div id="sun-panel">
-      <h5><span data-i18n="sun.title">☀️ Güneş / Gölge</span><span class="pclose" id="t-sun-close" data-i18n-title="common.close.t" title="Kapat">✕</span></h5>
+      <h5><span data-i18n="sun.title">Güneş / Gölge</span><span class="pclose" id="t-sun-close" data-i18n-title="common.close.t" title="Kapat">×</span></h5>
       <div class="sun-row"><label data-i18n="sun.date">Tarih</label><input type="date" id="sun-date"></div>
       <div class="sun-row"><label data-i18n="sun.time">Saat</label><input type="range" id="sun-time" min="240" max="1320" step="5" value="780"><b id="sun-time-val">13:00</b></div>
       <div class="sun-info" id="sun-info">—</div>
       <div class="sun-note" data-i18n="sun.note">Gölgeler, modelin konumundan (enlem/boylam) ve seçilen tarih-saatten hesaplanan gerçek güneş açısıyla çizilir.</div>
     </div>
     <div id="kunye">
-      <button type="button" id="kunye-close" data-i18n-title="common.close.t" title="Kapat" aria-label="Kapat">✕</button>
-      <h4>Polat Gölü-İliç (Erzincan) — <span data-i18n="info.title">Künye</span></h4>
+      <button type="button" id="kunye-close" data-i18n-title="common.close.t" title="Kapat" aria-label="Kapat">×</button>
+      <h4><span data-i18n="ak.mn.polat">Polat Gölü-İliç (Erzincan)</span> — <span data-i18n="info.title">Künye</span></h4>
       <div class="edu-blurb"><b data-i18n="info.whatis">Bu nedir?</b> <span class="l-tr">Polat Gölü, jips (alçıtaşı) karstında gelişmiş bir dolin gölüdür: suda kolay çözünen jips yeraltında boşluklar oluşturur, yüzey çözünmesi ve tavan çökmesiyle huni biçimli dolin gelişir ve tabanında su birikir. Kıyıdaki beyaz halka jips/karbonat çökelidir.</span><span class="l-en">Polat Lake is a doline lake developed in gypsum karst: readily soluble gypsum forms underground cavities, surface dissolution and roof collapse create a funnel-shaped doline, and water collects on its floor. The white ring along the shore is a gypsum/carbonate precipitate.</span></div>
       <div class="row"><span data-i18n="info.location">Konum</span><span><span class="l-tr">39,5306°K, 38,6260°D</span><span class="l-en">39.5306°N, 38.6260°E</span></span></div>
       <div class="row"><span data-i18n="info.crs">Koordinat sistemi</span><span>UTM 37N · EPSG:32637</span></div>
@@ -281,17 +300,14 @@
       <div class="note"><span class="l-tr">Veri: DJI hava aracı ile fotogrametrik çekim (2533 görüntü).</span><span class="l-en">Data: photogrammetric survey with a DJI UAV (2533 images).</span></div>
       
       <div class="cite">
-        <button id="cite-bib" type="button" data-i18n="cite.bib">⧉ BibTeX kopyala</button>
-        <button id="cite-ris" type="button" data-i18n="cite.ris">⧉ RIS kopyala</button>
+        <button id="cite-bib" type="button" data-i18n="cite.bib">BibTeX kopyala</button>
+        <button id="cite-ris" type="button" data-i18n="cite.ris">RIS kopyala</button>
       </div>
     </div>
   </div>
 
-
   <!-- ORTOFOTO -->
   <div class="view" id="view-ortho"><div class="osd" id="osd-ortho"></div></div>
-
-
 
   <!-- DEM 2B -->
   <div class="view" id="view-dem2d">
@@ -300,7 +316,7 @@
       <button class="dl active" data-img="dem_relief.jpg" data-leg="dem" data-i18n="dem.relief">Renkli DEM</button>
       <button class="dl" data-img="slope.jpg" data-leg="slope" data-i18n="dem.slope">Eğim</button>
       <button class="dl" data-img="aspect.jpg" data-leg="aspect" data-i18n="dem.aspect">Bakı</button>
-      <button class="dl dl-toggle" id="dem-contour" data-i18n="dem.contourtgl" data-vt-title="dem.contourtgl.t" title="Eşyükselti eğrilerini aç/kapa">⛰ Eşyükselti</button>
+      <button class="dl dl-toggle" id="dem-contour" data-i18n="dem.contourtgl" data-vt-title="dem.contourtgl.t" title="Eşyükselti eğrilerini aç/kapa">Eşyükselti</button>
     </div>
     <div id="dem-legend" class="maplegend">
       <div class="leg" data-leg="dem">
@@ -344,16 +360,14 @@
     </div>
   </div>
 
-
-
   <!-- KARŞILAŞTIR: ortofoto ↔ DEM sürgülü karşılaştırma -->
   <div class="view" id="view-compare">
     <div id="cmp-wrap">
       <img id="cmp-base" alt="Ortofoto" data-vt-alt="cmp.alt.ortho">
       <div id="cmp-top"><img id="cmp-top-img" alt="DEM katmanı" data-vt-alt="cmp.alt.dem"></div>
-      <div id="cmp-divider"><div id="cmp-handle">⇋</div></div>
-      <div class="cmp-lbl cmp-lbl-l" data-i18n="cmp.ortho">📷 Ortofoto</div>
-      <div class="cmp-lbl cmp-lbl-r">🗺 <span id="cmp-lbl-r" data-i18n="dem.relief">Renkli DEM</span></div>
+      <div id="cmp-divider"><div id="cmp-handle">↔</div></div>
+      <div class="cmp-lbl cmp-lbl-l" data-i18n="cmp.ortho">Ortofoto</div>
+      <div class="cmp-lbl cmp-lbl-r"><span id="cmp-lbl-r" data-i18n="dem.relief">Renkli DEM</span></div>
       <div id="cmp-pick">
         <button class="cdl active" data-img="dem_relief.jpg" data-key="dem.relief" data-i18n="dem.relief">Renkli DEM</button>
         <button class="cdl" data-img="slope.jpg" data-key="dem.slope" data-i18n="dem.slope">Eğim</button>
@@ -404,27 +418,24 @@
     </div>
   </div>
 
-
-  <div id="warn" data-i18n="warn.perf">⚠️ "Yüksek" ve "En Yüksek" güçlü bir bilgisayar ister. Model açılmazsa veya takılırsa daha düşük bir kalite seçin.</div>
+  <div id="warn" data-i18n="warn.perf">"Yüksek" ve "En Yüksek" güçlü bir bilgisayar ister. Model açılmazsa veya takılırsa daha düşük bir kalite seçin.</div>
 
   <!-- Yardım paneli: tüm araçların ne işe yaradığı + nasıl kullanılacağı -->
   <div id="help-panel">
     <div class="hp-card">
-      <h4><span data-i18n="help.title">Araçlar — Ne işe yarar, nasıl kullanılır</span><span class="pclose" id="t-help-close" data-i18n-title="common.close.t" title="Kapat">✕</span></h4>
+      <h4><span data-i18n="help.title">Araçlar — Ne işe yarar, nasıl kullanılır</span><span class="pclose" id="t-help-close" data-i18n-title="common.close.t" title="Kapat">×</span></h4>
       <div class="hp-intro" data-i18n="help.intro">Her araç bir kez açılır/kapanır. Ölçüm araçları için modele tıklayarak nokta seç.</div>
       <div id="hp-list"></div>
     </div>
   </div>
 
-
-  <!-- ✨ Foto-gerçekçi (Gaussian Splatting) görünümü: splat.html iframe'de, sekme ilk açılınca yüklenir -->
+  <!-- Foto-gerçekçi (Gaussian Splatting) görünümü: splat.html iframe'de, sekme ilk açılınca yüklenir -->
   <div class="view" id="view-splat">
     <iframe id="splat-frame" title="Foto-gerçekçi görünüm (Gaussian Splatting)" data-vt-title="splat.title"
-      data-src="../splat.html?m=polat&v=63b4666f5c&up=-0.034,0.055,0.998&clook=0.004,-0.048,-0.010&cpos=-0.242,0.612,0.872&mindist=0.14&maxdist=2.48&minpol=0&maxpol=60&alpha=6&zmax=8&g=a27208bd68"
-      style="width:100%; height:100%; border:0; display:block; background:#0b0f14;"
+      data-src="../splat.html?m=polat&v=63b4666f5c&up=-0.034,0.055,0.998&clook=0.004,-0.048,-0.010&cpos=-0.242,0.612,0.872&mindist=0.14&maxdist=2.48&minpol=0&maxpol=60&alpha=6&zmax=8&g=e6b70833d7"
+      style="width:100%; height:100%; border:0; display:block; background:#0C0E0D;"
       allow="fullscreen; xr-spatial-tracking" loading="lazy"></iframe>
   </div>
-
 
 
   <script type="importmap">
@@ -570,7 +581,7 @@
 
   (function loop(){ requestAnimationFrame(loop); if (activeRender) activeRender(); })();
 
-  // ===================== ✨ FOTO-GERÇEKÇİ (Gaussian Splatting) =====================
+  // ===================== FOTO-GERÇEKÇİ (Gaussian Splatting) =====================
   // Yalnız splat sekmesi olan modelde (#view-splat varsa). iframe izole + lazy: sekme ilk tıklanınca yüklenir.
   if (document.getElementById('view-splat')) {
     registerView('splat', () => {
@@ -588,7 +599,7 @@
   {
     const host = document.getElementById('view-model');
     const statusEl = document.getElementById('model-status');
-    const setStatus = (t, ok) => { statusEl.textContent = (window.T?window.T('st.prefix'):'Durum: ') + t; statusEl.style.background = ok===true?'rgba(22,54,31,.92)':ok===false?'rgba(70,26,26,.95)':'rgba(20,24,30,.85)'; };
+    const setStatus = (t, ok) => { statusEl.textContent = (window.T?window.T('st.prefix'):'Durum: ') + t; statusEl.style.background = ok===true?'rgba(22,54,31,.92)':ok===false?'rgba(70,26,26,.95)':'rgba(16,18,17,.9)'; };
 
     const renderer = new THREE.WebGLRenderer({ antialias:true, preserveDrawingBuffer:false });
     renderer.setPixelRatio(Math.min(devicePixelRatio,2));
@@ -597,7 +608,7 @@
     host.appendChild(renderer.domElement);
     renderer.domElement.addEventListener('webglcontextlost', (e) => { e.preventDefault(); setStatus(Tt('st.ctxlost'), false); });
 
-    const scene = new THREE.Scene(); scene.background = new THREE.Color(0x0e1116);
+    const scene = new THREE.Scene(); scene.background = new THREE.Color(0x0c0e0d);
     const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100000);
     scene.add(new THREE.HemisphereLight(0xffffff,0x3a3f4a,1.2));
     scene.add(new THREE.AmbientLight(0xffffff,0.35));
@@ -749,16 +760,16 @@
       ctx.strokeStyle = 'rgba(255,255,255,.14)'; ctx.lineWidth = 1.5;
       ctx.beginPath(); ctx.moveTo(pad, 12); ctx.lineTo(pad, H - pad); ctx.lineTo(W - 8, H - pad); ctx.stroke();
       const grad = ctx.createLinearGradient(0, 12, 0, H - pad);
-      grad.addColorStop(0, 'rgba(56,232,208,.5)'); grad.addColorStop(1, 'rgba(47,109,240,.04)');
+      grad.addColorStop(0, 'rgba(255,106,61,.42)'); grad.addColorStop(1, 'rgba(255,106,61,.03)');
       ctx.beginPath(); ctx.moveTo(X(pts[0].d), Y(pts[0].y));
       pts.forEach(p => ctx.lineTo(X(p.d), Y(p.y)));
       ctx.lineTo(X(dmax), H - pad); ctx.lineTo(pad, H - pad); ctx.closePath(); ctx.fillStyle = grad; ctx.fill();
       ctx.beginPath(); ctx.moveTo(X(pts[0].d), Y(pts[0].y));
       pts.forEach(p => ctx.lineTo(X(p.d), Y(p.y)));
-      ctx.strokeStyle = '#38e8d0'; ctx.lineWidth = 2.5; ctx.stroke();
+      ctx.strokeStyle = '#FF6A3D'; ctx.lineWidth = 2.5; ctx.stroke();
       const off = (MIDZ != null) ? MIDZ : 0;
       lastProfile = pts.map(p => ({ d: +p.d.toFixed(2), z: +(p.y + off).toFixed(2) }));
-      ctx.fillStyle = '#9aa3af'; ctx.font = '14px Inter, system-ui, sans-serif';
+      ctx.fillStyle = '#A9ACA5'; ctx.font = "14px 'IBM Plex Mono', ui-monospace, monospace";
       ctx.textAlign = 'right'; ctx.fillText(Math.round(ymax + off) + ' m', pad - 6, 18); ctx.fillText(Math.round(ymin + off) + ' m', pad - 6, H - pad + 2);
       ctx.textAlign = 'center'; ctx.fillText('0', pad, H - pad + 22); ctx.fillText(Math.round(dmax) + ' m', W - 30, H - pad + 22);
       const sum = document.getElementById('profile-sum'); sum.replaceChildren();
@@ -773,7 +784,7 @@
         const pts = sampleProfile(ppts[0], ppts[1]);
         // 3B çizgi topografyayı TAKİP ETSİN: düz A→B yerine yüzeye düşürülmüş örnek noktalarını bağla
         const linePts = (pts.length >= 2) ? pts.map(s => s.p) : [ppts[0], ppts[1]];
-        const ln = new THREE.Line(new THREE.BufferGeometry().setFromPoints(linePts), new THREE.LineBasicMaterial({ color: 0x38e8d0, depthTest: false })); ln.renderOrder = 999; measureGroup.add(ln);
+        const ln = new THREE.Line(new THREE.BufferGeometry().setFromPoints(linePts), new THREE.LineBasicMaterial({ color: 0xff6a3d, depthTest: false })); ln.renderOrder = 999; measureGroup.add(ln);
         drawProfile(pts);
       }
     }
@@ -841,9 +852,9 @@
     function updateVolReadout(){
       readout.replaceChildren(); readout.style.display='block';
       if(vpts.length < 3){ readout.append(document.createTextNode(Tt('vol.prompt',{n:vpts.length}))); return; }
-      const mkBtn = (txt,bg,fn) => { const b=document.createElement('button'); b.textContent=txt; b.style.cssText='background:'+bg+';color:#fff;border:0;border-radius:6px;padding:3px 9px;margin:0 3px;cursor:pointer;font-size:12px'; b.onclick=fn; return b; };
+      const mkBtn = (txt,bg,fn) => { const b=document.createElement('button'); b.textContent=txt; b.style.cssText='background:'+bg+';color:#121413;border:0;border-radius:0;padding:4px 10px;margin:0 3px;cursor:pointer;font-size:12px;font-weight:600'; b.onclick=fn; return b; };
       readout.append(document.createTextNode(vpts.length+' '+Tt('common.points')+' · '));
-      readout.append(mkBtn(Tt('vol.calc'), '#2f6df0', () => {
+      readout.append(mkBtn(Tt('vol.calc'), '#E8491D', () => {
         readout.replaceChildren(document.createTextNode(Tt('vol.calcing')));
         setTimeout(() => {
           const r = computeVolume(); readout.replaceChildren();
@@ -851,10 +862,10 @@
           const ba=document.createElement('b'); ba.textContent=fmt0(r.area)+' m²';
           const bh=document.createElement('b'); bh.textContent=r.maxH.toLocaleString(LOC(),{maximumFractionDigits:1})+' m';
           readout.append(Tt('vol.vol'), bv, Tt('vol.area'), ba, Tt('vol.maxh'), bh, '  ');
-          readout.append(mkBtn(Tt('common.clearbtn'), '#3a4250', () => { clearVol(); updateVolReadout(); }));
+          readout.append(mkBtn(Tt('common.clearbtn'), '#D9D6CE', () => { clearVol(); updateVolReadout(); }));
         }, 30);
       }));
-      readout.append(mkBtn(Tt('common.clearbtn'), '#3a4250', () => { clearVol(); updateVolReadout(); }));
+      readout.append(mkBtn(Tt('common.clearbtn'), '#D9D6CE', () => { clearVol(); updateVolReadout(); }));
     }
     const btnV = document.getElementById('t-vol');
     if(btnV) btnV.onclick = () => {
@@ -898,9 +909,9 @@
     function updateAreaReadout(){
       readout.replaceChildren(); readout.style.display='block';
       if(apts.length < 3){ readout.append(document.createTextNode(Tt('ar.prompt',{n:apts.length}))); return; }
-      const mkBtn=(txt,bg,fn)=>{ const b=document.createElement('button'); b.textContent=txt; b.style.cssText='background:'+bg+';color:#fff;border:0;border-radius:6px;padding:3px 9px;margin:0 3px;cursor:pointer;font-size:12px'; b.onclick=fn; return b; };
+      const mkBtn=(txt,bg,fn)=>{ const b=document.createElement('button'); b.textContent=txt; b.style.cssText='background:'+bg+';color:#121413;border:0;border-radius:0;padding:4px 10px;margin:0 3px;cursor:pointer;font-size:12px;font-weight:600'; b.onclick=fn; return b; };
       readout.append(document.createTextNode(apts.length+' '+Tt('common.points')+' · '));
-      readout.append(mkBtn(Tt('ar.calc'), '#cf7b1d', () => {
+      readout.append(mkBtn(Tt('ar.calc'), '#E8491D', () => {
         readout.replaceChildren(document.createTextNode(Tt('vol.calcing')));
         setTimeout(() => {
           const r=computeArea(); readout.replaceChildren();
@@ -908,10 +919,10 @@
           const bs=document.createElement('b'); bs.textContent=fmt0(r.surf)+' m²';
           const bk=document.createElement('b'); bk.textContent=(r.planar>0?(r.surf/r.planar):1).toLocaleString(LOC(),{maximumFractionDigits:2})+'×';
           readout.append(Tt('ar.planar'), bp, Tt('ar.surf'), bs, Tt('ar.rough'), bk, '  ');
-          readout.append(mkBtn(Tt('common.clearbtn'), '#3a4250', () => { clearArea(); updateAreaReadout(); }));
+          readout.append(mkBtn(Tt('common.clearbtn'), '#D9D6CE', () => { clearArea(); updateAreaReadout(); }));
         }, 30);
       }));
-      readout.append(mkBtn(Tt('common.clearbtn'), '#3a4250', () => { clearArea(); updateAreaReadout(); }));
+      readout.append(mkBtn(Tt('common.clearbtn'), '#D9D6CE', () => { clearArea(); updateAreaReadout(); }));
     }
     if(btnArea) btnArea.onclick = () => {
       areaMode = !areaMode; btnArea.classList.toggle('on', areaMode);
@@ -974,7 +985,7 @@
       waypoints.push({ pos: camera.position.clone(), tgt: controls.target.clone() });
       readout.replaceChildren(document.createTextNode(Tt('wp.added',{n:waypoints.length})));
       const clr = document.createElement('button'); clr.textContent = Tt('wp.clear');
-      clr.style.cssText='background:#3a4250;color:#fff;border:0;border-radius:6px;padding:3px 9px;margin-left:4px;cursor:pointer;font-size:12px';
+      clr.style.cssText='background:#D9D6CE;color:#121413;border:0;border-radius:0;padding:4px 10px;margin-left:4px;cursor:pointer;font-size:12px;font-weight:600';
       clr.onclick = () => { waypoints.length = 0; readout.style.display='none'; };
       readout.append(clr); readout.style.display='block';
     };
@@ -1144,7 +1155,7 @@ ER  - `;
     function addScalebar(){
       if (typeof v.scalebar !== 'function' || !v.world.getItemAt(0)) return;
       const wpx = v.world.getItemAt(0).getContentSize().x;
-      v.scalebar({ type: OpenSeadragon.ScalebarType.MAP, pixelsPerMeter: wpx / 1479.9, location: OpenSeadragon.ScalebarLocation.BOTTOM_RIGHT, minWidth:'90px', barThickness:3, color:'#e8edf2', fontColor:'#e8edf2', backgroundColor:'rgba(18,22,28,.75)', fontSize:'12px' });
+      v.scalebar({ type: OpenSeadragon.ScalebarType.MAP, pixelsPerMeter: wpx / 1479.9, location: OpenSeadragon.ScalebarLocation.BOTTOM_RIGHT, minWidth:'90px', barThickness:3, color:'#ECE9E1', fontColor:'#ECE9E1', backgroundColor:'rgba(12,14,13,.78)', fontSize:'12px' });
     }
     function removeContour(){ while(v.world.getItemCount() > 1) v.world.removeItem(v.world.getItemAt(v.world.getItemCount()-1)); }
     async function addContour(){
