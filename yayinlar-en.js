@@ -5,7 +5,8 @@
  * mevcut çevirileri kaydırmaz. Anahtarı burada olmayan bloklar Türkçe kalır.
  * t: başlık (yoksa TR başlık kalır), a: özet (yoksa TR özet kalır).
  * İngilizce yayımlanmış kayıtlarda t, resmî (Crossref/DergiPark) başlığın kendisidir;
- * resmî İngilizce başlığı olan Türkçe makalelerde (TJB, Behzat, IGGE, Burdur) o başlık kullanılır.
+ * resmî İngilizce başlığı olan Türkçe makalelerde (TJB, Behzat, IGGE, Burdur, LandTrendr, Of) o başlık kullanılır.
+ * LandTrendr ve Of başlıklarını yazar bildirdi (2026-11-11); Burdur başlığı DergiPark makale sayfasındaki İngilizce başlıktır.
  */
 window.PUBS_EN = {
   /* ===== Makaleler ===== */
@@ -14,7 +15,7 @@ window.PUBS_EN = {
     a: "The Otlukbeli travertines (Erzincan) are evaluated as geological and cultural heritage (a geosite). The area hosts a travertine barrier lake (Otlukbeli Lake) formed by rare mineral-rich waters, together with travertine cones, chimneys, terraces and ridges."
   },
   'a-landtrendr2026': {
-    t: "Classification of Forest Degradation and Recovery Processes Using the LandTrendr Algorithm and Machine Learning: The Case of Milas-Bodrum",
+    t: "Classification of Forest Disturbance and Recovery Dynamics Using the LandTrendr Algorithm and Machine Learning: A Case Study of Milas-Bodrum",
     a: "Forest dynamics in the Milas-Bodrum area over 2013–2024 are analyzed with remote sensing and machine learning. An NBR time series from 49 Landsat 8 images is processed with LandTrendr and classified into “Healthy / Degradation / Recovery” using Random Forest. “Degradation” fell to 24% over 2014–2021, then jumped to 47% after the major 2021 wildfire; by 2024 “Recovery” reached 29%."
   },
   'a-ege2025': {
@@ -26,7 +27,7 @@ window.PUBS_EN = {
     a: "Flood hazard in the Endek Stream and Kırmızı Stream basins (Horasan-Erzurum) is assessed with unit hydrographs and GIS. Flow direction/accumulation/slope are derived from a 25 m DEM. Peak discharge reaches 14,408 m³/s in ~18.5 h for Endek and 4,251 m³/s in ~2.5 h for Kırmızı; the model was validated by correctly predicting the 2010 Saçlık Village flood (6 fatalities)."
   },
   'a-afet2024': {
-    t: "Landslide Risk Susceptibility Analysis in Of District (Trabzon) with the Analytic Hierarchy Process (AHP) Method",
+    t: "Landslide Risk Susceptibility Analysis in Of District (Trabzon) by Analytical Hierarchy Process (AHS) Method",
     a: "Landslide risk in Of district (Trabzon) is analyzed with the AHP method integrated in GIS. 60 km² (23% of the district) was found to be risky/very risky, 67.7 km² (26%) moderate, and 132.4 km² (51%) low/very low landslide risk."
   },
   'a-flsrt2023': {
@@ -86,7 +87,7 @@ window.PUBS_EN = {
     a: "Detection of settlements relocated for natural and human reasons in Erzincan, using GIS and remote sensing."
   },
   'p-ucek2021': {
-    t: "Detection of Level Changes in Lakes in the Burdur Basin with Geographic Information Systems (GIS) and Remote Sensing (RS)",
+    t: "Detection of Level Changes in Lakes in Burdur Basin with Geographical Information Systems (GIS) and Remote Sensing (RS)",
     a: "Detection of water-level changes in the lakes of the Burdur basin with GIS and remote sensing (conference version of the related Eastern Geographical Review article)."
   },
   'p-turkdunya2020': {
@@ -96,6 +97,11 @@ window.PUBS_EN = {
   'p-cudes2017': {
     t: "A Geographical Approach to the Gated-Community Trend in the Residential Areas of Üsküdar",
     a: "A geographical approach to the gated-community trend in the residential areas of Üsküdar (early/conference version of the related IGGE article)."
+  },
+  /* ===== Kitap (başlık çeviridir; Zenodo kaydında yalnız Türkçe başlık var) ===== */
+  'k-melen2026': {
+    t: "Melen Stream Basin: Geographical Planning and Integrated Basin Management",
+    a: "The physical and human characteristics of the Melen Stream Basin are analyzed and synthesized with a range of methods, chiefly Geographic Information Systems, and projections for the future are made. The findings are evaluated in light of national and international action plans and implementation provisions, setting out holistic goals and strategies centered on protecting people and nature."
   },
   /* ===== Kitap bölümleri ===== */
   'b-rize2023': {
@@ -131,6 +137,7 @@ window.PUBS_EN_LBL = {
   'Özet Bildiri': 'Conference Abstract',
   'Bildiri': 'Conference Paper',
   'Yayımlanmamış Bildiri': 'Unpublished Presentation',
+  'Kitap': 'Book',
   'Kitap Bölümü': 'Book Chapter',
   'Doktora Tezi': 'Doctoral Dissertation',
   'Yüksek Lisans Tezi': 'Master’s Thesis',

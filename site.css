@@ -425,6 +425,19 @@ h2 { font:300 clamp(2.5rem,6.3vw,5.7rem)/.98 var(--serif); letter-spacing:-.03em
 .cite b { font:300 clamp(3rem,7.4vw,6.6rem)/.86 var(--serif); letter-spacing:-.04em; font-variant-numeric:lining-nums tabular-nums; transition:color .4s ease; }
 a.cite:hover b { color:var(--acct); }
 @media (max-width:640px) { .cites { grid-template-columns:1fr 1fr; } .cite:nth-child(3) { border-left:0; padding-left:0; } }
+/* Dizinlere göre atıf dökümü (kaynak: AVESİS + Google Scholar; sayıları scripts/atif_guncelle.py yazar) */
+.cidx { margin-top:clamp(30px,4vw,54px); align-items:start; }
+.cidx-a { grid-column:1 / span 7; } .cidx-b { grid-column:9 / -1; }
+.cidx-t { width:100%; border-collapse:collapse; font-size:.97rem; }
+.cidx-t caption { text-align:left; padding-bottom:12px; }
+.cidx-t th, .cidx-t td { padding:11px 0; border-bottom:1px solid var(--rule); text-align:left; font-weight:400; }
+.cidx-t thead th { font:500 .7rem/1.25 var(--sans); font-stretch:94%; letter-spacing:.17em; text-transform:uppercase; color:var(--fg3); border-top:1px solid var(--fg); }
+.cidx-t thead th.raw { text-transform:none; letter-spacing:.08em; font-size:.8rem; }
+.cidx-t td, .cidx-t thead th + th { width:6.4em; text-align:right; }
+.cidx-t td { font:400 .86rem/1.45 var(--mono); font-variant-numeric:tabular-nums; }
+.cidx-b .note:first-child { margin-top:0; }
+.cidx-b .note b { font-weight:500; color:var(--fg2); }
+@media (max-width:900px) { .cidx-a, .cidx-b { grid-column:1 / -1; } .cidx-b { margin-top:20px; } }
 
 /* ==========================================================================================
    PROJELER · DERSLER
@@ -439,6 +452,7 @@ a.cite:hover b { color:var(--acct); }
 @media (max-width:900px) { .prow .when, .prow .what, .prow .who { grid-column:1 / -1; } .prow .when { padding-top:0; margin-bottom:8px; } .prow .who { margin-top:10px; } }
 .teach-a { grid-column:1 / span 7; } .teach-b { grid-column:9 / -1; }
 .teach-a .lbl, .teach-b .lbl { display:block; padding-bottom:12px; border-bottom:1px solid var(--fg); }
+@media (min-width:1041px) { .courses { columns:2; column-gap:clamp(24px,3vw,48px); } .courses li { break-inside:avoid; } }
 .courses li { display:flex; justify-content:space-between; align-items:baseline; gap:18px; padding:11px 0; border-bottom:1px solid var(--rule); font-size:.97rem; }
 .courses .lv { flex:0 0 auto; font-style:normal; color:var(--fg3); }
 .courses .lv-y { color:var(--acct); }
