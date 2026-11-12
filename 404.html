@@ -2,39 +2,44 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8" />
+<meta http-equiv="Content-Security-Policy" data-csp="strict" content="default-src 'self'; script-src 'self' 'sha256-/x7W7R75k8Roq0WaVRQX9blP4OufE5xbAdzklGxsgpw=' 'sha256-HV/pscJuCgQJGuc/KY67KHGb61soWIf8fadKsPq27FY=' 'sha256-Z7BYtlxsVJ0sGTHGjJGmrw/sOjP0PxlAnyxoTVop1PU='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://surek-counter.tas-mehmet-akif.workers.dev https://api.openalex.org; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<meta name="text-scale" content="scale" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content="noindex, follow" />
 <title>Sayfa bulunamadı (404) — Mehmet Akif Taş</title>
 <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<meta name="theme-color" content="#F1EFE9" />
+<meta name="theme-color" content="#F1EFE9" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#0C0E0D" media="(prefers-color-scheme: dark)" />
 <script>document.documentElement.classList.add('js');</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/doc.css?v=20261110" />
+<link rel="stylesheet" href="/fonts/fonts.css?v=20261112" />
+<link rel="stylesheet" href="/tokens.css?v=20261112" />
+<link rel="stylesheet" href="/doc.css?v=20261112" />
 <style>
   /* ===== 404 — haritada olmayan pafta ===== */
   body { min-height:100svh; display:flex; flex-direction:column; }
-  main { position:relative; flex:1; display:flex; align-items:flex-end; overflow:hidden; padding:clamp(80px,12vh,140px) 0 clamp(30px,6vh,64px); }
+  main { position:relative; flex:1; display:flex; align-items:flex-end; overflow:hidden; padding:clamp(80px,12vh,140px) 0 clamp(30px,6vh,64px);
+         --code:clamp(8.4rem,4rem + 18vw,21rem); --tsz:min(128vmin,1080px); }
   /* Eğriler yalnız zirve çevresinde görünür, dışa doğru solar: yazıların üstünden çizgi geçmez. */
-  .topo { position:absolute; left:58%; top:44%; width:min(128vmin,1080px); height:min(128vmin,1080px); transform:translate(-50%,-50%); pointer-events:none;
+  /* Halkalar "404"ün sağında kalır: görünen en sol halka = merkez − 0,307 × boyut; merkez rakamın sağ kenarından
+     (sol boşluk + 1,45 × yazı boyu) en az 24 px uzağa itilir. Yazı büyüdükçe (metin ölçeği) halkalar da sağa kayar. */
+  .topo { position:absolute; left:max(58%, calc(50% - min(50% - var(--gut), 560px) + 1.45 * var(--code) + 24px + .307 * var(--tsz))); top:44%; width:var(--tsz); height:var(--tsz); transform:translate(-50%,-50%); pointer-events:none;
           -webkit-mask-image:radial-gradient(circle closest-side at 60.3% 43.3%, #000 0, #000 34%, transparent 82%); mask-image:radial-gradient(circle closest-side at 60.3% 43.3%, #000 0, #000 34%, transparent 82%); }
   @media (max-width:760px) { .topo { left:62%; top:23%; } }
   .topo path { fill:none; stroke:var(--fg); stroke-width:1; vector-effect:non-scaling-stroke; opacity:.3; }
   .topo path.idx { opacity:.6; stroke-width:1.5; }
-  .js .topo path { stroke-dasharray:1; stroke-dashoffset:1; animation:draw 2.4s var(--ease) forwards; animation-delay:calc(var(--k) * 90ms); }
+  @media (prefers-reduced-motion:no-preference) { .js .topo path { stroke-dasharray:1; stroke-dashoffset:1; animation:draw 2.4s var(--ease) forwards; animation-delay:calc(var(--k) * 90ms); } }
   @keyframes draw { to { stroke-dashoffset:0; } }
   .topo circle { fill:var(--accent); }
   .box { position:relative; }
-  .code { font:300 clamp(6.5rem,27vw,21rem)/.8 var(--serif); letter-spacing:-.06em; margin-left:-.05em; font-variant-numeric:lining-nums; }
+  .code { font:300 var(--code)/.8 var(--serif); letter-spacing:-.06em; margin-left:-.05em; font-variant-numeric:lining-nums; }
   .box .dlbl { display:flex; gap:14px; margin-bottom:clamp(24px,3.4vw,50px); }
   .box .dlbl .dmono { color:var(--acct); }
   h1 { font:400 clamp(1.5rem,3vw,2.3rem)/1.15 var(--serif); letter-spacing:-.018em; margin:clamp(20px,3vw,34px) 0 10px; padding-top:clamp(18px,2.4vw,28px); border-top:1px solid var(--fg); }
   .box p { color:var(--fg2); max-width:54ch; }
   .links { display:flex; flex-wrap:wrap; gap:10px; margin:clamp(20px,3vw,30px) 0 0; }
   .lang { margin-top:22px; font-size:.84rem; color:var(--fg2); }
-  @media (prefers-reduced-motion:reduce) { .js .topo path { stroke-dashoffset:0; animation:none; } }
 </style>
 </head>
 <body>

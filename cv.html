@@ -2,6 +2,9 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8" />
+<meta http-equiv="Content-Security-Policy" data-csp="strict" content="default-src 'self'; script-src 'self' 'sha256-T6DOxe9CQpsh92Qphg2bo8BwZue625soPyVQRgP3Nco=' 'sha256-vgrCxAjhbfv/0PEoS5BWOd3CBEyaTit3K73XYrljUvI='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://surek-counter.tas-mehmet-akif.workers.dev https://api.openalex.org; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<meta name="text-scale" content="scale" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Özgeçmiş (CV) — Dr. Öğr. Üyesi Mehmet Akif Taş</title>
 <meta name="description" content="Dr. Öğr. Üyesi Mehmet Akif Taş — akademik özgeçmiş (CV): eğitim, projeler, dersler, yayınlar, atıf metrikleri." />
@@ -19,35 +22,41 @@
 <meta name="twitter:title" content="Özgeçmiş (CV) — Dr. Öğr. Üyesi Mehmet Akif Taş" />
 <meta name="twitter:image" content="https://mehmetakiftas.com/akif-avatar.jpg" />
 <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#F1EFE9" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#0C0E0D" media="(prefers-color-scheme: dark)" />
+<link rel="stylesheet" href="/fonts/fonts.css?v=20261112" />
+<link rel="stylesheet" href="/tokens.css?v=20261112" />
 <style>
   /* ===== Özgeçmiş — kâğıt üzerinde tek sayfa düzeni (Pafta). Renkler site.css / doc.css ile aynı. ===== */
-  :root { --ink:#121413; --mut:#555955; --fnt:#777B75; --acc:#B5380F; --accent:#E8491D; --line:rgba(18,20,19,.17); --bg:#F1EFE9; --paper:#FBFAF6;
-          --serif:'Newsreader','Iowan Old Style','Palatino Linotype',Georgia,serif; --sans:'Archivo','Helvetica Neue',Arial,sans-serif; --mono:'IBM Plex Mono',ui-monospace,Consolas,monospace; }
+  /* renk ve yazı tipleri tokens.css'ten (tek kaynak); --sheet: kâğıt sayfanın kendisi */
+  :root { --txt:var(--ink); --mut:var(--fg2-paper); --fnt:var(--fg3-paper); --acc:var(--acct-paper); --line:var(--rule-paper); --bg:var(--paper); --sheet:#FBFAF6; --body:#2D312F; color-scheme:light; }
+  /* ekranda sistem koyu tercihine uyar; yazdırma her zaman kâğıt */
+  @media screen and (prefers-color-scheme:dark) {
+    :root { --txt:var(--bone); --mut:var(--fg2-night); --fnt:var(--fg3-night); --acc:var(--acct-night); --line:var(--rule-night); --bg:var(--night); --sheet:#121413; --body:#D9D6CE; color-scheme:dark; }
+  }
   * { margin:0; padding:0; box-sizing:border-box; }
   html { -webkit-text-size-adjust:100%; text-size-adjust:100%; }
-  body { background:var(--bg); color:var(--ink); font:400 15px/1.55 var(--sans); font-synthesis:none; -webkit-font-smoothing:antialiased; padding:84px 16px 64px; }
+  body { background:var(--bg); color:var(--txt); font:400 .9375rem/1.55 var(--sans); font-synthesis:none; -webkit-font-smoothing:antialiased; padding:84px 16px 64px; }
   ::selection { background:var(--accent); color:#121413; }
   [hidden] { display:none !important; }
   :focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
-  .sheet { max-width:860px; margin:0 auto; background:var(--paper); border:1px solid var(--line); padding:56px 60px 44px; }
-  .top { display:flex; gap:28px; align-items:center; border-bottom:1px solid var(--ink); padding-bottom:26px; margin-bottom:4px; }
+  .sheet { display:block; max-width:860px; margin:0 auto; background:var(--sheet); border:1px solid var(--line); padding:56px 60px 44px; }
+  .top { display:flex; gap:28px; align-items:center; border-bottom:1px solid var(--txt); padding-bottom:26px; margin-bottom:4px; }
   .top img { width:108px; height:108px; object-fit:cover; object-position:50% 26%; flex:0 0 auto; filter:grayscale(1) contrast(1.04); }
   h1 { font:300 clamp(1.85rem,4.6vw,2.75rem)/1.05 var(--serif); letter-spacing:-.026em; }
   .role { color:var(--mut); font-size:.86rem; line-height:1.45; margin:9px 0 11px; }
   .meta { font:400 .72rem/1.8 var(--mono); color:var(--mut); overflow-wrap:anywhere; }
-  .meta a { color:var(--ink); text-decoration:underline; text-underline-offset:3px; text-decoration-color:var(--fnt); }
+  .meta a { color:var(--txt); text-decoration:underline; text-underline-offset:3px; text-decoration-color:var(--fnt); }
   .meta a:hover { color:var(--acc); }
-  .meta b { color:var(--ink); font-weight:500; }
+  .meta b { color:var(--txt); font-weight:500; }
   h2 { font:500 .7rem/1.3 var(--sans); font-stretch:94%; text-transform:uppercase; letter-spacing:.17em; color:var(--acc); margin:32px 0 12px; padding-bottom:9px; border-bottom:1px solid var(--line); }
   .h2n { font-weight:400; text-transform:none; letter-spacing:0; color:var(--mut); font-size:.72rem; }
-  .p { font-size:.9rem; line-height:1.6; color:#2D312F; }
+  .p { font-size:.9rem; line-height:1.6; color:var(--body); }
   .p a { color:var(--acc); text-decoration:underline; text-underline-offset:3px; }
-  .stats { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); border-top:1px solid var(--ink); }
+  .stats { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); border-top:1px solid var(--txt); }
   .stats div { display:flex; flex-direction:column; gap:7px; padding:13px 8px 13px 0; border-bottom:1px solid var(--line); font-size:.72rem; letter-spacing:.05em; color:var(--mut); }
   .stats div + div { border-left:1px solid var(--line); padding-left:13px; }
-  .stats b { font:300 2.15rem/.9 var(--serif); letter-spacing:-.03em; color:var(--ink); font-variant-numeric:lining-nums tabular-nums; }
+  .stats b { font:300 2.15rem/.9 var(--serif); letter-spacing:-.03em; color:var(--txt); font-variant-numeric:lining-nums tabular-nums; }
   .tags { font:italic 400 1.04rem/1.6 var(--serif); }
   .tags span:not(:last-child)::after { content:' / '; font-style:normal; color:var(--fnt); }
   .item { padding:10px 0; border-bottom:1px solid var(--line); }
@@ -64,8 +73,8 @@
   .nw { white-space:nowrap; }
   .foot { margin-top:30px; padding-top:14px; border-top:1px solid var(--line); font-size:.7rem; color:var(--mut); text-align:center; }
   .bar { position:fixed; top:16px; right:16px; display:flex; gap:8px; z-index:5; }
-  .bar a, .bar button { font:500 .66rem/1 var(--sans); letter-spacing:.14em; text-transform:uppercase; border:1px solid var(--ink); background:var(--bg); color:var(--ink); padding:11px 14px 10px; cursor:pointer; text-decoration:none; transition:background-color .3s ease, border-color .3s ease, color .3s ease; }
-  .bar button:last-child { background:var(--ink); color:var(--bg); }
+  .bar a, .bar button { font:500 .66rem/1 var(--sans); letter-spacing:.14em; text-transform:uppercase; border:1px solid var(--txt); background:var(--bg); color:var(--txt); padding:11px 14px 10px; cursor:pointer; text-decoration:none; transition:background-color .3s ease, border-color .3s ease, color .3s ease; }
+  .bar button:last-child { background:var(--txt); color:var(--bg); }
   .bar a:hover, .bar button:hover, .bar button:last-child:hover { background:var(--accent); border-color:var(--accent); color:#121413; }
   @media (max-width:680px) {
     body { padding:16px 12px 48px; }
@@ -79,7 +88,7 @@
     .sheet { border:0; max-width:none; padding:0; background:#fff; }
     .bar { display:none; }
     .item, .crow { break-inside:avoid; }
-    a { color:var(--ink); }
+    a { color:var(--txt); }
     @page { margin:14mm 15mm; }
   }
 </style>
@@ -88,9 +97,9 @@
   <div class="bar">
     <a href="/" data-en="Back to site">Siteye dön</a>
     <button id="cvlang" type="button">EN</button>
-    <button type="button" onclick="window.print()" data-en="Download as PDF">PDF olarak indir</button>
+    <button type="button" id="cvprint" data-en="Download as PDF">PDF olarak indir</button>
   </div>
-  <div class="sheet">
+  <main class="sheet" id="main">
     <div class="top">
       <img src="akif-avatar.jpg" alt="Mehmet Akif Taş" />
       <div>
@@ -184,7 +193,7 @@
     <p class="p" data-en='11 high-resolution 3D models produced with UAV photogrammetry (Otlukbeli Lake, Mezra, Katır Glacial Lakes, Fairy Chimneys, Polat Lake, Sürek Waterfall, Erzincan Stadium, Tomara Waterfall, Konarlı Waterfall, Ağnene Travertine Area, EBYÜ Faculty of Arts and Sciences) — with measurement, orthophoto and DEM tools: <a href="https://mehmetakiftas.com/">mehmetakiftas.com</a>'>İHA fotogrametrisiyle üretilmiş 11 yüksek çözünürlüklü 3B model (Otlukbeli Gölü, Mezra, Katır Buzul Gölleri, Peribacaları, Polat Gölü, Sürek Şelalesi, Erzincan Stadyumu, Tomara Şelalesi, Konarlı Şelalesi, Ağnene Traverten Alanı, EBYÜ Fen-Edebiyat Fakültesi) — ölçüm, ortofoto ve DEM araçlarıyla: <a href="https://mehmetakiftas.com/">mehmetakiftas.com</a></p>
 
     <div class="foot" data-en="This CV is automatically compiled from the AVESİS profile and academic sources · mehmetakiftas.com/cv.html">Bu özgeçmiş AVESİS profili ve akademik kaynaklardan otomatik derlenmiştir · mehmetakiftas.com/cv.html</div>
-  </div>
+  </main>
   <script>
     (function(){
       function curLang(){
@@ -213,6 +222,7 @@
       }
       var lang = curLang();
       apply(lang);
+      var pr = document.getElementById('cvprint'); if (pr) pr.addEventListener('click', function () { window.print(); });
       var btn = document.getElementById('cvlang');
       if (btn) btn.addEventListener('click', function(){
         lang = (lang==='en') ? 'tr' : 'en';
@@ -222,10 +232,10 @@
     })();
   </script>
   <script>
-    /* Üstteki kutular Google Scholar değerleridir (elle güncellenir). OpenAlex değerleri
+    /* Üstteki kutuları scripts/atif_guncelle.py AVESİS ve Google Scholar'dan yazar. OpenAlex değerleri
        onları ezmez; ayrı bir "OpenAlex (canlı)" satırında gösterilir. */
     try {
-      fetch('https://api.openalex.org/authors/A5036448179?mailto=akif.tas@erzincan.edu.tr')
+      fetch('https://api.openalex.org/authors/A5036448179?mailto=akif.tas@erzincan.edu.tr', { priority: 'low' })
         .then(function(r){return r.json();}).then(function(d){ if(!d||!d.summary_stats) return; var ss=d.summary_stats;
           function s(id,v){ var e=document.getElementById(id); if(e) e.textContent=v; }
           if (typeof d.cited_by_count!=='number') return;

@@ -1,0 +1,43 @@
+/* OTOMATİK ÜRETİLİR — scripts/fonts_fetch.py. Elle düzenleme; betiği yeniden çalıştır.
+   Yazı tipleri sitenin kendi kökeninden sunulur (SIL OFL 1.1, bkz. OFL.txt): Google Fonts'a istek gitmez.
+   '... Yedek' aileleri: yazı tipi yüklenene dek kullanılan sistem yazı tipinin ölçüleri asıl yazı tipine
+   eşitlenmiştir (size-adjust ve ascent/descent override); yükleme anında satırlar kaymaz. */
+@font-face { font-family:'Archivo'; font-style:normal; font-weight:100 900; font-stretch:62% 125%; font-display:swap;
+  src:url(archivo-normal-100_900-latin-ext.woff2) format('woff2');
+  unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family:'Archivo'; font-style:normal; font-weight:100 900; font-stretch:62% 125%; font-display:swap;
+  src:url(archivo-normal-100_900-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family:'IBM Plex Mono'; font-style:normal; font-weight:400; font-display:swap;
+  src:url(ibmplexmono-normal-400-latin-ext.woff2) format('woff2');
+  unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family:'IBM Plex Mono'; font-style:normal; font-weight:400; font-display:swap;
+  src:url(ibmplexmono-normal-400-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family:'IBM Plex Mono'; font-style:normal; font-weight:500; font-display:swap;
+  src:url(ibmplexmono-normal-500-latin-ext.woff2) format('woff2');
+  unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family:'IBM Plex Mono'; font-style:normal; font-weight:500; font-display:swap;
+  src:url(ibmplexmono-normal-500-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family:'Newsreader'; font-style:italic; font-weight:200 800; font-display:swap;
+  src:url(newsreader-italic-200_800-latin-ext.woff2) format('woff2');
+  unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family:'Newsreader'; font-style:italic; font-weight:200 800; font-display:swap;
+  src:url(newsreader-italic-200_800-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family:'Newsreader'; font-style:normal; font-weight:200 800; font-display:swap;
+  src:url(newsreader-normal-200_800-latin-ext.woff2) format('woff2');
+  unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family:'Newsreader'; font-style:normal; font-weight:200 800; font-display:swap;
+  src:url(newsreader-normal-200_800-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+@font-face { font-family:'Newsreader Yedek'; font-style:normal; font-weight:100 900; src:local('Georgia');
+  size-adjust:96.77%; ascent-override:75.95%; descent-override:27.38%; line-gap-override:0.00%; }
+@font-face { font-family:'Newsreader Yedek'; font-style:italic; font-weight:100 900; src:local('Georgia Italic'), local('Georgia-Italic');
+  size-adjust:89.59%; ascent-override:82.04%; descent-override:29.58%; line-gap-override:0.00%; }
+@font-face { font-family:'Archivo Yedek'; font-style:normal; font-weight:100 900; src:local('Arial'), local('ArialMT');
+  size-adjust:99.18%; ascent-override:88.53%; descent-override:21.17%; line-gap-override:0.00%; }
+@font-face { font-family:'Plex Mono Yedek'; font-style:normal; font-weight:100 900; src:local('Courier New'), local('CourierNewPSMT');
+  size-adjust:99.98%; ascent-override:102.52%; descent-override:27.50%; line-gap-override:0.00%; }

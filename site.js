@@ -22,15 +22,29 @@
   var progress = $('#progress');
   var themed = $$('[data-theme]');
 
-  /* ---------- Kaydırma: kâğıt/gece geçişi, üst bar, ilerleme çizgisi ---------- */
-  var lastY = win.scrollY || 0, ticking = false;
+  /* ---------- Kaydırma: kâğıt/gece geçişi, üst bar, ilerleme çizgisi ----------
+     Her karede ÖNCE tüm ölçümler (okuma), SONRA tüm yazımlar: yazımdan sonra okuma, tarayıcıyı yerleşimi
+     yeniden hesaplamaya zorlar (kılavuz `performance`). Belge yüksekliği yalnız boyut değişince ölçülür. */
+  var lastY = win.scrollY || 0, ticking = false, docH = 0;
+  // Destekleyen tarayıcıda ilerleme çizgisini CSS kaydırma zaman çizelgesi sürer (site.css); JS yalnız yedek.
+  var CSS_PROGRESS = !!(win.CSS && CSS.supports && CSS.supports('animation-timeline: scroll()'));
+  var themeMeta = $('meta[name="theme-color"]');
+  var THEME = { paper: '#F1EFE9', night: '#0C0E0D' };     // tarayıcı arayüzü rengi, bölüm temasıyla birlikte
+  function measure() { docH = root.scrollHeight; }
   function onScroll() {
     var y = win.scrollY || 0, vh = win.innerHeight, mid = vh * 0.5, i, r, mode = null;
+    // 1) okuma
     for (i = 0; i < themed.length; i++) {
       r = themed[i].getBoundingClientRect();
       if (r.top <= mid && r.bottom > mid) { mode = themed[i].getAttribute('data-theme'); break; }
     }
-    if (mode && root.getAttribute('data-mode') !== mode) root.setAttribute('data-mode', mode);
+    var leadRect = words.length ? leadEl.getBoundingClientRect() : null;
+    if (!docH) measure();
+    // 2) yazım
+    if (mode && root.getAttribute('data-mode') !== mode) {
+      root.setAttribute('data-mode', mode);
+      if (themeMeta && THEME[mode]) themeMeta.setAttribute('content', THEME[mode]);
+    }
     if (top) {
       top.classList.toggle('is-solid', y > 24);
       var down = y > lastY + 4, up = y < lastY - 4, open = menu && menu.classList.contains('open');
@@ -38,16 +52,17 @@
       else if (down) top.classList.add('is-hidden');
       else if (up) top.classList.remove('is-hidden');
     }
-    if (progress) {
-      var max = Math.max(1, doc.documentElement.scrollHeight - vh);
+    if (progress && !CSS_PROGRESS) {
+      var max = Math.max(1, docH - vh);
       progress.style.transform = 'scaleX(' + Math.min(1, y / max).toFixed(4) + ')';
     }
-    lead();
+    if (leadRect) lead(leadRect);
     lastY = y; ticking = false;
   }
   function reqScroll() { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }
   win.addEventListener('scroll', reqScroll, { passive: true });
-  win.addEventListener('resize', reqScroll);
+  win.addEventListener('resize', function () { docH = 0; reqScroll(); });
+  win.addEventListener('load', function () { docH = 0; reqScroll(); });     // geç yüklenen görsel/harita yüksekliği değiştirir
 
   /* ---------- Giriş paragrafı: sözcükler kaydırdıkça belirir ---------- */
   var leadEl = $('#lead'), words = [];
@@ -62,9 +77,9 @@
     });
     lead();
   }
-  function lead() {
+  function lead(rect) {
     if (!words.length) return;
-    var r = leadEl.getBoundingClientRect(), vh = win.innerHeight;
+    var r = rect || leadEl.getBoundingClientRect(), vh = win.innerHeight;
     var p = (vh * 0.86 - r.top) / (r.height + vh * 0.36);          // 0: alttan girerken · 1: ekran ortasını geçince
     var n = Math.round(Math.max(0, Math.min(1, p)) * words.length);
     for (var i = 0; i < words.length; i++) words[i].classList.toggle('on', i < n);

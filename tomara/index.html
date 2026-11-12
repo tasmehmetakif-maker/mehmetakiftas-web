@@ -3,6 +3,9 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8" />
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'none'; form-action 'none'" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<meta name="text-scale" content="scale" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Tomara Şelalesi-Şiran (Gümüşhane) — 3B Model</title>
 <meta name="description" content="Tomara Şelalesi ve çevresinin yüksek çözünürlüklü fotogrametri 3B modeli. Döndür, yakınlaş, gerçek metre ile ölç; DEM (yükseklik/eğim/bakı)." />
@@ -20,25 +23,29 @@
 <link rel="apple-touch-icon" href="../apple-touch-icon.png" />
 <meta name="theme-color" content="#0C0E0D" />
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"Tomara Şelalesi-Şiran (Gümüşhane) — İHA fotogrametrisi 3B modeli","description":"Tomara Şelalesi ve çevresinin yüksek çözünürlüklü fotogrametri 3B modeli. Döndür, yakınlaş, gerçek metre ile ölç; DEM (yükseklik/eğim/bakı).","url":"https://mehmetakiftas.com/tomara/","image":"https://mehmetakiftas.com/tomara-onizleme.jpg","creator":{"@type":"Person","name":"Mehmet Akif Taş"},"measurementTechnique":"SfM–MVS fotogrametri (Agisoft Metashape)","keywords":["fotogrametri","3B model","SfM","DEM","ortofoto","Gaussian Splatting","jeomorfoloji"],"isAccessibleForFree":true,"dateCreated":"2026-06-02","spatialCoverage":{"@type":"Place","geo":{"@type":"GeoCoordinates","latitude":40.080245,"longitude":39.050229}}}</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js" integrity="sha384-4BsIv4BUV37POdA1NZ6UcVAsFk96MQXmFLog7pWs+JP+a8k2XjilfManEVdWDxTe" crossorigin="anonymous"></script>
-<script src="../openseadragon-scalebar.js"></script>
-<script src="../i18n.js?v=20261111c"></script>
+<link rel="stylesheet" href="/fonts/fonts.css?v=20261112" />
+<link rel="stylesheet" href="/tokens.css?v=20261112" />
+<!-- model anahtarı (Worker) ve bot denetimi (Turnstile) için bağlantı erken kurulur -->
+<link rel="preconnect" href="https://surek-ultra.tas-mehmet-akif.workers.dev" crossorigin />
+<link rel="preconnect" href="https://challenges.cloudflare.com" />
+<!-- OpenSeadragon yalnız Ortofoto/DEM sekmesinde gerekir: ayrıştırmayı durdurmasın (defer; sıra korunur) -->
+<script defer src="/vendor/openseadragon@4.1.0/build/openseadragon/openseadragon.min.js"></script>
+<script defer src="../openseadragon-scalebar.js"></script>
+<script src="../i18n.js?v=20261112"></script>
 <script>/* Sekme başlığı dile göre: "<model adı> — 3B Model" / "<model name> — 3D Model" */
 (function () { function tt() { if (!window.T) return; var n = window.T('ak.mn.tomara'); if (n && n.indexOf('ak.mn.') !== 0) document.title = n + ' — ' + window.T('tab.model'); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', tt); else tt(); window.addEventListener('langchange', tt); })();</script>
 <script defer src="/counter.js"></script>
+<script type="speculationrules">{"prefetch":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
 <style>
   /* ===== PAFTA — görüntüleyici arayüzü. Renkler site.css ile aynı: gece zemin, kemik yazı, ölçme turuncusu.
      Köşeler düz, paneller opak (cam/bulanıklık yok), ayrım ince çizgiyle. ===== */
-  :root { color-scheme: dark; --hdr:46px;
-          --night:#0C0E0D; --bone:#ECE9E1; --fg2:#A9ACA5; --fg3:#7C807A; --soft:#D9D6CE; --ink:#121413;
-          --rule:rgba(236,233,225,.16); --rule2:rgba(236,233,225,.32);
+  /* Renk ve yazı tipleri tokens.css'ten (tek kaynak); burada yalnız görüntüleyiciye özgü tonlar. */
+  :root { color-scheme: dark; --hdr:2.875rem;
+          --fg2:var(--fg2-night); --fg3:var(--fg3-night); --soft:#D9D6CE;
+          --rule:var(--rule-night); --rule2:rgba(236,233,225,.32);
           --panel:rgba(14,16,15,.95); --btn:rgba(22,25,24,.92); --btnh:rgba(44,48,46,.97);
-          --accent:#E8491D; --acct:#FF6A3D;
-          --sans:'Archivo','Helvetica Neue',Arial,sans-serif; --serif:'Newsreader','Iowan Old Style',Georgia,serif; --mono:'IBM Plex Mono',ui-monospace,Consolas,monospace; }
+          --acct:var(--acct-night); }
   * { margin:0; padding:0; box-sizing:border-box; }
   [hidden] { display:none !important; }
   html,body { width:100%; height:100%; overflow:hidden; background:var(--night); color:var(--bone); font-family:var(--sans); -webkit-font-smoothing:antialiased; }
@@ -47,50 +54,49 @@
   :focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
   /* Üst çubuk: [başlık][sekmeler][TR/EN · Portföy]. Başlık önce kısalır (…); sekmeler gerekirse yatay kayar. */
   #tabs { position:fixed; top:0; left:0; right:0; height:var(--hdr); display:flex; gap:6px; align-items:center; padding:0 12px; background:var(--night); border-bottom:1px solid var(--rule); z-index:20; }
-  #tabs strong { font:400 17px/1.2 var(--serif); letter-spacing:-.01em; margin-right:10px; flex:0 1000 auto; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .tabbar { display:flex; gap:2px; align-items:center; flex:0 1 auto; min-width:0; overflow-x:auto; overflow-y:hidden; scrollbar-width:none; -webkit-overflow-scrolling:touch; }
-  .tabbar::-webkit-scrollbar { display:none; }
-  .tab { flex:0 0 auto; white-space:nowrap; background:transparent; color:var(--fg2); border:0; padding:9px 13px 8px; border-radius:0; font:500 11px/1 var(--sans); letter-spacing:.11em; text-transform:uppercase; cursor:pointer; transition:color .25s ease, background-color .25s ease; }
+  #tabs h1 { font:400 1.0625rem/1.2 var(--serif); letter-spacing:-.01em; margin-right:10px; flex:0 1000 auto; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .tabbar { display:flex; gap:2px; align-items:center; flex:0 1 auto; min-width:0; overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; }   /* ince kaydırma çubuğu: viewer-premium.css */
+  .tab { flex:0 0 auto; white-space:nowrap; background:transparent; color:var(--fg2); border:0; padding:9px 13px 8px; border-radius:0; font:500 .6875rem/1 var(--sans); letter-spacing:.11em; text-transform:uppercase; cursor:pointer; transition:color .25s ease, background-color .25s ease; }
   .tab:hover { color:var(--bone); background:rgba(236,233,225,.07); }
   .tab.active { color:var(--ink); background:var(--accent); }
   .hdr-right { margin-left:auto; display:flex; gap:8px; align-items:center; flex:0 0 auto; }
   #lang-switch { --ls-line:var(--rule); --ls-bg:transparent; --ls-fg:var(--fg2); --ls-on-bg:var(--bone); --ls-on-fg:var(--ink); --ls-radius:0; font-family:var(--mono); }
-  .homelink { color:var(--fg2); background:transparent; border:1px solid var(--rule); padding:8px 12px 7px; border-radius:0; font:500 10.5px/1 var(--sans); letter-spacing:.13em; text-transform:uppercase; text-decoration:none; white-space:nowrap; cursor:pointer; transition:color .25s ease, border-color .25s ease; }
+  .homelink { color:var(--fg2); background:transparent; border:1px solid var(--rule); padding:8px 12px 7px; border-radius:0; font:500 .6562rem/1 var(--sans); letter-spacing:.13em; text-transform:uppercase; text-decoration:none; white-space:nowrap; cursor:pointer; transition:color .25s ease, border-color .25s ease; }
   .homelink:hover { color:var(--bone); border-color:var(--rule2); }
   .view { position:fixed; top:var(--hdr); left:0; right:0; bottom:var(--vg-ftr, 0px); display:none; }
   .view.active { display:block; }
   /* Dar ekran (≤760 px): iki satır — 1) başlık (…) + TR-EN/Portföy, 2) yatay kaydırılan sekmeler. */
   @media (max-width:760px){
-    :root { --hdr:80px; }
+    :root { --hdr:5rem; }
     #tabs { flex-wrap:wrap; align-content:center; row-gap:6px; column-gap:6px; padding:6px 10px; }
-    #tabs strong { flex:1 1 0; font-size:15px; margin-right:0; }
+    #tabs h1 { flex:1 1 0; font-size:.9375rem; margin-right:0; }
     .tabbar { order:3; flex:1 0 100%; }
     .tabbar { gap:2px; }
-    .tab { padding:8px 9px 7px; font-size:10px; letter-spacing:.08em; }
-    .homelink { padding:7px 9px 6px; font-size:9.5px; }
+    .tab { padding:8px 9px 7px; font-size:.625rem; letter-spacing:.08em; }
+    .homelink { padding:7px 9px 6px; font-size:.5938rem; }
   }
   /* İki dilli satır içi metinler (künye değerleri, "Bu nedir?"): i18n.js <html lang>'ı değiştirir. */
   .l-en { display:none; }
   html[lang="en"] .l-en { display:inline; }
   html[lang="en"] .l-tr { display:none; }
   /* Görünüm içi yükleme/hata rozeti (ortofoto, DEM, karşılaştır) */
-  .loadbadge { position:absolute; top:12px; left:50%; transform:translateX(-50%); z-index:15; display:none; max-width:92vw; text-align:center; font-size:12.5px; color:var(--bone); background:var(--panel); border:1px solid var(--rule); padding:7px 12px; border-radius:0; }
+  .loadbadge { position:absolute; top:12px; left:50%; transform:translateX(-50%); z-index:15; display:none; max-width:92vw; text-align:center; font-size:.7812rem; color:var(--bone); background:var(--panel); border:1px solid var(--rule); padding:7px 12px; border-radius:0; }
   .loadbadge.on { display:block; }
   .loadbadge.err { color:#ffb3b3; border-color:rgba(255,120,120,.35); }
-  .loadbadge button { margin-left:8px; background:var(--accent); color:var(--ink); border:0; border-radius:0; padding:3px 10px; font:inherit; font-size:12px; cursor:pointer; }
+  .loadbadge button { margin-left:8px; background:var(--accent); color:var(--ink); border:0; border-radius:0; padding:3px 10px; font:inherit; font-size:.75rem; cursor:pointer; }
   #view-dem2d .loadbadge { top:54px; }
   canvas { display:block; }
   #quality { position:absolute; top:10px; right:14px; display:flex; gap:0; flex-wrap:wrap; justify-content:flex-end; max-width:60vw; z-index:10; }
-  #quality button { background:var(--btn); color:var(--soft); border:1px solid var(--rule); margin-left:-1px; padding:7px 12px; border-radius:0; font-size:12.5px; cursor:pointer; transition:background-color .25s ease, color .25s ease; }
+  #quality button { background:var(--btn); color:var(--soft); border:1px solid var(--rule); margin-left:-1px; padding:7px 12px; border-radius:0; font-size:.7812rem; cursor:pointer; transition:background-color .25s ease, color .25s ease; }
   #quality button:hover { background:var(--btnh); color:#fff; }
   #quality button.active { background:var(--accent); color:var(--ink); border-color:var(--accent); font-weight:600; position:relative; }
   #quality button.ultra.active { background:var(--bone); border-color:var(--bone); color:var(--ink); }
-  #quality .qlabel { flex-basis:100%; text-align:right; font:500 9.5px/1.3 var(--sans); letter-spacing:.16em; text-transform:uppercase; color:var(--fg2); margin-bottom:4px; text-shadow:0 1px 2px #000, 0 0 6px rgba(0,0,0,.85); }
-  .hud { position:absolute; top:10px; left:14px; font:400 11px/1.4 var(--mono); opacity:.85; text-shadow:0 1px 4px rgba(0,0,0,.6); z-index:10; }
-  .status { position:absolute; left:14px; bottom:40px; font-size:12.5px; background:rgba(16,18,17,.9); padding:7px 11px; border-radius:0; z-index:10; max-width:80vw; }
+  #quality .qlabel { flex-basis:100%; text-align:right; font:500 .5938rem/1.3 var(--sans); letter-spacing:.16em; text-transform:uppercase; color:var(--fg2); margin-bottom:4px; text-shadow:0 1px 2px #000, 0 0 6px rgba(0,0,0,.85); }
+  .hud { position:absolute; top:10px; left:14px; font:400 .6875rem/1.4 var(--mono); opacity:.85; text-shadow:0 1px 4px rgba(0,0,0,.6); z-index:10; }
+  .status { position:absolute; left:14px; bottom:40px; font-size:.7812rem; background:rgba(16,18,17,.9); padding:7px 11px; border-radius:0; z-index:10; max-width:80vw; }
   .osd { width:100%; height:100%; background:#000; }   /* siyah: JPEG'lerin kenarındaki nodata (siyah) dişleri zeminle birleşir */
-  #warn { position:fixed; left:0; right:0; bottom:var(--vg-ftr, 0px); text-align:center; color:#E9D9B4; font-size:12px; background:rgba(18,20,19,.95); border-top:1px solid rgba(233,217,180,.22); padding:6px 14px; z-index:30; }
-  .hint { position:absolute; right:14px; bottom:40px; font-size:11.5px; color:var(--fg2); background:rgba(16,18,17,.74); padding:5px 11px; border-radius:0; z-index:10; }
+  #warn { position:fixed; left:0; right:0; bottom:var(--vg-ftr, 0px); text-align:center; color:#E9D9B4; font-size:.75rem; background:rgba(18,20,19,.95); border-top:1px solid rgba(233,217,180,.22); padding:6px 14px; z-index:30; }
+  .hint { position:absolute; right:14px; bottom:40px; font-size:.7188rem; color:var(--fg2); background:rgba(16,18,17,.74); padding:5px 11px; border-radius:0; z-index:10; }
   /* Araç çubuğu: alttaki geniş çubuk yerine DİKEY yan raylar — Görünüm+Bilgi SOLDA, Ölçüm SAĞDA.
      Alttaki yer açılır, model daha ferah görünür. Düğmeler lejant satırı gibi: ince çizgiyle ayrılır. */
   #tools { position:absolute; inset:0; pointer-events:none; z-index:12; }
@@ -101,10 +107,10 @@
   .trail-right { right:12px; align-items:flex-end; }
   .tgroup { display:flex; flex-direction:column; gap:5px; align-items:stretch; pointer-events:auto; }
   .tgroup { flex:0 0 auto; }   /* kısa ekranda gruplar ezilip üst üste binmesin: ray kayar */
-  .tglabel { font:500 9.5px/1.3 var(--sans); letter-spacing:.16em; text-transform:uppercase; color:var(--fg2); padding:0 2px; text-shadow:0 1px 2px #000, 0 0 6px rgba(0,0,0,.85); }
+  .tglabel { font:500 .5938rem/1.3 var(--sans); letter-spacing:.16em; text-transform:uppercase; color:var(--fg2); padding:0 2px; text-shadow:0 1px 2px #000, 0 0 6px rgba(0,0,0,.85); }
   .trail-right .tglabel { text-align:right; }
   .tgbtns { display:flex; flex-direction:column; gap:0; width:130px; background:var(--panel); border:1px solid var(--rule); padding:0; border-radius:0; }
-  #tools button { background:transparent; color:var(--soft); border:0; border-bottom:1px solid var(--rule); padding:8px 11px; border-radius:0; font-size:12.5px; cursor:pointer; white-space:nowrap; text-align:left; width:100%; transition:background-color .2s ease, color .2s ease; }
+  #tools button { background:transparent; color:var(--soft); border:0; border-bottom:1px solid var(--rule); padding:8px 11px; border-radius:0; font-size:.7812rem; cursor:pointer; white-space:nowrap; text-align:left; width:100%; transition:background-color .2s ease, color .2s ease; }
   #tools .tgbtns button:last-child { border-bottom:0; }
   #tools button:hover { background:rgba(236,233,225,.09); color:#fff; }
   #tools button.on { background:var(--accent); color:var(--ink); font-weight:600; }
@@ -112,177 +118,180 @@
     /* Mobilde de DİKEY yan raylar (alt taraf boş kalsın); sadece daha dar/kompakt. */
     .trail { gap:9px; max-height:calc(100% - 66px); }
     .tgbtns { width:104px; }
-    #tools button { font-size:11.5px; padding:7px 8px; }
+    #tools button { font-size:.7188rem; padding:7px 8px; }
     .hint { display:none; }   /* "Sürükle: döndür" fare ipucu — dokunmatikte gereksiz, yer açar */
   }
   #tools button.thelp { color:var(--acct); }
   #tools button.thelp:hover { background:rgba(232,73,29,.18); color:#fff; }
   /* Ölçüm/okuma kutusu ÜST-ORTADA (tabs'ın altında) — alttaki çok-satırlı kategorili
      toolbar ne kadar yüksek olursa olsun menü adlarıyla ASLA çakışmaz. */
-  #measure-readout { position:absolute; left:50%; top:56px; transform:translateX(-50%); display:none; max-width:94vw; text-align:center; background:var(--panel); border:1px solid var(--rule); padding:8px 13px; border-radius:0; font-size:13px; z-index:16; white-space:normal; }
+  #measure-readout { position:absolute; left:50%; top:56px; transform:translateX(-50%); display:none; max-width:94vw; text-align:center; background:var(--panel); border:1px solid var(--rule); padding:8px 13px; border-radius:0; font-size:.8125rem; z-index:16; white-space:normal; }
   #measure-readout b { color:var(--acct); font-weight:600; }
   #profile-panel { position:absolute; top:62px; right:14px; width:380px; max-width:46vw; display:none; background:var(--panel); border:1px solid var(--rule); border-radius:0; padding:11px 13px; z-index:14; }
-  #profile-panel h5 { font:500 10px/1.3 var(--sans); letter-spacing:.15em; text-transform:uppercase; color:var(--soft); margin-bottom:9px; display:flex; justify-content:space-between; align-items:center; }
-  #profile-panel .pclose { cursor:pointer; color:var(--fg2); font-size:18px; line-height:1; }
+  #profile-panel h5 { font:500 .625rem/1.3 var(--sans); letter-spacing:.15em; text-transform:uppercase; color:var(--soft); margin-bottom:9px; display:flex; justify-content:space-between; align-items:center; }
+  #profile-panel .pclose { cursor:pointer; color:var(--fg2); font-size:1.125rem; line-height:1; background:none; border:0; padding:2px 6px; min-block-size:24px; min-inline-size:24px; }
   #profile-panel .pclose:hover { color:#fff; }
   #profile-panel canvas { width:100%; height:150px; display:block; background:rgba(0,0,0,.3); border-radius:0; }
-  #profile-panel .psum { margin-top:8px; font:400 11px/1.5 var(--mono); color:var(--fg2); display:flex; gap:14px; flex-wrap:wrap; }
+  #profile-panel .psum { margin-top:8px; font:400 .6875rem/1.5 var(--mono); color:var(--fg2); display:flex; gap:14px; flex-wrap:wrap; }
   #profile-panel .psum b { color:var(--bone); font-weight:500; }
   #sun-panel { position:absolute; top:62px; right:14px; width:300px; max-width:46vw; display:none; background:var(--panel); border:1px solid var(--rule); border-radius:0; padding:12px 14px; z-index:14; }
-  #sun-panel h5 { font:500 10px/1.3 var(--sans); letter-spacing:.15em; text-transform:uppercase; color:var(--soft); margin-bottom:11px; display:flex; justify-content:space-between; align-items:center; }
-  #sun-panel .pclose { cursor:pointer; color:var(--fg2); font-size:18px; line-height:1; }
+  #sun-panel h5 { font:500 .625rem/1.3 var(--sans); letter-spacing:.15em; text-transform:uppercase; color:var(--soft); margin-bottom:11px; display:flex; justify-content:space-between; align-items:center; }
+  #sun-panel .pclose { cursor:pointer; color:var(--fg2); font-size:1.125rem; line-height:1; background:none; border:0; padding:2px 6px; min-block-size:24px; min-inline-size:24px; }
   #sun-panel .pclose:hover { color:#fff; }
-  #sun-panel .sun-row { display:flex; align-items:center; gap:9px; margin-bottom:9px; font-size:12.5px; color:var(--soft); }
+  #sun-panel .sun-row { display:flex; align-items:center; gap:9px; margin-bottom:9px; font-size:.7812rem; color:var(--soft); }
   #sun-panel .sun-row label { width:42px; color:var(--fg2); flex:0 0 auto; }
   #sun-panel .sun-row input[type=range] { flex:1; accent-color:#ffb52e; }
-  #sun-panel .sun-row input[type=date] { flex:1; background:var(--btn); color:var(--bone); border:1px solid var(--rule); border-radius:0; padding:4px 7px; font-size:12.5px; color-scheme:dark; }
-  #sun-panel .sun-row b { color:#ffcf66; min-width:46px; text-align:right; font:500 12.5px/1 var(--mono); }
-  #sun-panel .sun-info { font-size:12px; color:#ffcf66; background:rgba(255,181,46,.08); border-left:2px solid rgba(255,181,46,.55); border-radius:0; padding:6px 9px; margin-top:2px; }
-  #sun-panel .sun-note { margin-top:8px; font-size:10.5px; line-height:1.5; color:var(--fg3); }
+  #sun-panel .sun-row input[type=date] { flex:1; background:var(--btn); color:var(--bone); border:1px solid var(--rule); border-radius:0; padding:4px 7px; font-size:.7812rem; color-scheme:dark; }
+  #sun-panel .sun-row b { color:#ffcf66; min-width:46px; text-align:right; font:500 .7812rem/1 var(--mono); }
+  #sun-panel .sun-info { font-size:.75rem; color:#ffcf66; background:rgba(255,181,46,.08); border-left:2px solid rgba(255,181,46,.55); border-radius:0; padding:6px 9px; margin-top:2px; }
+  #sun-panel .sun-note { margin-top:8px; font-size:.6562rem; line-height:1.5; color:var(--fg3); }
   #cmp-wrap { position:absolute; inset:0; overflow:hidden; background:#000; user-select:none; touch-action:none; }
   #cmp-base, #cmp-top-img { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; }
   #cmp-top { position:absolute; inset:0; overflow:hidden; will-change:clip-path; }
   #cmp-divider { position:absolute; top:0; bottom:0; left:50%; width:2px; background:var(--bone); box-shadow:0 0 8px rgba(0,0,0,.6); cursor:ew-resize; z-index:5; }
-  #cmp-handle { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:42px; height:42px; border-radius:50%; background:var(--accent); color:var(--ink); display:flex; align-items:center; justify-content:center; font-size:19px; box-shadow:0 2px 12px rgba(0,0,0,.55); cursor:ew-resize; }
-  .cmp-lbl { position:absolute; top:14px; padding:6px 11px 5px; background:rgba(14,16,15,.9); border:1px solid var(--rule); border-radius:0; font:500 10px/1.3 var(--sans); letter-spacing:.13em; text-transform:uppercase; color:var(--bone); z-index:4; pointer-events:none; }
+  #cmp-handle { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:42px; height:42px; border-radius:50%; background:var(--accent); color:var(--ink); display:flex; align-items:center; justify-content:center; font-size:1.1875rem; box-shadow:0 2px 12px rgba(0,0,0,.55); cursor:ew-resize; }
+  .cmp-lbl { position:absolute; top:14px; padding:6px 11px 5px; background:rgba(14,16,15,.9); border:1px solid var(--rule); border-radius:0; font:500 .625rem/1.3 var(--sans); letter-spacing:.13em; text-transform:uppercase; color:var(--bone); z-index:4; pointer-events:none; }
   .cmp-lbl-l { left:14px; } .cmp-lbl-r { right:14px; }
+  .vh { position:absolute !important; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip-path:inset(50%); white-space:nowrap; border:0; }
+  #cmp-wrap:has(#cmp-range:focus-visible) #cmp-handle { outline:2px solid var(--bone); outline-offset:3px; }
   #cmp-pick { position:absolute; bottom:14px; left:50%; transform:translateX(-50%); display:flex; gap:0; z-index:6; flex-wrap:wrap; justify-content:center; max-width:90vw; }
-  #cmp-pick .cdl { background:var(--btn); color:var(--soft); border:1px solid var(--rule); margin-left:-1px; padding:7px 12px; border-radius:0; font-size:12.5px; cursor:pointer; transition:background-color .25s ease, color .25s ease; }
+  #cmp-pick .cdl { background:var(--btn); color:var(--soft); border:1px solid var(--rule); margin-left:-1px; padding:7px 12px; border-radius:0; font-size:.7812rem; cursor:pointer; transition:background-color .25s ease, color .25s ease; }
   #cmp-pick .cdl:hover { background:var(--btnh); color:#fff; }
   #cmp-pick .cdl.active { background:var(--accent); color:var(--ink); border-color:var(--accent); font-weight:600; position:relative; }
-  #cmp-hint { position:absolute; bottom:58px; left:50%; transform:translateX(-50%); font-size:11.5px; color:var(--fg2); background:rgba(16,18,17,.74); padding:4px 10px; border-radius:0; z-index:4; pointer-events:none; }
-  #help-panel { position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(6,7,7,.74); z-index:40; }
-  #help-panel.on { display:flex; }
+  #cmp-hint { position:absolute; bottom:58px; left:50%; transform:translateX(-50%); font-size:.7188rem; color:var(--fg2); background:rgba(16,18,17,.74); padding:4px 10px; border-radius:0; z-index:4; pointer-events:none; }
+  #help-panel { padding:0; border:0; background:transparent; color:inherit; width:min(580px,92vw); max-width:none; max-height:none; margin:auto; overflow:visible; }
+  #help-panel::backdrop { background:rgba(6,7,7,.74); }
   #help-panel .hp-card { width:min(580px,92vw); max-height:82vh; overflow:auto; background:#121413; border:1px solid var(--rule); border-radius:0; padding:22px 24px; }
-  #help-panel h4 { display:flex; justify-content:space-between; align-items:center; font:400 23px/1.2 var(--serif); letter-spacing:-.016em; color:var(--bone); margin-bottom:8px; }
-  #help-panel .pclose { cursor:pointer; color:var(--fg2); font:400 22px/1 var(--sans); }
+  #help-panel h4 { display:flex; justify-content:space-between; align-items:center; font:400 1.4375rem/1.2 var(--serif); letter-spacing:-.016em; color:var(--bone); margin-bottom:8px; }
+  #help-panel .pclose { cursor:pointer; color:var(--fg2); font:400 1.375rem/1 var(--sans); background:none; border:0; padding:2px 6px; min-block-size:24px; min-inline-size:24px; }
   #help-panel .pclose:hover { color:#fff; }
-  #help-panel .hp-intro { font-size:12.5px; color:var(--fg2); margin-bottom:8px; line-height:1.55; }
-  #help-panel .hp-grp { font:500 9.5px/1.3 var(--sans); text-transform:uppercase; letter-spacing:.16em; color:var(--acct); margin:16px 0 5px; }
+  #help-panel .hp-intro { font-size:.7812rem; color:var(--fg2); margin-bottom:8px; line-height:1.55; }
+  #help-panel .hp-grp { font:500 .5938rem/1.3 var(--sans); text-transform:uppercase; letter-spacing:.16em; color:var(--acct); margin:16px 0 5px; }
   #help-panel .hp-item { display:flex; gap:11px; align-items:flex-start; padding:8px 0; border-top:1px solid var(--rule); }
-  #help-panel .hp-name { flex:0 0 120px; font-size:13px; color:var(--bone); font-weight:500; }
-  #help-panel .hp-desc { flex:1; font-size:12.5px; color:#B5B8B0; line-height:1.5; }
-  #kunye { position:absolute; left:14px; top:40px; width:292px; display:none; background:rgba(14,16,15,.97); border:1px solid var(--rule); padding:14px 15px; border-radius:0; font-size:12.5px; line-height:1.65; z-index:13; }
-  #kunye h4 { font:400 16.5px/1.25 var(--serif); letter-spacing:-.01em; margin-bottom:10px; color:var(--bone); padding-right:30px; }
-  #kunye-close { position:absolute; top:9px; right:9px; width:26px; height:26px; background:transparent; color:var(--fg2); border:1px solid var(--rule); border-radius:0; cursor:pointer; font-size:17px; line-height:1; }
+  #help-panel .hp-name { flex:0 0 120px; font-size:.8125rem; color:var(--bone); font-weight:500; }
+  #help-panel .hp-desc { flex:1; font-size:.7812rem; color:#B5B8B0; line-height:1.5; }
+  #kunye { position:absolute; left:14px; top:40px; width:292px; display:none; background:rgba(14,16,15,.97); border:1px solid var(--rule); padding:14px 15px; border-radius:0; font-size:.7812rem; line-height:1.65; z-index:13; }
+  #kunye h4 { font:400 1.0312rem/1.25 var(--serif); letter-spacing:-.01em; margin-bottom:10px; color:var(--bone); padding-right:30px; }
+  #kunye-close { position:absolute; top:9px; right:9px; width:26px; height:26px; background:transparent; color:var(--fg2); border:1px solid var(--rule); border-radius:0; cursor:pointer; font-size:1.0625rem; line-height:1; }
   #kunye-close:hover { color:#fff; border-color:var(--rule2); }
   #kunye .row { display:flex; justify-content:space-between; gap:12px; padding:1px 0; border-top:1px solid rgba(236,233,225,.08); }
   #kunye .row > span:first-child { color:var(--fg2); }
   #kunye .row > span:last-child { color:var(--bone); text-align:right; }
-  #kunye .note { margin-top:8px; color:var(--fg3); font-size:11px; }
-  #kunye .kpaper { margin-top:9px; padding:8px 10px; font-size:11px; line-height:1.55; color:var(--soft); background:rgba(232,73,29,.08); border-left:2px solid var(--accent); border-radius:0; }
-  #kunye .kpaper-lbl { color:var(--acct); font-weight:500; font-size:9.5px; text-transform:uppercase; letter-spacing:.14em; margin-bottom:3px; }
+  #kunye .note { margin-top:8px; color:var(--fg3); font-size:.6875rem; }
+  #kunye .kpaper { margin-top:9px; padding:8px 10px; font-size:.6875rem; line-height:1.55; color:var(--soft); background:rgba(232,73,29,.08); border-left:2px solid var(--accent); border-radius:0; }
+  #kunye .kpaper-lbl { color:var(--acct); font-weight:500; font-size:.5938rem; text-transform:uppercase; letter-spacing:.14em; margin-bottom:3px; }
   #kunye .kpaper-cite i { color:var(--soft); }
   #kunye .kpaper-cite a { color:var(--acct); text-decoration:none; font-weight:600; margin-left:3px; }
-  #kunye .edu-blurb { margin:0 0 10px; padding:8px 10px; font-size:11.5px; line-height:1.55; color:var(--soft); background:rgba(236,233,225,.06); border-left:2px solid var(--rule2); border-radius:0; }
+  #kunye .edu-blurb { margin:0 0 10px; padding:8px 10px; font-size:.7188rem; line-height:1.55; color:var(--soft); background:rgba(236,233,225,.06); border-left:2px solid var(--rule2); border-radius:0; }
   #kunye .edu-blurb b { color:var(--bone); font-weight:600; }
   #kunye .cite { margin-top:10px; display:flex; gap:6px; }
-  #kunye .cite button { flex:1; background:transparent; color:var(--soft); border:1px solid var(--rule); padding:6px 8px; border-radius:0; font-size:11px; cursor:pointer; transition:background-color .25s ease, color .25s ease, border-color .25s ease; }
+  #kunye .cite button { flex:1; background:transparent; color:var(--soft); border:1px solid var(--rule); padding:6px 8px; border-radius:0; font-size:.6875rem; cursor:pointer; transition:background-color .25s ease, color .25s ease, border-color .25s ease; }
   #kunye .cite button:hover { background:var(--accent); border-color:var(--accent); color:var(--ink); }
   #dem-layers { position:absolute; top:10px; left:50%; transform:translateX(-50%); display:flex; gap:0; z-index:11; }
-  #dem-layers .dl { background:var(--btn); color:var(--soft); border:1px solid var(--rule); margin-left:-1px; padding:7px 12px; border-radius:0; font-size:12.5px; cursor:pointer; white-space:nowrap; transition:background-color .25s ease, color .25s ease; }
+  #dem-layers .dl { background:var(--btn); color:var(--soft); border:1px solid var(--rule); margin-left:-1px; padding:7px 12px; border-radius:0; font-size:.7812rem; cursor:pointer; white-space:nowrap; transition:background-color .25s ease, color .25s ease; }
   #dem-layers .dl:hover { background:var(--btnh); color:#fff; }
   #dem-layers .dl.active { background:var(--accent); color:var(--ink); border-color:var(--accent); font-weight:600; position:relative; }
   /* Harita lejantı: hem DEM 2B view'inde (#dem-legend, sol) hem Karşılaştır'da (#cmp-legend, sağ) paylaşılır. */
   .maplegend { position:absolute; background:rgba(14,16,15,.93); border:1px solid var(--rule); padding:9px 11px; border-radius:0; z-index:10; }
   #dem-legend { left:14px; bottom:22px; }
   #cmp-legend { right:14px; bottom:14px; }
-  .maplegend .lt { color:var(--soft); margin-bottom:6px; font-size:11.5px; }
+  .maplegend .lt { color:var(--soft); margin-bottom:6px; font-size:.7188rem; }
   .maplegend .lbar { display:flex; gap:6px; height:124px; }
   .maplegend .lg { width:16px; border-radius:0; }
   .maplegend .lg-dem { background:linear-gradient(to top, rgb(60,120,60), rgb(180,170,90) 40%, rgb(140,100,60) 75%, rgb(235,235,235)); }
   .maplegend .slopecls { display:flex; flex-direction:column; gap:2px; }
-  .maplegend .slopecls div { display:flex; align-items:center; gap:6px; color:var(--soft); font-size:10.5px; }
+  .maplegend .slopecls div { display:flex; align-items:center; gap:6px; color:var(--soft); font-size:.6562rem; }
   .maplegend .slopecls i { width:15px; height:11px; border-radius:0; flex:0 0 auto; }
-  .maplegend .ll { display:flex; flex-direction:column; justify-content:space-between; color:var(--fg2); font:400 10.5px/1.2 var(--mono); }
+  .maplegend .ll { display:flex; flex-direction:column; justify-content:space-between; color:var(--fg2); font:400 .6562rem/1.2 var(--mono); }
   .maplegend .abar { width:154px; height:16px; border-radius:0; background:linear-gradient(to right, rgb(255,97,97), rgb(176,255,97) 25%, rgb(97,255,255) 50%, rgb(176,97,255) 75%, rgb(255,97,97)); }
-  .maplegend .al { display:flex; justify-content:space-between; width:154px; color:var(--fg2); font:400 10.5px/1.2 var(--mono); margin-top:3px; }
+  .maplegend .al { display:flex; justify-content:space-between; width:154px; color:var(--fg2); font:400 .6562rem/1.2 var(--mono); margin-top:3px; }
   @media (max-width:760px){ #cmp-legend { transform:scale(.86); transform-origin:bottom right; } #cmp-hint { bottom:104px; max-width:70vw; text-align:center; } }
 </style>
-<link rel="stylesheet" href="../viewer-premium.css?v=20261111" />
-<script src="../view-guard.js?v=7fee5a829a"></script>
+<link rel="stylesheet" href="../viewer-premium.css?v=20261112" />
+<script src="../view-guard.js?v=a4019b69cb"></script>
 </head>
 <body>
-  <div id="tabs">
-    <strong title="Tomara Şelalesi-Şiran (Gümüşhane)" data-i18n="ak.mn.tomara" data-i18n-title="ak.mn.tomara">Tomara Şelalesi-Şiran (Gümüşhane)</strong>
-    <div class="tabbar">
-      <button class="tab active" type="button" data-view="model" data-i18n="tab.model">3B Model</button>
-      <button class="tab" type="button" data-view="ortho" data-i18n="tab.ortho">Ortofoto</button>
-      <button class="tab" type="button" data-view="dem2d" data-i18n="tab.dem2d">DEM (2B)</button>
-      <button class="tab" type="button" data-view="splat" data-i18n="tab.splat">Foto-gerçekçi</button>
-      <button class="tab" type="button" data-view="compare" data-i18n="tab.compare">Karşılaştır</button>
+  <header id="tabs">
+    <h1 title="Tomara Şelalesi-Şiran (Gümüşhane)" data-i18n="ak.mn.tomara" data-i18n-title="ak.mn.tomara">Tomara Şelalesi-Şiran (Gümüşhane)</h1>
+    <div class="tabbar" role="tablist" aria-label="Görünümler" data-i18n-aria="tabs.aria">
+      <button class="tab active" type="button" role="tab" id="tab-model" aria-controls="view-model" aria-selected="true" tabindex="0" data-view="model" data-i18n="tab.model">3B Model</button>
+      <button class="tab" type="button" role="tab" id="tab-ortho" aria-controls="view-ortho" aria-selected="false" tabindex="-1" data-view="ortho" data-i18n="tab.ortho">Ortofoto</button>
+      <button class="tab" type="button" role="tab" id="tab-dem2d" aria-controls="view-dem2d" aria-selected="false" tabindex="-1" data-view="dem2d" data-i18n="tab.dem2d">DEM (2B)</button>
+      <button class="tab" type="button" role="tab" id="tab-splat" aria-controls="view-splat" aria-selected="false" tabindex="-1" data-view="splat" data-i18n="tab.splat">Foto-gerçekçi</button>
+      <button class="tab" type="button" role="tab" id="tab-compare" aria-controls="view-compare" aria-selected="false" tabindex="-1" data-view="compare" data-i18n="tab.compare">Karşılaştır</button>
     </div>
     <div class="hdr-right">
       <span id="lang-switch"></span>
       <a href="/" class="homelink" data-i18n="nav.portfolio" data-i18n-title="nav.portfolio.t" title="Akademik portföy / tüm modeller">Portföy</a>
     </div>
-  </div>
+  </header>
 
+  <main id="main">
   <!-- 3B MODEL -->
-  <div class="view active" id="view-model">
+  <div class="view active" id="view-model" role="tabpanel" aria-labelledby="tab-model">
     <div class="hud" id="model-stats"></div>
-    <div id="quality">
-      <span class="qlabel" data-i18n="q.label">Model kalitesi</span>
-      <button class="q" type="button" data-url="low.glb" data-i18n="q.low" data-i18n-title="q.low.t" title="Düşük detay — en hızlı">Düşük</button>
-      <button class="q active" type="button" data-url="medium.glb" data-i18n="q.medium" data-i18n-title="q.medium.t" title="Dengeli (önerilen)">Orta</button>
-      <button class="q" type="button" data-url="high.glb" data-i18n="q.high" data-i18n-title="q.high.t" title="Yüksek detay">Yüksek</button>
-      <button class="q ultra" type="button" data-url="ultra.glb" data-mb="122" data-i18n="q.ultra" data-i18n-title="q.ultra.t" title="Tam detay">En Yüksek</button>
+    <div id="quality" role="group" aria-labelledby="q-label">
+      <span class="qlabel" id="q-label" data-i18n="q.label">Model kalitesi</span>
+      <button class="q" type="button" aria-pressed="false" data-url="low.glb" data-i18n="q.low" data-i18n-title="q.low.t" title="Düşük detay — en hızlı">Düşük</button>
+      <button class="q active" type="button" aria-pressed="true" data-url="medium.glb" data-i18n="q.medium" data-i18n-title="q.medium.t" title="Dengeli (önerilen)">Orta</button>
+      <button class="q" type="button" aria-pressed="false" data-url="high.glb" data-i18n="q.high" data-i18n-title="q.high.t" title="Yüksek detay">Yüksek</button>
+      <button class="q ultra" type="button" aria-pressed="false" data-url="ultra.glb" data-mb="122" data-i18n="q.ultra" data-i18n-title="q.ultra.t" title="Tam detay">En Yüksek</button>
     </div>
     <div class="status" id="model-status">Durum: başlatılıyor…</div>
     <div class="hint" data-i18n="hint.controls">Sürükle: döndür · Sağ tık: kaydır · Tekerlek: yakınlaş</div>
     <div id="tools">
       <!-- SOL ray: Görünüm + Paylaşım & Bilgi (dikey) -->
       <div class="trail trail-left">
-        <div class="tgroup">
-          <span class="tglabel" data-i18n="grp.view">Görünüm</span>
+        <div class="tgroup" role="group" aria-labelledby="grp-view">
+          <span class="tglabel" id="grp-view" data-i18n="grp.view">Görünüm</span>
           <div class="tgbtns">
-            <button id="t-wire" data-i18n="tool.wire" data-i18n-title="tool.wire.t" title="Modeli üçgen ağ (wireframe) göster">Üçgenler</button>
-            <button id="t-rotate" data-i18n="tool.rotate" data-i18n-title="tool.rotate.t" title="Otomatik döndür">Döndür</button>
-            <button id="t-tour" data-i18n="tool.tour" data-i18n-title="tool.tour.t" title="Sinematik tur: rota noktası yoksa 360° döner, varsa rotayı izler">Tur</button>
-            <button id="t-waypoint" data-i18n="tool.wp" data-i18n-title="tool.wp.t" title="Şu anki kamera açısını tur rotasına ekle">Rota +</button>
-            <button id="t-sun" data-i18n="tool.sun" data-i18n-title="tool.sun.t" title="Güneş/gölge: tarih-saate göre gerçek güneş ve gölgeler">Güneş</button>
+            <button type="button" id="t-wire" aria-pressed="false" data-i18n="tool.wire" data-i18n-title="tool.wire.t" title="Modeli üçgen ağ (wireframe) göster">Üçgenler</button>
+            <button type="button" id="t-rotate" aria-pressed="false" data-i18n="tool.rotate" data-i18n-title="tool.rotate.t" title="Otomatik döndür">Döndür</button>
+            <button type="button" id="t-tour" aria-pressed="false" data-i18n="tool.tour" data-i18n-title="tool.tour.t" title="Sinematik tur: rota noktası yoksa 360° döner, varsa rotayı izler">Tur</button>
+            <button type="button" id="t-waypoint" data-i18n="tool.wp" data-i18n-title="tool.wp.t" title="Şu anki kamera açısını tur rotasına ekle">Rota +</button>
+            <button type="button" id="t-sun" aria-pressed="false" data-i18n="tool.sun" data-i18n-title="tool.sun.t" title="Güneş/gölge: tarih-saate göre gerçek güneş ve gölgeler">Güneş</button>
           </div>
         </div>
-        <div class="tgroup">
-          <span class="tglabel" data-i18n="grp.share">Paylaşım & Bilgi</span>
+        <div class="tgroup" role="group" aria-labelledby="grp-share">
+          <span class="tglabel" id="grp-share" data-i18n="grp.share">Paylaşım & Bilgi</span>
           <div class="tgbtns">
-            <button id="t-share" data-i18n="tool.share" data-i18n-title="tool.share.t" title="Bu kamera görünümünün bağlantısını kopyala">Bağlantı</button>
-            <button id="t-kunye" data-i18n="tool.info" data-i18n-title="tool.info.t" title="Künye / teknik bilgi">Künye</button>
-            <button id="t-help" class="thelp" data-i18n="tool.help" data-i18n-title="tool.help.t" title="Araçların ne işe yaradığı ve nasıl kullanılacağı">Yardım</button>
+            <button type="button" id="t-share" data-i18n="tool.share" data-i18n-title="tool.share.t" title="Bu kamera görünümünün bağlantısını kopyala">Bağlantı</button>
+            <button type="button" id="t-kunye" aria-expanded="false" aria-controls="kunye" data-i18n="tool.info" data-i18n-title="tool.info.t" title="Künye / teknik bilgi">Künye</button>
+            <button type="button" id="t-help" aria-haspopup="dialog" aria-controls="help-panel" class="thelp" data-i18n="tool.help" data-i18n-title="tool.help.t" title="Araçların ne işe yaradığı ve nasıl kullanılacağı">Yardım</button>
           </div>
         </div>
       </div>
       <!-- SAĞ ray: Ölçüm (dikey) -->
       <div class="trail trail-right">
-        <div class="tgroup">
-          <span class="tglabel" data-i18n="grp.measure">Ölçüm</span>
+        <div class="tgroup" role="group" aria-labelledby="grp-measure">
+          <span class="tglabel" id="grp-measure" data-i18n="grp.measure">Ölçüm</span>
           <div class="tgbtns">
-            <button id="t-measure" data-i18n="tool.measure" data-i18n-title="tool.measure.t" title="İki noktaya tıkla: mesafe ve yükseklik farkı">Mesafe</button>
-            <button id="t-vol" data-i18n="tool.vol" data-i18n-title="tool.vol.t" title="Alanı çevrele: taban üstü hacim (m³)">Hacim</button>
-            <button id="t-area" data-i18n="tool.area" data-i18n-title="tool.area.t" title="Alanı çevrele: düzlemsel + gerçek 3B yüzey alanı (m²)">Alan</button>
-            <button id="t-elev" data-i18n="tool.elev" data-i18n-title="tool.elev.t" title="Bir noktaya tıkla: o noktanın rakımı (m)">Rakım</button>
-            <button id="t-profile" data-i18n="tool.profile" data-i18n-title="tool.profile.t" title="İki nokta seç: aradaki yükseklik profili">Profil</button>
-            <button id="t-clear" data-i18n="tool.clear" data-i18n-title="tool.clear.t" title="Tüm ölçüm/işaretleri temizle">Temizle</button>
+            <button type="button" id="t-measure" aria-pressed="false" data-i18n="tool.measure" data-i18n-title="tool.measure.t" title="İki noktaya tıkla: mesafe ve yükseklik farkı">Mesafe</button>
+            <button type="button" id="t-vol" aria-pressed="false" data-i18n="tool.vol" data-i18n-title="tool.vol.t" title="Alanı çevrele: taban üstü hacim (m³)">Hacim</button>
+            <button type="button" id="t-area" aria-pressed="false" data-i18n="tool.area" data-i18n-title="tool.area.t" title="Alanı çevrele: düzlemsel + gerçek 3B yüzey alanı (m²)">Alan</button>
+            <button type="button" id="t-elev" aria-pressed="false" data-i18n="tool.elev" data-i18n-title="tool.elev.t" title="Bir noktaya tıkla: o noktanın rakımı (m)">Rakım</button>
+            <button type="button" id="t-profile" aria-pressed="false" data-i18n="tool.profile" data-i18n-title="tool.profile.t" title="İki nokta seç: aradaki yükseklik profili">Profil</button>
+            <button type="button" id="t-clear" data-i18n="tool.clear" data-i18n-title="tool.clear.t" title="Tüm ölçüm/işaretleri temizle">Temizle</button>
           </div>
         </div>
       </div>
     </div>
     <div id="measure-readout"></div>
-    <div id="profile-panel">
-      <h5><span data-i18n="profile.title">Yükseklik Profili</span><span><span class="pclose" id="t-profile-close" data-i18n-title="common.close.t" title="Kapat">×</span></span></h5>
+    <div id="profile-panel" role="region" aria-labelledby="profile-h">
+      <h5><span id="profile-h" data-i18n="profile.title">Yükseklik Profili</span><button type="button" class="pclose" id="t-profile-close" data-i18n-title="common.close.t" data-i18n-aria="common.close.t" title="Kapat" aria-label="Kapat">×</button></h5>
       <canvas id="profile-canvas" width="740" height="300"></canvas>
       <div class="psum" id="profile-sum"></div>
     </div>
-    <div id="sun-panel">
-      <h5><span data-i18n="sun.title">Güneş / Gölge</span><span class="pclose" id="t-sun-close" data-i18n-title="common.close.t" title="Kapat">×</span></h5>
-      <div class="sun-row"><label data-i18n="sun.date">Tarih</label><input type="date" id="sun-date"></div>
-      <div class="sun-row"><label data-i18n="sun.time">Saat</label><input type="range" id="sun-time" min="240" max="1320" step="5" value="780"><b id="sun-time-val">13:00</b></div>
+    <div id="sun-panel" role="region" aria-labelledby="sun-h">
+      <h5><span id="sun-h" data-i18n="sun.title">Güneş / Gölge</span><button type="button" class="pclose" id="t-sun-close" data-i18n-title="common.close.t" data-i18n-aria="common.close.t" title="Kapat" aria-label="Kapat">×</button></h5>
+      <div class="sun-row"><label for="sun-date" data-i18n="sun.date">Tarih</label><input type="date" id="sun-date"></div>
+      <div class="sun-row"><label for="sun-time" data-i18n="sun.time">Saat</label><input type="range" id="sun-time" min="240" max="1320" step="5" value="780"><b id="sun-time-val">13:00</b></div>
       <div class="sun-info" id="sun-info">—</div>
       <div class="sun-note" data-i18n="sun.note">Gölgeler, modelin konumundan (enlem/boylam) ve seçilen tarih-saatten hesaplanan gerçek güneş açısıyla çizilir.</div>
     </div>
-    <div id="kunye">
-      <button type="button" id="kunye-close" data-i18n-title="common.close.t" title="Kapat" aria-label="Kapat">×</button>
-      <h4><span data-i18n="ak.mn.tomara">Tomara Şelalesi-Şiran (Gümüşhane)</span> — <span data-i18n="info.title">Künye</span></h4>
+    <div id="kunye" role="region" aria-labelledby="kunye-h">
+      <button type="button" id="kunye-close" data-i18n-title="common.close.t" data-i18n-aria="common.close.t" title="Kapat" aria-label="Kapat">×</button>
+      <h4 id="kunye-h"><span data-i18n="ak.mn.tomara">Tomara Şelalesi-Şiran (Gümüşhane)</span> — <span data-i18n="info.title">Künye</span></h4>
       <div class="edu-blurb"><b data-i18n="info.whatis">Bu nedir?</b> <span class="l-tr">Tomara Şelalesi, karbonatça zengin kaynak sularının geniş bir tufa (traverten) örtüsü üzerinden döküldüğü bir kaynak şelalesidir. Suyun CO₂ kaybetmesiyle çökelen kalsiyum karbonat, bitki ve yosun yüzeylerini kaplayarak basamaklı tufa setlerini büyütür.</span><span class="l-en">Tomara Waterfall is a spring waterfall where carbonate-rich spring water cascades over a broad tufa (travertine) cover. Calcium carbonate precipitated as the water loses CO₂ coats plant and moss surfaces and builds up stepped tufa barriers.</span></div>
       <div class="row"><span data-i18n="info.location">Konum</span><span><span class="l-tr">40,0802°K, 39,0502°D</span><span class="l-en">40.0802°N, 39.0502°E</span></span></div>
       <div class="row"><span data-i18n="info.crs">Koordinat sistemi</span><span>UTM 37N · EPSG:32637</span></div>
@@ -307,16 +316,16 @@
   </div>
 
   <!-- ORTOFOTO -->
-  <div class="view" id="view-ortho"><div class="osd" id="osd-ortho"></div></div>
+  <div class="view" id="view-ortho" role="tabpanel" aria-labelledby="tab-ortho"><div class="osd" id="osd-ortho"></div></div>
 
   <!-- DEM 2B -->
-  <div class="view" id="view-dem2d">
+  <div class="view" id="view-dem2d" role="tabpanel" aria-labelledby="tab-dem2d">
     <div class="osd" id="osd-dem"></div>
-    <div id="dem-layers">
-      <button class="dl active" data-img="dem_relief.jpg" data-leg="dem" data-i18n="dem.relief">Renkli DEM</button>
-      <button class="dl" data-img="slope.jpg" data-leg="slope" data-i18n="dem.slope">Eğim</button>
-      <button class="dl" data-img="aspect.jpg" data-leg="aspect" data-i18n="dem.aspect">Bakı</button>
-      <button class="dl dl-toggle" id="dem-contour" data-i18n="dem.contourtgl" data-vt-title="dem.contourtgl.t" title="Eşyükselti eğrilerini aç/kapa">Eşyükselti</button>
+    <div id="dem-layers" role="group" aria-label="Harita katmanı" data-i18n-aria="grp.demlayers">
+      <button type="button" class="dl active" aria-pressed="true" data-img="dem_relief.jpg" data-leg="dem" data-i18n="dem.relief">Renkli DEM</button>
+      <button type="button" class="dl" aria-pressed="false" data-img="slope.jpg" data-leg="slope" data-i18n="dem.slope">Eğim</button>
+      <button type="button" class="dl" aria-pressed="false" data-img="aspect.jpg" data-leg="aspect" data-i18n="dem.aspect">Bakı</button>
+      <button type="button" class="dl dl-toggle" id="dem-contour" aria-pressed="false" data-i18n="dem.contourtgl" data-vt-title="dem.contourtgl.t" title="Eşyükselti eğrilerini aç/kapa">Eşyükselti</button>
     </div>
     <div id="dem-legend" class="maplegend">
       <div class="leg" data-leg="dem">
@@ -361,18 +370,19 @@
   </div>
 
   <!-- KARŞILAŞTIR: ortofoto ↔ DEM sürgülü karşılaştırma -->
-  <div class="view" id="view-compare">
+  <div class="view" id="view-compare" role="tabpanel" aria-labelledby="tab-compare">
     <div id="cmp-wrap">
       <img id="cmp-base" alt="Ortofoto" data-vt-alt="cmp.alt.ortho">
       <div id="cmp-top"><img id="cmp-top-img" alt="DEM katmanı" data-vt-alt="cmp.alt.dem"></div>
-      <div id="cmp-divider"><div id="cmp-handle">↔</div></div>
+      <div id="cmp-divider" aria-hidden="true"><div id="cmp-handle">↔</div></div>
+      <input type="range" id="cmp-range" class="vh" min="0" max="100" step="1" value="50" aria-label="Bölücü konumu" data-i18n-aria="cmp.range" />
       <div class="cmp-lbl cmp-lbl-l" data-i18n="cmp.ortho">Ortofoto</div>
       <div class="cmp-lbl cmp-lbl-r"><span id="cmp-lbl-r" data-i18n="dem.relief">Renkli DEM</span></div>
-      <div id="cmp-pick">
-        <button class="cdl active" data-img="dem_relief.jpg" data-key="dem.relief" data-i18n="dem.relief">Renkli DEM</button>
-        <button class="cdl" data-img="slope.jpg" data-key="dem.slope" data-i18n="dem.slope">Eğim</button>
-        <button class="cdl" data-img="aspect.jpg" data-key="dem.aspect" data-i18n="dem.aspect">Bakı</button>
-        <button class="cdl" data-img="contour.jpg" data-key="dem.contour" data-i18n="dem.contour">Eşyükselti</button>
+      <div id="cmp-pick" role="group" aria-label="Sağdaki katman" data-i18n-aria="grp.cmplayers">
+        <button type="button" class="cdl active" aria-pressed="true" data-img="dem_relief.jpg" data-key="dem.relief" data-i18n="dem.relief">Renkli DEM</button>
+        <button type="button" class="cdl" aria-pressed="false" data-img="slope.jpg" data-key="dem.slope" data-i18n="dem.slope">Eğim</button>
+        <button type="button" class="cdl" aria-pressed="false" data-img="aspect.jpg" data-key="dem.aspect" data-i18n="dem.aspect">Bakı</button>
+        <button type="button" class="cdl" aria-pressed="false" data-img="contour.jpg" data-key="dem.contour" data-i18n="dem.contour">Eşyükselti</button>
       </div>
       <div id="cmp-hint" data-i18n="cmp.hint">Bölücüyü sürükle: solda ortofoto, sağda seçilen DEM katmanı</div>
       <div id="cmp-legend" class="maplegend">
@@ -421,28 +431,30 @@
   <div id="warn" data-i18n="warn.perf">"Yüksek" ve "En Yüksek" güçlü bir bilgisayar ister. Model açılmazsa veya takılırsa daha düşük bir kalite seçin.</div>
 
   <!-- Yardım paneli: tüm araçların ne işe yaradığı + nasıl kullanılacağı -->
-  <div id="help-panel">
+  <dialog id="help-panel" aria-labelledby="help-h">
     <div class="hp-card">
-      <h4><span data-i18n="help.title">Araçlar — Ne işe yarar, nasıl kullanılır</span><span class="pclose" id="t-help-close" data-i18n-title="common.close.t" title="Kapat">×</span></h4>
+      <h4><span id="help-h" data-i18n="help.title">Araçlar — Ne işe yarar, nasıl kullanılır</span><button type="button" class="pclose" id="t-help-close" data-i18n-title="common.close.t" data-i18n-aria="common.close.t" title="Kapat" aria-label="Kapat">×</button></h4>
       <div class="hp-intro" data-i18n="help.intro">Her araç bir kez açılır/kapanır. Ölçüm araçları için modele tıklayarak nokta seç.</div>
       <div id="hp-list"></div>
     </div>
-  </div>
+  </dialog>
 
   <!-- Foto-gerçekçi (Gaussian Splatting) görünümü: splat.html iframe'de, sekme ilk açılınca yüklenir -->
-  <div class="view" id="view-splat">
+  <div class="view" id="view-splat" role="tabpanel" aria-labelledby="tab-splat">
     <iframe id="splat-frame" title="Foto-gerçekçi görünüm (Gaussian Splatting)" data-vt-title="splat.title"
-      data-src="../splat.html?m=tomara&v=78d79270e4&up=0.025,0.011,1.000&clook=-0.036,0.087,-0.025&cpos=0.327,0.681,0.924&mindist=0.14&maxdist=2.59&minpol=0&maxpol=60&alpha=6&zmax=8&g=e6b70833d7"
+      data-src="../splat.html?m=tomara&v=78d79270e4&up=0.025,0.011,1.000&clook=-0.036,0.087,-0.025&cpos=0.327,0.681,0.924&mindist=0.14&maxdist=2.59&minpol=0&maxpol=60&alpha=6&zmax=8&g=1609dc68f5"
       style="width:100%; height:100%; border:0; display:block; background:#0C0E0D;"
       allow="fullscreen; xr-spatial-tracking" loading="lazy"></iframe>
   </div>
 
+  <div id="vt-status" class="vh" role="status" aria-live="polite"></div>
+  </main>
 
   <script type="importmap">
   { "imports": {
-    "three": "https://unpkg.com/three@0.169.0/build/three.module.js",
-    "three/addons/": "https://unpkg.com/three@0.169.0/examples/jsm/",
-    "three-mesh-bvh": "https://unpkg.com/three-mesh-bvh@0.8.3/build/index.module.js"
+    "three": "/vendor/three@0.169.0/build/three.module.min.js",
+    "three/addons/": "/vendor/three@0.169.0/examples/jsm/",
+    "three-mesh-bvh": "/vendor/three-mesh-bvh@0.8.3/build/index.module.js"
   }}
   </script>
   <script type="module">
@@ -562,7 +574,7 @@
   function showView(name) {
     document.body.dataset.view = name;   // view-guard.js filigranı haritalarda küçültür/saydamlaştırır
     document.getElementById('warn').style.display = (name === 'model') ? 'block' : 'none';
-    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.view === name));
+    document.querySelectorAll('.tab').forEach(t => { const on = t.dataset.view === name; t.classList.toggle('active', on); t.setAttribute('aria-selected', on ? 'true' : 'false'); t.tabIndex = on ? 0 : -1; });
     document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === 'view-' + name));
     if (name !== 'splat') splatMsg('pause');
     const v = views[name];
@@ -578,6 +590,23 @@
     if (v && v.onActivate) v.onActivate();
   }
   document.querySelectorAll('.tab').forEach(t => t.onclick = () => showView(t.dataset.view));
+  // Sekme listesi klavyesi (kılavuz `tabs`): ←/→ komşu sekme, Home/End ilk/son; seçim odakla birlikte değişir.
+  document.querySelector('.tabbar').addEventListener('keydown', e => {
+    const tabs = [...document.querySelectorAll('.tab')], i = tabs.indexOf(document.activeElement);
+    if (i < 0) return;
+    const j = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[e.key];
+    if (j === undefined) return;
+    e.preventDefault();
+    const t = tabs[(j + tabs.length) % tabs.length]; t.focus(); showView(t.dataset.view);
+  });
+  // Aç/kapa ve seçim düğmeleri: görsel durum sınıfı (.on / .active) değişince aria-pressed eşlenir.
+  {
+    const sync = b => b.setAttribute('aria-pressed', (b.classList.contains('on') || b.classList.contains('active')) ? 'true' : 'false');
+    const mo = new MutationObserver(ms => ms.forEach(m => { if (m.target.hasAttribute('aria-pressed')) sync(m.target); }));
+    document.querySelectorAll('button[aria-pressed]').forEach(b => { sync(b); mo.observe(b, { attributes: true, attributeFilter: ['class'] }); });
+  }
+  // Durum bildirimi (kopyalama vb.) ekran okuyucuya
+  const announce = t => { const st = document.getElementById('vt-status'); if (st) { st.textContent = ''; setTimeout(() => { st.textContent = t; }, 50); } };
 
   (function loop(){ requestAnimationFrame(loop); if (activeRender) activeRender(); })();
 
@@ -591,7 +620,7 @@
     // Splat görünürken three.js mesh döngüsü durur (gizli kanvasa çizim yok); iframe'in döngüsü sürdürülür.
     views.splat.onActivate = () => { activeRender = null; splatMsg('resume'); };
     // splat.html hata ekranındaki "3B Model sekmesine dön" düğmesi
-    addEventListener('message', e => { const f = document.getElementById('splat-frame'); if (f && e.source === f.contentWindow && e.data && e.data.splatCmd === 'model') showView('model'); });
+    addEventListener('message', e => { if (e.origin !== location.origin) return; const f = document.getElementById('splat-frame'); if (f && e.source === f.contentWindow && e.data && e.data.splatCmd === 'model') showView('model'); });
   }
 
   // ===================== 3B MODEL =====================
@@ -622,7 +651,7 @@
     function camToHash(){ const p=camera.position, t=controls.target; return 'cam='+[p.x,p.y,p.z,t.x,t.y,t.z].map(v=>v.toFixed(2)).join(','); }
     function applyHashCam(){ const m=location.hash.match(/cam=([-\d.,]+)/); if(!m) return false; const a=m[1].split(',').map(Number); if(a.length<6||a.some(n=>!isFinite(n))) return false; camera.position.set(a[0],a[1],a[2]); controls.target.set(a[3],a[4],a[5]); camera.updateProjectionMatrix(); controls.update(); return true; }
 
-    const draco = new DRACOLoader(); draco.setDecoderPath('https://unpkg.com/three@0.169.0/examples/jsm/libs/draco/');
+    const draco = new DRACOLoader(); draco.setDecoderPath('/vendor/three@0.169.0/examples/jsm/libs/draco/');
     const loader = new GLTFLoader(); loader.setDRACOLoader(draco);
     let current = null, modelSize = 500, bvhReady = false;
     const dispose = o => o.traverse(n => { if (n.isMesh){ if(n.geometry?.boundsTree) n.geometry.disposeBoundsTree(); n.geometry?.dispose(); (Array.isArray(n.material)?n.material:[n.material]).forEach(m=>m?.dispose()); } });
@@ -1058,12 +1087,14 @@
     if(btnShare) btnShare.onclick = () => {
       history.replaceState(null, '', '#' + camToHash());
       const url = location.href, o = btnShare.textContent;
-      const done = () => { btnShare.textContent = Tt('cite.copied'); setTimeout(() => btnShare.textContent = o, 1500); };
-      if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(done).catch(done); else done();
+      const show = k => { btnShare.textContent = Tt(k); announce(Tt(k)); setTimeout(() => btnShare.textContent = o, 1500); };
+      if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(() => show('cite.copied')).catch(() => show('cite.fail')); else show('cite.fail');
     };
     const kun = document.getElementById('kunye');
-    document.getElementById('t-kunye').onclick = () => { kun.style.display = (kun.style.display==='block') ? 'none' : 'block'; };
-    document.getElementById('kunye-close').onclick = () => { kun.style.display = 'none'; };
+    const btnKun = document.getElementById('t-kunye');
+    const setKun = on => { kun.style.display = on ? 'block' : 'none'; btnKun.setAttribute('aria-expanded', on ? 'true' : 'false'); };
+    btnKun.onclick = () => setKun(kun.style.display !== 'block');
+    document.getElementById('kunye-close').onclick = () => { setKun(false); btnKun.focus(); };
 
     // ---- Yardım paneli: araç gruplarından (ad + açıklama) dinamik liste ----
     const helpPanel = document.getElementById('help-panel'), btnHelp = document.getElementById('t-help');
@@ -1082,9 +1113,18 @@
         });
       });
     }
-    if(btnHelp) btnHelp.onclick = () => { buildHelp(); helpPanel.classList.add('on'); };
-    const helpCloseBtn=document.getElementById('t-help-close'); if(helpCloseBtn) helpCloseBtn.onclick=()=>helpPanel.classList.remove('on');
-    if(helpPanel) helpPanel.addEventListener('click', e=>{ if(e.target===helpPanel) helpPanel.classList.remove('on'); });
+    // Yerel <dialog>: odak içeride kalır, Esc kapatır, kapanınca odak düğmeye döner; zemine tıklama da kapatır.
+    if(btnHelp) btnHelp.onclick = () => { buildHelp(); if(!helpPanel.open) helpPanel.showModal(); };
+    const helpCloseBtn=document.getElementById('t-help-close'); if(helpCloseBtn) helpCloseBtn.onclick=()=>helpPanel.close();
+    if(helpPanel) helpPanel.addEventListener('click', e=>{ if(e.target===helpPanel) helpPanel.close(); });
+    // Esc: açık yan paneli kapatır (iletişim kutusu ve yasal pencere kendi Esc'lerini yönetir)
+    addEventListener('keydown', e => {
+      if (e.key !== 'Escape' || e.defaultPrevented || document.querySelector('dialog[open]')) return;
+      const pp = document.getElementById('profile-panel');
+      if (kun.style.display === 'block') { setKun(false); btnKun.focus(); }
+      else if (sunOn) { setSun(false); if (btnSun) btnSun.focus(); }
+      else if (pp && pp.style.display && pp.style.display !== 'none') { clearProfile(); if (btnP) btnP.focus(); }
+    });
 
     // ---- Atıf üretici (BibTeX / RIS) ----
     const CITE = { title: 'Tomara Şelalesi-Şiran (Gümüşhane)', year: '2026', slug: 'tomara', author: 'Taş, Mehmet Akif',
@@ -1105,9 +1145,9 @@ PY  - ${CITE.year}
 UR  - ${CITE.url}
 ER  - `;
     function copyCite(text, btn){
-      const ok = () => { const t=btn.textContent; btn.textContent=Tt('cite.copied'); setTimeout(()=>btn.textContent=t,1500); };
-      if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(ok).catch(()=>fallback()); } else fallback();
-      function fallback(){ const ta=document.createElement('textarea'); ta.value=text; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');}catch(e){} ta.remove(); ok(); }
+      const show = k => { const t=btn.textContent; btn.textContent=Tt(k); announce(Tt(k)); setTimeout(()=>btn.textContent=t,1500); };
+      if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(() => show('cite.copied')).catch(() => show('cite.fail'));
+      else show('cite.fail');
     }
     document.getElementById('cite-bib').onclick = () => copyCite(bibtex(), document.getElementById('cite-bib'));
     document.getElementById('cite-ris').onclick = () => copyCite(ris(), document.getElementById('cite-ris'));
@@ -1211,8 +1251,10 @@ ER  - `;
     await Promise.all([setImg(base, bu), setImg(topImg, tu)]);
     bd.hide();
     let pct0=50, drag=false;
-    function setPct(p){ pct0=Math.max(0,Math.min(100,p)); top.style.clipPath='inset(0 0 0 '+pct0+'%)'; div.style.left=pct0+'%'; }
+    const rng=document.getElementById('cmp-range');
+    function setPct(p){ pct0=Math.max(0,Math.min(100,p)); top.style.clipPath='inset(0 0 0 '+pct0+'%)'; div.style.left=pct0+'%'; if(rng && +rng.value!==Math.round(pct0)) rng.value=Math.round(pct0); }
     setPct(50);
+    if(rng) rng.addEventListener('input', ()=>setPct(+rng.value));
     const xToPct=cx=>{ const r=wrap.getBoundingClientRect(); return (cx-r.left)/r.width*100; };
     div.addEventListener('pointerdown', e=>{ drag=true; try{div.setPointerCapture(e.pointerId);}catch(_){} e.preventDefault(); });
     wrap.addEventListener('pointermove', e=>{ if(drag) setPct(xToPct(e.clientX)); });

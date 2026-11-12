@@ -2,44 +2,48 @@
 <html lang="tr">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'none'; form-action 'none'" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<!-- Yakınlaştırma kilidi yok (kılavuz `typography`): sahnedeki dokunma hareketlerini #stage { touch-action:none } alır -->
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="text-scale" content="scale" />
 <title>Foto-gerçekçi Görünüm</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-<script src="view-guard.js?v=7fee5a829a"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
+<script src="view-guard.js?v=a4019b69cb"></script>
+<link rel="stylesheet" href="/fonts/fonts.css?v=20261112" />
+<link rel="stylesheet" href="/tokens.css?v=20261112" />
 <style>
   /* ===== PAFTA — foto-gerçekçi görünüm (iframe). Renkler görüntüleyiciyle aynı. ===== */
+  /* renk ve yazı tipleri tokens.css'ten (tek kaynak) */
   :root{
-    --bg:#0C0E0D; --fg:#ECE9E1; --muted:#A9ACA5;
-    --accent:#E8491D; --acct:#FF6A3D; --ink:#121413; --panel:rgba(14,16,15,.95); --line:rgba(236,233,225,.16);
-    --font:'Archivo','Helvetica Neue',Arial,sans-serif; --serif:'Newsreader','Iowan Old Style',Georgia,serif;
+    --bg:var(--night); --fg:var(--bone); --muted:var(--fg2-night);
+    --acct:var(--acct-night); --panel:rgba(14,16,15,.95); --line:var(--rule-night);
+    --font:var(--sans);
   }
   *{box-sizing:border-box}
   html,body{margin:0;height:100%;background:var(--bg);overflow:hidden;color:var(--fg);font-family:var(--font);-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
-  #stage{position:fixed;inset:0}
+  #stage{position:fixed;inset:0;touch-action:none}
   #stage canvas{display:block;width:100%!important;height:100%!important;outline:none}
 
   /* Marka rozeti */
   .badge{
     position:fixed;top:14px;left:14px;z-index:30;display:flex;align-items:baseline;gap:9px;
     padding:8px 12px 7px;border-radius:0;background:var(--panel);border:1px solid var(--line);
-    font:500 10.5px/1.3 var(--font);letter-spacing:.14em;text-transform:uppercase
+    font:500 .6562rem/1.3 var(--font);letter-spacing:.14em;text-transform:uppercase
   }
-  .badge small{font-weight:400;color:var(--muted);font-size:10px;letter-spacing:.06em;text-transform:none}
+  .badge small{font-weight:400;color:var(--muted);font-size:.625rem;letter-spacing:.06em;text-transform:none}
 
   /* Bilgi butonu */
   .info-btn{
     position:fixed;top:14px;right:14px;z-index:30;cursor:pointer;
     display:flex;align-items:center;gap:8px;padding:7px 12px 6px;border-radius:0;
     background:var(--panel);border:1px solid var(--line);
-    color:var(--fg);font:500 10.5px/1.3 var(--font);letter-spacing:.12em;text-transform:uppercase;
+    color:var(--fg);font:500 .6562rem/1.3 var(--font);letter-spacing:.12em;text-transform:uppercase;
     transition:border-color .2s
   }
   .info-btn:hover{border-color:var(--acct)}
   .info-btn .q{display:inline-grid;place-items:center;width:17px;height:17px;border-radius:50%;
-    background:var(--accent);color:var(--ink);font-weight:700;font-size:11px;letter-spacing:0}
+    background:var(--accent);color:var(--ink);font-weight:700;font-size:.6875rem;letter-spacing:0}
 
   /* Bilgi paneli */
   .scrim{position:fixed;inset:0;z-index:40;background:rgba(6,7,7,.6);
@@ -51,19 +55,19 @@
     transform:translateY(-8px);opacity:0;
     pointer-events:none;transition:opacity .22s,transform .22s}
   .panel.open{opacity:1;transform:none;pointer-events:auto}
-  .panel h2{margin:0 34px 10px 0;font:400 21px/1.2 var(--serif);letter-spacing:-.015em}
-  .panel p{margin:0 0 10px;font-size:13.5px;line-height:1.62;color:#D9D6CE}
+  .panel h2{margin:0 34px 10px 0;font:400 1.3125rem/1.2 var(--serif);letter-spacing:-.015em}
+  .panel p{margin:0 0 10px;font-size:.8438rem;line-height:1.62;color:#D9D6CE}
   .panel .tip{background:rgba(232,73,29,.08);
-    border-left:2px solid var(--accent);border-radius:0;padding:10px 12px;font-size:12.8px;
+    border-left:2px solid var(--accent);border-radius:0;padding:10px 12px;font-size:.8rem;
     line-height:1.55;color:#D9D6CE;margin-top:4px}
   .panel .close{position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:0;border:1px solid var(--line);
-    background:transparent;color:var(--muted);cursor:pointer;font-size:18px;line-height:1}
+    background:transparent;color:var(--muted);cursor:pointer;font-size:1.125rem;line-height:1}
   .panel .close:hover{color:var(--fg);border-color:var(--acct)}
 
   /* İpucu (kontroller) */
   .hint{position:fixed;left:50%;bottom:calc(16px + var(--vg-ftr, 0px));transform:translateX(-50%);z-index:25;
     padding:6px 13px;border-radius:0;background:rgba(14,16,15,.82);border:1px solid var(--line);
-    font-size:12px;color:var(--muted);white-space:nowrap;
+    font-size:.75rem;color:var(--muted);white-space:nowrap;
     transition:opacity .5s}
   .hint b{color:var(--fg);font-weight:600}
 
@@ -74,26 +78,28 @@
   .boot-card{text-align:center;max-width:330px;padding:0 20px}
   .spinner{width:38px;height:38px;margin:0 auto 18px;border-radius:50%;
     border:1.5px solid rgba(236,233,225,.2);border-top-color:var(--accent);animation:spin 1s linear infinite}
+  /* hareket azaltmada yavaş döner (yükleniyor bilgisi kaybolmasın; kılavuz `motion`) */
+  @media (prefers-reduced-motion:reduce){.spinner{animation-duration:6s}.scrim,.panel,#boot,.hint{transition:opacity .2s}.panel{transform:none}}
   @keyframes spin{to{transform:rotate(360deg)}}
-  .boot-card h1{font:400 21px/1.2 var(--serif);letter-spacing:-.015em;margin:0 0 8px}
-  .boot-card p{font-size:12.8px;color:var(--muted);margin:0;line-height:1.5}
+  .boot-card h1{font:400 1.3125rem/1.2 var(--serif);letter-spacing:-.015em;margin:0 0 8px}
+  .boot-card p{font-size:.8rem;color:var(--muted);margin:0;line-height:1.5}
 
   #err{position:fixed;inset:0;z-index:60;display:none;place-items:center;background:var(--bg);padding:24px;text-align:center}
   #err.show{display:grid}
   #err .box{max-width:420px}
-  #err h1{font:400 21px/1.2 var(--serif);color:#ff9b9b;margin:0 0 10px}
-  #err pre{font-size:11.5px;color:var(--muted);white-space:pre-wrap;text-align:left;
+  #err h1{font:400 1.3125rem/1.2 var(--serif);color:#ff9b9b;margin:0 0 10px}
+  #err pre{font-size:.7188rem;color:var(--muted);white-space:pre-wrap;text-align:left;
     background:rgba(236,233,225,.05);border:1px solid var(--line);border-radius:0;padding:10px;max-height:40vh;overflow:auto}
   #err .acts{display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap}
-  #err .acts button{background:transparent;color:var(--fg);border:1px solid var(--line);border-radius:0;padding:9px 14px 8px;font:500 10.5px/1.3 var(--font);letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
+  #err .acts button{background:transparent;color:var(--fg);border:1px solid var(--line);border-radius:0;padding:9px 14px 8px;font:500 .6562rem/1.3 var(--font);letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
   #err .acts button.pri{background:var(--accent);border-color:var(--accent);color:var(--ink)}
-  .boot-card .pct{margin-top:12px;font:400 12.5px/1.4 'IBM Plex Mono',ui-monospace,Consolas,monospace;color:var(--fg);font-variant-numeric:tabular-nums;min-height:18px}
+  .boot-card .pct{margin-top:12px;font:400 .7812rem/1.4 var(--mono);color:var(--fg);font-variant-numeric:tabular-nums;min-height:18px}
 </style>
 <script type="importmap">
 {
   "imports": {
-    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-    "@mkkellogg/gaussian-splats-3d": "https://cdn.jsdelivr.net/npm/@mkkellogg/gaussian-splats-3d@0.4.7/build/gaussian-splats-3d.module.js"
+    "three": "/vendor/three@0.169.0/build/three.module.min.js",
+    "@mkkellogg/gaussian-splats-3d": "/vendor/gaussian-splats-3d@0.4.7/build/gaussian-splats-3d.module.js"
   }
 }
 </script>
@@ -103,12 +109,12 @@
 
   <div class="badge"><span data-t="badge">Foto-gerçekçi</span> <small>Gaussian Splatting</small></div>
 
-  <button class="info-btn" id="infoBtn"><span class="q">?</span> <span data-t="info">Bu görünüm nedir?</span></button>
+  <button type="button" class="info-btn" id="infoBtn" aria-expanded="false" aria-controls="panel"><span class="q">?</span> <span data-t="info">Bu görünüm nedir?</span></button>
 
   <div class="scrim" id="scrim"></div>
-  <aside class="panel" id="panel" role="dialog" aria-label="Bilgi">
-    <button class="close" id="closeBtn" aria-label="Kapat" data-t-aria="close">×</button>
-    <h2 data-t="h2">Foto-gerçekçi görünüm nedir?</h2>
+  <aside class="panel" id="panel" role="dialog" aria-labelledby="panel-h" inert>
+    <button type="button" class="close" id="closeBtn" aria-label="Kapat" data-t-aria="close">×</button>
+    <h2 id="panel-h" data-t="h2">Foto-gerçekçi görünüm nedir?</h2>
     <p data-t="p1">Bu sahne, alanın yüzlerce fotoğrafından 3B Gaussian Splatting yöntemiyle üretildi. Görüntü, üçgen yüzeylerden (mesh) değil, ışığı ve rengi taşıyan milyonlarca minik Gaussian noktasından oluşur.</p>
     <p data-t="p2">Bu sayede gölgeler, yansımalar ve ince dokular fotoğraf gerçekliğinde görünür — klasik “3B Model” sekmesindeki katı modelin sunamadığı bir doğallıkla.</p>
     <div class="tip"><span data-t="tip">Bu görünüm yalnızca izlemek içindir. Ölçüm, kesit ve analiz için “3B Model” sekmesini kullanın.</span></div>
@@ -201,10 +207,11 @@
     };
 
     // Bilgi paneli aç/kapat
-    const scrim=document.getElementById('scrim'), panel=document.getElementById('panel');
-    const open=()=>{scrim.classList.add('open');panel.classList.add('open')};
-    const close=()=>{scrim.classList.remove('open');panel.classList.remove('open')};
-    document.getElementById('infoBtn').onclick=open;
+    const scrim=document.getElementById('scrim'), panel=document.getElementById('panel'), infoBtn=document.getElementById('infoBtn');
+    const isOpen=()=>panel.classList.contains('open');
+    const open=()=>{scrim.classList.add('open');panel.classList.add('open');panel.inert=false;infoBtn.setAttribute('aria-expanded','true');document.getElementById('closeBtn').focus()};
+    const close=()=>{if(!isOpen())return;scrim.classList.remove('open');panel.classList.remove('open');panel.inert=true;infoBtn.setAttribute('aria-expanded','false');infoBtn.focus()};
+    infoBtn.onclick=()=>isOpen()?close():open();
     document.getElementById('closeBtn').onclick=close;
     scrim.onclick=close;
     addEventListener('keydown',e=>{if(e.key==='Escape')close()});
@@ -226,7 +233,7 @@
     // Üst sayfa sekme değiştirince render döngüsünü durdur/sürdür (gizli iframe GPU harcamasın).
     let paused=false, loaded=false;
     addEventListener('message', e=>{
-      if (e.source !== window.parent || window.parent === window) return;
+      if (e.origin !== location.origin || e.source !== window.parent || window.parent === window) return;
       const c = e.data && e.data.splat, v = window.__viewer;
       if (c === 'pause') { paused = true; if (v && loaded) v.stop(); }
       else if (c === 'resume') { paused = false; if (v && loaded && !v.selfDrivenModeRunning) v.start(); }

@@ -34,6 +34,10 @@
     'ak.b.links': ['Bağlantılar', 'Links'],
     'ak.hero.live2': ['Canlı 3B model', 'Live 3D model'],
     'ak.cite.eyebrow': ['Akademik Etki', 'Academic Impact'],
+    'ak.skip': ['İçeriğe geç', 'Skip to content'],
+    'ak.footer.privacy': ['Gizlilik: Bu site çerez koymaz ve kişisel veri toplamaz; dil tercihi yalnız tarayıcınızda saklanır. Yazı tipleri ve kitaplıklar sitenin kendisinden sunulur. Üçüncü taraflara yalnız şu istekler gider: anonim ziyaret sayacı (Cloudflare), atıf sayısı (OpenAlex), harita açılınca harita karoları (Esri, OpenStreetMap, CARTO) ve model sayfalarında bot denetimi ile model anahtarı (Cloudflare Turnstile ve Worker; anahtar kısa süreli ve IP adresine bağlıdır, saklanmaz). Bu hizmetlerde kendi gizlilik koşulları geçerlidir.',
+      'Privacy: This site sets no cookies and collects no personal data; your language choice is stored only in your browser. Fonts and libraries are served from the site itself. Only these requests reach third parties: an anonymous visit counter (Cloudflare), citation counts (OpenAlex), map tiles when the map is opened (Esri, OpenStreetMap, CARTO), and on model pages a bot check and model key (Cloudflare Turnstile and Worker; the key is short-lived, bound to the IP address and not stored). These services apply their own privacy terms.'],
+    'ak.hero.pause': ['Durdur', 'Pause'], 'ak.hero.play': ['Oynat', 'Play'],
     'ak.cite.h2': ['Atıf Metrikleri', 'Citation Metrics'],
     'ak.cite.sub': ['AVESİS ve Google Scholar atıf metrikleri (elle güncellenir); OpenAlex verisi canlı olarak çekilir.', 'AVESİS and Google Scholar citation metrics (updated manually); OpenAlex data is fetched live.'],
     'ak.cite.total': ['Toplam Atıf · AVESİS', 'Total Citations · AVESİS'],
@@ -117,6 +121,9 @@
     // ---- Profil paneli ----
     'profile.title': ['Yükseklik Profili', 'Elevation Profile'],
     'common.close.t': ['Kapat', 'Close'],
+    'tabs.aria': ['Görünümler', 'Views'],
+    'grp.demlayers': ['Harita katmanı', 'Map layer'], 'grp.cmplayers': ['Sağdaki katman', 'Right-hand layer'],
+    'cmp.range': ['Bölücü konumu: solda ortofoto, sağda seçilen DEM katmanı', 'Divider position: orthophoto on the left, selected DEM layer on the right'],
     'profile.len': ['Uzunluk:', 'Length:'],
     'profile.elevrange': ['Rakım:', 'Elevation:'],
     'profile.delta': ['Δ:', 'Δ:'],
@@ -140,6 +147,7 @@
     'cite.bib': ['BibTeX kopyala', 'Copy BibTeX'],
     'cite.ris': ['RIS kopyala', 'Copy RIS'],
     'cite.copied': ['✓ kopyalandı', '✓ copied'],
+    'cite.fail': ['Kopyalanamadı', 'Copy failed'],
     // ---- DEM katman + lejant ----
     'dem.relief': ['Renkli DEM', 'Color DEM'],
     'dem.slope': ['Eğim', 'Slope'],
@@ -453,19 +461,34 @@
 
   function clear(node) { while (node.firstChild) node.removeChild(node.firstChild); }
 
+  // Dil düğmesi bir kez kurulur, dil değişince YERİNDE güncellenir: basılan düğme yok edilmediği için klavye odağı
+  // kaybolmaz (kılavuz `html`). En az 24 px dokunma hedefi; grup adı ekran okuyucuya "Dil" diye okunur.
+  // Renkler sayfadan gelir: --ls-on-bg/--ls-on-fg (seçili), --ls-bg/--ls-fg (diğer). Tanımsızsa nötr koyu/açık.
+  let switchBtns = null;
   function buildSwitch() {
     let host = document.getElementById('lang-switch');
     if (!host) { host = document.createElement('div'); host.id = 'lang-switch'; host.style.cssText = 'position:fixed;top:8px;right:10px;z-index:9999'; document.body.appendChild(host); }
-    clear(host);
-    host.style.display = 'inline-flex'; host.style.borderRadius = 'var(--ls-radius, 0)'; host.style.overflow = 'hidden'; host.style.border = '1px solid var(--ls-line, rgba(128,128,128,.45))';
-    ['tr', 'en'].forEach(L => {
-      const b = document.createElement('button'); b.type = 'button'; b.textContent = L.toUpperCase();
-      // Renkler sayfadan gelir: --ls-on-bg/--ls-on-fg (seçili), --ls-bg/--ls-fg (diğer). Tanımsızsa nötr koyu/açık.
-      b.style.cssText = 'background:' + (L === lang ? 'var(--ls-on-bg, #ECE9E1)' : 'var(--ls-bg, transparent)') + ';color:' + (L === lang ? 'var(--ls-on-fg, #121413)' : 'var(--ls-fg, #9aa3af)') + ';border:0;padding:6px 10px;font:500 11.5px/1 inherit;letter-spacing:.06em;cursor:pointer';
-      b.setAttribute('aria-pressed', L === lang ? 'true' : 'false');
-      b.onclick = () => setLang(L);
-      host.appendChild(b);
-    });
+    if (!document.getElementById('ls-css')) {
+      const st = document.createElement('style'); st.id = 'ls-css';
+      st.textContent = '#lang-switch{display:inline-flex;border:1px solid var(--ls-line,rgba(128,128,128,.45));border-radius:var(--ls-radius,0);overflow:hidden}'
+        + '#lang-switch button{min-block-size:26px;min-inline-size:34px;padding:6px 10px;border:0;margin:0;cursor:pointer;font:inherit;font-weight:500;font-size:.72rem;line-height:1;letter-spacing:.06em;'
+        + 'background:var(--ls-bg,transparent);color:var(--ls-fg,#9aa3af)}'
+        + '#lang-switch button[aria-pressed="true"]{background:var(--ls-on-bg,#ECE9E1);color:var(--ls-on-fg,#121413)}';
+      document.head.appendChild(st);
+    }
+    if (!switchBtns || !host.contains(switchBtns[0])) {
+      clear(host);
+      host.setAttribute('role', 'group');
+      switchBtns = ['tr', 'en'].map(L => {
+        const b = document.createElement('button'); b.type = 'button'; b.textContent = L.toUpperCase(); b.lang = L;
+        b.setAttribute('aria-label', L === 'tr' ? 'Türkçe' : 'English');
+        b.onclick = () => setLang(L);
+        host.appendChild(b);
+        return b;
+      });
+    }
+    host.setAttribute('aria-label', lang === 'en' ? 'Language' : 'Dil');
+    switchBtns.forEach(b => b.setAttribute('aria-pressed', b.lang === lang ? 'true' : 'false'));
   }
 
   function setLang(L) {

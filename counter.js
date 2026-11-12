@@ -32,6 +32,7 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ path: p }),
         keepalive: true,
+        priority: "low",        // analitik: sayfanın kendi isteklerinin önüne geçmesin
       }).catch(function () {});
     }
   } catch (e) { /* sessizce yut — sayaç hiçbir zaman sayfayı bozmaz */ }
@@ -41,7 +42,7 @@
     try {
       var box = document.getElementById("visitor-counter");
       if (!box) return;
-      fetch(EP + "/stats")
+      fetch(EP + "/stats", { priority: "low" })
         .then(function (r) { return r.json(); })
         .then(function (d) {
           if (!d) return;

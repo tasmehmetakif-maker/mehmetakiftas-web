@@ -2,12 +2,17 @@
    bu dosya şablondan SONRA yüklenir ve yalnız ince ayarları taşır. Renk/yazı değişkenleri şablonun :root'unda. */
 
 /* Panellerde ince kaydırma çubuğu */
-#help-panel .hp-card, #kunye, .trail { scrollbar-width:thin; scrollbar-color:rgba(236,233,225,.28) transparent; }
+/* Tutamak zemine karşı en az 3:1 (koyu panelde rgba(...,.42) ≈ 3,6:1); yüksek karşıtlık tercihinde tam kemik rengi. */
+#help-panel .hp-card, #kunye, .trail, .tabbar { scrollbar-width:thin; scrollbar-color:rgba(236,233,225,.42) transparent; }
+@media (prefers-contrast:more) { #help-panel .hp-card, #kunye, .trail, .tabbar { scrollbar-color:var(--bone) var(--night); } }
 
 /* Sayılar hizalı dursun (ölçüm okumaları, künye değerleri) */
 #measure-readout, #kunye .row > span:last-child, .hud, .status { font-variant-numeric:tabular-nums; }
 
-/* Sayfalar arası yumuşak geçiş (destekleyen tarayıcılarda) */
-@view-transition { navigation:auto; }
+/* Sayfalar arası yumuşak geçiş (destekleyen tarayıcılarda; hareket azaltma tercihinde yok) */
+@media (prefers-reduced-motion:no-preference) { @view-transition { navigation:auto; } }
 
-@media (prefers-reduced-motion:reduce) { *, *::before, *::after { transition-duration:.001ms !important; } }
+/* hareket azaltma: yer değiştiren geçişler kapanır, renk/saydamlık geçişleri kalır */
+@media (prefers-reduced-motion:reduce) {
+  *, *::before, *::after { transition-property:color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, filter !important; }
+}

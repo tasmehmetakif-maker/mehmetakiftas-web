@@ -2,6 +2,9 @@
 <html lang="tr" data-mode="night">
 <head>
 <meta charset="UTF-8" />
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'none'; form-action 'none'" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<meta name="text-scale" content="scale" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title data-i18n="ak.doc.title">Dr. Öğr. Üyesi Mehmet Akif Taş — 3B Modeller ve Yayınlar</title>
 <meta name="description" content="Dr. Öğr. Üyesi Mehmet Akif Taş (EBYÜ Coğrafya) — İHA fotogrametrisiyle üretilmiş interaktif 3B arazi modelleri ile CBS ve uzaktan algılama yayınları." />
@@ -27,40 +30,41 @@ document.documentElement.classList.add('js');
 try { if (sessionStorage.getItem('pl_seen')) document.documentElement.classList.add('pl-seen'); } catch (e) {}
 /* Sayfalar arası geçiş (site.css @view-transition) atlanırsa tarayıcının konsola hata düşürmesini önle. */
 ['pagereveal','pageswap'].forEach(function (n) { window.addEventListener(n, function (e) { var v = e.viewTransition; if (v) { v.finished.catch(function () {}); if (v.ready) v.ready.catch(function () {}); } }); });</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H" crossorigin="anonymous" />
-<link rel="stylesheet" href="site.css?v=20261111b" />
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH" crossorigin="anonymous"></script>
-<script src="view-guard.js?v=7fee5a829a" data-mode="lite"></script>
-<script src="i18n.js?v=20261111c"></script>
+<link rel="preload" href="/fonts/newsreader-italic-200_800-latin.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/fonts/archivo-normal-100_900-latin.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/fonts/fonts.css?v=20261112" />
+<link rel="stylesheet" href="/tokens.css?v=20261112" />
+<link rel="stylesheet" href="site.css?v=20261112" />
+<script src="view-guard.js?v=a4019b69cb" data-mode="lite"></script>
+<script src="i18n.js?v=20261112"></script>
 <script defer src="/counter.js"></script>
+<script type="speculationrules">{"prefetch":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
 <style id="pl-css">
 /* ===== Açılış perdesi: kâğıt üzerinde çizilen eşyükselti eğrileri (ana sayfaya oturumda ilk girişte) ===== */
-#preloader { position:fixed; inset:0; z-index:9999; display:grid; grid-template-rows:minmax(0,1fr) auto; overflow:hidden; background:#F1EFE9; color:#121413;
-  font-family:'Archivo','Helvetica Neue',Arial,sans-serif; clip-path:inset(0 0 0 0); transition:clip-path 1.15s cubic-bezier(.65,0,.35,1); }
+#preloader { position:fixed; inset:0; z-index:9999; display:grid; grid-template-rows:minmax(0,1fr) auto; overflow:hidden; background:var(--paper); color:var(--ink);
+  font-family:var(--sans); clip-path:inset(0 0 0 0); transition:clip-path 1.15s cubic-bezier(.65,0,.35,1); }
 #preloader.pl-out { clip-path:inset(0 0 100% 0); pointer-events:none; }
 html.pl-seen #preloader { display:none !important; }
 #preloader .pl-topo { position:absolute; left:50%; top:44%; width:min(124vmin,1040px); height:min(124vmin,1040px); transform:translate(-50%,-50%); overflow:visible; }
-#preloader .pl-topo path { fill:none; stroke:#121413; stroke-width:1; vector-effect:non-scaling-stroke; opacity:.34; stroke-dasharray:1; stroke-dashoffset:1; }
+#preloader .pl-topo path { fill:none; stroke:var(--ink); stroke-width:1; vector-effect:non-scaling-stroke; opacity:.34; stroke-dasharray:1; stroke-dashoffset:1; }
 #preloader .pl-topo path.idx { opacity:.72; stroke-width:1.5; }
-#preloader #pl-peak { fill:#E8491D; opacity:0; transition:opacity .5s ease; }
+#preloader #pl-peak { fill:var(--accent); opacity:0; transition:opacity .5s ease; }
 #preloader.pl-summit #pl-peak { opacity:1; }
-#preloader .pl-base { grid-row:2; position:relative; z-index:1; background:#F1EFE9; padding:0 clamp(20px,4.2vw,64px) clamp(20px,3.6vh,40px); }
-#preloader .pl-line { height:1px; background:rgba(18,20,19,.17); margin-bottom:clamp(16px,2.4vh,26px); }
-#preloader #pl-bar { display:block; height:100%; width:0; background:#121413; }
+#preloader .pl-base { grid-row:2; position:relative; z-index:1; background:var(--paper); padding:0 clamp(20px,4.2vw,64px) clamp(20px,3.6vh,40px); }
+#preloader .pl-line { height:1px; background:var(--rule-paper); margin-bottom:clamp(16px,2.4vh,26px); }
+#preloader #pl-bar { display:block; height:100%; width:0; background:var(--ink); }
 #preloader .pl-row { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:end; gap:24px; }
-#preloader .pl-eyebrow { font:500 .7rem/1.25 'Archivo','Helvetica Neue',Arial,sans-serif; letter-spacing:.17em; text-transform:uppercase; color:#555955; margin-bottom:12px; }
-#preloader .pl-name { font:300 clamp(2.1rem,6vw,4.6rem)/1 'Newsreader','Iowan Old Style',Georgia,serif; letter-spacing:-.03em; }
-#preloader .pl-tag { margin-top:12px; font-size:.86rem; line-height:1.4; color:#555955; }
-#preloader .pl-pct { font:300 clamp(4rem,15vw,12rem)/.78 'Newsreader','Iowan Old Style',Georgia,serif; letter-spacing:-.05em; font-variant-numeric:lining-nums tabular-nums; white-space:nowrap; }
-#preloader .pl-pct i { font-style:normal; font-size:.26em; letter-spacing:0; margin-left:.12em; vertical-align:top; position:relative; top:.25em; color:#555955; }
+#preloader .pl-eyebrow { font:500 .7rem/1.25 var(--sans); letter-spacing:.17em; text-transform:uppercase; color:var(--fg2-paper); margin-bottom:12px; }
+#preloader .pl-name { font:300 clamp(2.1rem,1rem + 4.6vw,4.6rem)/1 var(--serif); letter-spacing:-.03em; }
+#preloader .pl-tag { margin-top:12px; font-size:.86rem; line-height:1.4; color:var(--fg2-paper); }
+#preloader .pl-pct { font:300 clamp(4.8rem,2rem + 12vw,12rem)/.78 var(--serif); letter-spacing:-.05em; font-variant-numeric:lining-nums tabular-nums; white-space:nowrap; }
+#preloader .pl-pct i { font-style:normal; font-size:.26em; letter-spacing:0; margin-left:.12em; vertical-align:top; position:relative; top:.25em; color:var(--fg2-paper); }
 @media (max-width:640px) { #preloader .pl-row { grid-template-columns:1fr; gap:14px; } #preloader .pl-pct { order:-1; } }
 @media (prefers-reduced-motion:reduce) { #preloader { transition:opacity .4s ease; } #preloader.pl-out { clip-path:none; opacity:0; } }
 </style>
 </head>
 <body>
+  <a class="skip" href="#main" data-i18n="ak.skip">İçeriğe geç</a>
   <svg class="vh" width="0" height="0" aria-hidden="true" focusable="false"><defs>
     <symbol id="i-arr" viewBox="0 0 16 16"><path d="M2 8h11.2M8.8 3.6 13.2 8l-4.4 4.4"/></symbol>
     <symbol id="i-ne" viewBox="0 0 16 16"><path d="M4 12 12 4M5.6 4H12v6.4"/></symbol>
@@ -181,7 +185,7 @@ html.pl-seen #preloader { display:none !important; }
     </div>
   </div></header>
 
-  <div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menü" data-i18n-aria="ak.menu" inert>
+  <div class="menu" id="menu" inert>
     <div class="wrap menu-in">
       <nav class="menu-main" aria-label="Bölümler" data-i18n-aria="ak.nav.aria">
         <a class="st" style="--i:0" href="#profil"><span class="mono">01</span><span data-i18n="ak.nav.about">Hakkında</span></a>
@@ -223,7 +227,7 @@ html.pl-seen #preloader { display:none !important; }
   <!-- ============ AÇILIŞ ============ -->
   <section class="hero" id="hakkinda" data-theme="night">
     <div class="hero-media" id="hero-canvas-wrap" aria-hidden="true">
-      <img class="hero-poster" id="hero-poster" src="otlukbeli-kapak.jpg" alt="" />
+      <img class="hero-poster" id="hero-poster" src="otlukbeli-kapak.jpg" alt="" fetchpriority="high" />
       <canvas id="hero-canvas"></canvas>
     </div>
     <script>/* Açılış: kapak her zaman yüksek çözünürlüklü Otlukbeli ortofotosu. 3B çalışacaksa (masaüstü) havuzdan
@@ -250,12 +254,12 @@ html.pl-seen #preloader { display:none !important; }
         </div>
         <div class="figs hf" style="--i:3">
           <div><b data-count="11">11</b><span class="lbl" data-i18n="ak.m.models">3B Model</span></div>
-          <div><b data-count="28">28</b><span class="lbl" data-i18n="ak.m.pubs">Yayın</span></div>
+          <div><b data-m="pubs" data-count="29">29</b><span class="lbl" data-i18n="ak.m.pubs">Yayın</span></div>
           <div><b data-count="3">3</b><span class="lbl" data-i18n="ak.m.proj">Proje</span></div>
         </div>
       </div>
       <div class="hero-strip hf" style="--i:4">
-        <div class="hero-live mono"><i aria-hidden="true"></i><span><span id="hc-kind" data-i18n="ak.hero.still">Ortofoto</span> · <span id="hc-model" data-i18n="ak.hc.otlukbeli">Otlukbeli Gölü</span></span></div>
+        <div class="hero-live mono"><i aria-hidden="true"></i><span><span id="hc-kind" data-i18n="ak.hero.still">Ortofoto</span> · <span id="hc-model" data-i18n="ak.hc.otlukbeli">Otlukbeli Gölü</span></span><button class="hero-pause" id="hero-pause" type="button" hidden data-i18n="ak.hero.pause">Durdur</button></div>
         <a class="scroll-cue lbl" href="#profil"><span data-i18n="ak.scroll.t">Kaydır</span><span class="ln" aria-hidden="true"></span></a>
       </div>
     </div>
@@ -269,7 +273,7 @@ html.pl-seen #preloader { display:none !important; }
         <div class="about-side">
           <div class="sec-idx" style="margin-bottom:clamp(22px,3vw,38px)"><span class="mono">01</span><h2 class="lbl" data-i18n="ak.b.about" style="letter-spacing:.17em">Hakkında</h2></div>
           <figure class="portrait" data-reveal="up">
-            <div class="ph"><img src="akif-avatar.jpg" alt="Mehmet Akif Taş" width="316" height="316" /></div>
+            <div class="ph"><img src="akif-avatar.jpg" alt="Mehmet Akif Taş" width="316" height="316" loading="lazy" decoding="async" /></div>
             <figcaption><b><span data-i18n="ak.title">Dr. Öğr. Üyesi</span> Mehmet Akif Taş</b><span data-i18n="ak.edu.v2">EBYÜ, Coğrafya Bölümü — CBS Anabilim Dalı</span></figcaption>
           </figure>
         </div>
@@ -282,15 +286,15 @@ html.pl-seen #preloader { display:none !important; }
             </div>
             <div class="facts" data-reveal="up" style="--d:120ms">
               <div>
-                <span class="lbl" data-i18n="ak.b.edu">Eğitim ve Kurum</span>
+                <h3 class="lbl" data-i18n="ak.b.edu">Eğitim ve Kurum</h3>
                 <div class="fact-edu"><b data-i18n="ak.edu.l1">Doktora:</b><span data-i18n="ak.edu.v1">Marmara Üniversitesi, Coğrafya (2021)</span><b data-i18n="ak.edu.l3">Yüksek Lisans:</b><span data-i18n="ak.edu.v3">Marmara Üniversitesi, Coğrafya (2015)</span><b data-i18n="ak.edu.l4">Lisans:</b><span data-i18n="ak.edu.v4">Marmara Üniversitesi, Coğrafya (2012)</span><b data-i18n="ak.edu.l2">Kurum:</b><span data-i18n="ak.edu.v2">EBYÜ, Coğrafya Bölümü — CBS Anabilim Dalı</span><b data-i18n="ak.edu.l5">Görev:</b><span data-i18n="ak.edu.v5">Bölüm Başkan Yardımcısı (2023–), Anabilim Dalı Başkanı (2021–)</span></div>
               </div>
               <div>
-                <span class="lbl" data-i18n="ak.b.research">Araştırma Alanları</span>
+                <h3 class="lbl" data-i18n="ak.b.research">Araştırma Alanları</h3>
                 <p class="areas"><span data-i18n="ak.tag.gis">CBS</span><span data-i18n="ak.tag.rs">Uzaktan Algılama</span><span data-i18n="ak.tag.haz">Doğal Afetler</span><span data-i18n="ak.tag.land">Heyelan</span><span data-i18n="ak.tag.flood">Taşkın</span><span data-i18n="ak.tag.geom">Jeomorfoloji</span><span data-i18n="ak.tag.photo">Fotogrametri</span><span data-i18n="ak.tag.tr">Türkiye Coğrafyası</span></p>
               </div>
               <div>
-                <span class="lbl" data-i18n="ak.b.links">Bağlantılar</span>
+                <h3 class="lbl" data-i18n="ak.b.links">Bağlantılar</h3>
                 <div class="linklist">
                   <a href="cv.html" target="_blank" rel="noopener"><span data-i18n="ak.cv2">Özgeçmiş (CV)</span><svg class="i" aria-hidden="true"><use href="#i-ne"/></svg></a>
                   <a href="mailto:akif.tas@erzincan.edu.tr"><span data-i18n="ak.c.email">E-posta</span><svg class="i" aria-hidden="true"><use href="#i-ne"/></svg></a>
@@ -559,7 +563,7 @@ html.pl-seen #preloader { display:none !important; }
       </div>
       <div class="g12" data-reveal="up">
         <div class="teach-a">
-          <span class="lbl" data-i18n="ak.teach.courses">Verdiği Dersler</span>
+          <h3 class="lbl" data-i18n="ak.teach.courses">Verdiği Dersler</h3>
           <ul class="courses">
             <li><span data-i18n="ak.crs.1">Afet Yönetiminde Coğrafi Bilgi Sistemleri ve Uzaktan Algılama</span> <em class="lv lv-y mono" data-i18n="ak.lv.phd">Doktora</em></li>
             <li><span data-i18n="ak.crs.2">Uzaktan Algılama ve Coğrafi Bilgi Sistemleri</span> <em class="lv lv-y mono" data-i18n="ak.lv.ms">Yüksek Lisans</em></li>
@@ -588,7 +592,7 @@ html.pl-seen #preloader { display:none !important; }
           </ul>
         </div>
         <div class="teach-b">
-          <span class="lbl" data-i18n="ak.teach.theses">Tez Danışmanlıkları</span>
+          <h3 class="lbl" data-i18n="ak.teach.theses">Tez Danışmanlıkları</h3>
           <ul class="theses">
             <li>
               <b data-i18n="ak.th.t1">Analitik Hiyerarşi Süreci (AHS) Metodu ile Terme Havzası (Samsun) Taşkın Risk Analizi</b>
@@ -631,6 +635,7 @@ html.pl-seen #preloader { display:none !important; }
     </div>
     <a class="up lbl" href="#hakkinda"><span data-i18n="ak.up">Başa dön</span><svg class="i" aria-hidden="true"><use href="#i-arr"/></svg></a>
     <div class="legal" data-i18n="ak.footer.legal">Tüm modeller ve görüntüler 5846 sayılı FSEK kapsamında korunur; indirme, ekran görüntüsü ve video kaydı yasaktır.</div>
+    <div class="legal" id="gizlilik" data-i18n="ak.footer.privacy">Gizlilik: Bu site çerez koymaz ve kişisel veri toplamaz; dil tercihi yalnız tarayıcınızda saklanır. Yazı tipleri ve kitaplıklar sitenin kendisinden sunulur. Üçüncü taraflara yalnız şu istekler gider: anonim ziyaret sayacı (Cloudflare), atıf sayısı (OpenAlex), harita açılınca harita karoları (Esri, OpenStreetMap, CARTO) ve model sayfalarında bot denetimi ile model anahtarı (Cloudflare Turnstile ve Worker; anahtar kısa süreli ve IP adresine bağlıdır, saklanmaz). Bu hizmetlerde kendi gizlilik koşulları geçerlidir.</div>
   </div></footer>
 
   <!-- ===== Ön izleme sayfası: kart buraya açılır (künye + 3B modele geçiş) ===== -->
@@ -674,15 +679,25 @@ html.pl-seen #preloader { display:none !important; }
     okul:      { photos:639,  w:372,  h:282,  zmin:1452, zmax:1514, gsd:6.3,  cam:'DJI FC9313', img:'okul-kapak.jpg' }
   };
   </script>
-  <script src="qrcode.js"></script>
-  <script src="site.js?v=20261111"></script>
+  <script src="site.js?v=20261112"></script>
   <script>
     document.getElementById('yr').textContent = '2026';
     var SITE_URL = 'https://mehmetakiftas.com/';
-    try { var qr = qrcode(0, 'M'); qr.addData(SITE_URL); qr.make(); document.getElementById('qr').src = qr.createDataURL(4, 8); }
-    catch (e) { console.error('QR oluşturulamadı', e); }
+    // Karekod ve harita kitaplıkları açılışta değil, ilgili bölüm ekrana yaklaşınca yüklenir (Leaflet artık <head>'de değil).
+    function nearView(el, fn) {
+      if (!el) return;
+      if (!('IntersectionObserver' in window)) { fn(); return; }
+      var io = new IntersectionObserver(function (es) { if (es.some(function (e) { return e.isIntersecting; })) { io.disconnect(); fn(); } }, { rootMargin: '800px 0px' });
+      io.observe(el);
+    }
+    function loadJs(src) { return new Promise(function (res, rej) { var s = document.createElement('script'); s.src = src; s.onload = res; s.onerror = function () { rej(new Error(src)); }; document.head.appendChild(s); }); }
+    function loadCss(href) { return new Promise(function (res, rej) { var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = href; l.onload = res; l.onerror = function () { rej(new Error(href)); }; document.head.appendChild(l); }); }
+    nearView(document.getElementById('qr'), function () {
+      loadJs('qrcode.js').then(function () { var qr = qrcode(0, 'M'); qr.addData(SITE_URL); qr.make(); document.getElementById('qr').src = qr.createDataURL(4, 8); })
+        .catch(function (e) { console.error('QR oluşturulamadı', e); });
+    });
     // Konum haritası — model alanı çerçevesi (footprint) + etiketli uydu/yol/sokak (TR/EN)
-    (function(){
+    function initMap(){
       if (typeof L === 'undefined' || !document.getElementById('map')) return;
       var T = window.T || function(k){ return k; };
       // lbl: kalıcı etiket yönü (Sürek/Mezra çakışmasın diye).
@@ -741,10 +756,14 @@ html.pl-seen #preloader { display:none !important; }
         });
         buildCtrl();
       });
-    })();
+    }
+    nearView(document.getElementById('map'), function () {
+      Promise.all([loadCss('/vendor/leaflet@1.9.4/dist/leaflet.css'), loadJs('/vendor/leaflet@1.9.4/dist/leaflet.js')]).then(initMap)
+        .catch(function (e) { console.error('Harita yüklenemedi', e); });
+    });
   </script>
 <script>
-/* Atıf metrikleri: kartlardaki değerler Google Scholar'dan elle güncellenir (56/4/2 · 28.10.2026).
+/* Atıf metrikleri: kartlardaki değerleri scripts/atif_guncelle.py AVESİS ve Google Scholar'dan yazar.
    OpenAlex değerleri ayrı satırda, canlı gösterilir (taban/Math.max karışımı yok). */
 (function(){
   var oa = null;
@@ -756,7 +775,7 @@ html.pl-seen #preloader { display:none !important; }
     if(c) c.textContent=fmt(oa.c); if(h) h.textContent=fmt(oa.h); if(line) line.hidden=false;
   }
   try {
-    fetch('https://api.openalex.org/authors/A5036448179?mailto=akif.tas@erzincan.edu.tr')
+    fetch('https://api.openalex.org/authors/A5036448179?mailto=akif.tas@erzincan.edu.tr', { priority: 'low' })
       .then(function(r){ return r.ok ? r.json() : null; })
       .then(function(d){
         if(!d || typeof d.cited_by_count!=='number' || !d.summary_stats) return;
@@ -770,8 +789,8 @@ html.pl-seen #preloader { display:none !important; }
 <!-- Canlı 3B açılış: Otlukbeli ya da Stadyum (şifreli medium.enc, sayfada çözülür) döner; kapak önce -> 3B belirir; mobil/hareket-azalt'ta kapak kalır -->
 <script type="importmap">
 { "imports": {
-  "three": "https://unpkg.com/three@0.169.0/build/three.module.js",
-  "three/addons/": "https://unpkg.com/three@0.169.0/examples/jsm/"
+  "three": "/vendor/three@0.169.0/build/three.module.min.js",
+  "three/addons/": "/vendor/three@0.169.0/examples/jsm/"
 }}
 </script>
 <script type="module">
@@ -796,11 +815,11 @@ html.pl-seen #preloader { display:none !important; }
       scene.add(new THREE.HemisphereLight(0xffffff,0x3a3f4a,1.2));
       scene.add(new THREE.AmbientLight(0xffffff,0.42));
       var sun=new THREE.DirectionalLight(0xffffff,1.25); sun.position.set(0.7,1.5,0.9); scene.add(sun);
-      var draco=new DRACOLoader(); draco.setDecoderPath('https://unpkg.com/three@0.169.0/examples/jsm/libs/draco/');
+      var draco=new DRACOLoader(); draco.setDecoderPath('/vendor/three@0.169.0/examples/jsm/libs/draco/');
       var loader=new GLTFLoader(); loader.setDRACOLoader(draco);
       var pivot=new THREE.Group(); scene.add(pivot);
       function resize(){ var w=wrap.clientWidth,h=wrap.clientHeight; if(!w||!h) return; renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix(); }
-      var poster=document.getElementById('hero-poster');
+      var poster=document.getElementById('hero-poster'), pb=document.getElementById('hero-pause');
       // Arka plan için medium (~6-7 MB) yeterli; high (16-19 MB) her ziyarette gereksiz yük olurdu.
       // Dosya R2'de şifreli; anahtarı Worker verir (view-guard.js VG).
       var VG=window.__vgTake ? window.__vgTake() : null;
@@ -813,6 +832,7 @@ html.pl-seen #preloader { display:none !important; }
         camera.position.set(0, d*0.78, d*1.02); camera.lookAt(0,0,0);
         resize();
         if(poster) poster.classList.add('hide');
+        if(pb) pb.hidden=false;                                   // dönen model görünüyor: durdur düğmesi
         // şerit etiketi: artık canlı model görünüyor
         var kind=document.getElementById('hc-kind'), cm=document.getElementById('hc-model');
         if(kind) kind.setAttribute('data-i18n','ak.hero.live2');
@@ -822,11 +842,16 @@ html.pl-seen #preloader { display:none !important; }
       }).catch(function(){
         if(window.__heroLoader) window.__heroLoader.done();        // model yüklenemedi: ortofoto kapağı ve etiketi kalır
       });
-      var running=false;
+      var running=false, heroVis=false, userPaused=false;
       function loop(){ if(!running) return; requestAnimationFrame(loop); pivot.rotation.y+=0.0016; renderer.render(scene,camera); }
+      function sync(){ var want=heroVis && !userPaused; if(want && !running){ running=true; loop(); } else if(!want){ running=false; } }
       addEventListener('resize', resize); resize();
       var hero=document.querySelector('.hero');
-      new IntersectionObserver(function(es){ var vis=es[0].isIntersecting; if(vis && !running){ running=true; loop(); } else if(!vis){ running=false; } }, {threshold:0}).observe(hero);
+      // Sürekli dönen model için durdur/oynat (WCAG 2.2.2); seçim oturum boyunca hatırlanır.
+      try { userPaused = sessionStorage.getItem('hero_paused') === '1'; } catch(e){}
+      function label(){ if(!pb) return; var k=userPaused?'ak.hero.play':'ak.hero.pause'; pb.setAttribute('data-i18n',k); pb.textContent=window.T?window.T(k):pb.textContent; hero.classList.toggle('is-paused', userPaused); }
+      if(pb){ label(); pb.addEventListener('click', function(){ userPaused=!userPaused; try { sessionStorage.setItem('hero_paused', userPaused?'1':'0'); } catch(e){} label(); sync(); if(userPaused) renderer.render(scene,camera); }); }
+      new IntersectionObserver(function(es){ heroVis=es[0].isIntersecting; sync(); }, {threshold:0}).observe(hero);
     }).catch(function(){ if(window.__heroLoader) window.__heroLoader.done(); });  // three.js içe aktarma hatası -> kapat
   })();
 </script>

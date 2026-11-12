@@ -35,7 +35,7 @@
       var d = document.createElement('div');
       d.id = 'vg-frame'; d.setAttribute('role', 'alert');
       d.style.cssText = 'position:fixed;inset:0;z-index:2147483647;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;'
-        + 'text-align:center;background:#0C0E0D;color:#ECE9E1;font:500 15px/1.6 Archivo,system-ui,-apple-system,"Segoe UI",sans-serif';
+        + 'text-align:center;background:#0C0E0D;color:#ECE9E1;font:500 .9375rem/1.6 Archivo,system-ui,-apple-system,"Segoe UI",sans-serif';
       var p = document.createElement('p'); p.style.margin = '0';
       p.textContent = L('Bu içerik başka bir sitenin içinde görüntülenemez. Modeller yalnız mehmetakiftas.com üzerinde açılır.',
         'This content cannot be displayed inside another site. The models open only on mehmetakiftas.com.');
@@ -72,7 +72,7 @@
     if (!TS_KEY) return '';
     await tsLoad();
     return new Promise(function (res, rej) {
-      var box = document.createElement('div');
+      var box = document.createElement('div'); box.id = 'vg-ts';
       // Etkileşim gerekirse kutu yasal pencerenin (2147483646) ÜSTÜNDE görünmeli; aksi hâlde ziyaretçi takılır.
       box.style.cssText = 'position:fixed;left:50%;bottom:40px;transform:translateX(-50%);z-index:2147483647';
       document.body.appendChild(box);
@@ -188,32 +188,32 @@
     + (lite ? '' : 'body{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}'
       + 'input,textarea{user-select:text;-webkit-user-select:text}'
       + '@media print{html,body{display:none!important}}'
-      + '#vg-shield{position:fixed;inset:0;z-index:2147483647;display:none;align-items:center;justify-content:center;background:#0C0E0D;color:#D9D6CE;'
-      + 'font:500 15px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;text-align:center;padding:24px}#vg-shield.on{display:flex}'
+      + '#vg-shield{position:fixed;inset:0;z-index:2147483647;display:none;align-items:center;justify-content:center;background:var(--night,#0C0E0D);color:#D9D6CE;'
+      + 'font:500 .9375rem/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;text-align:center;padding:24px}#vg-shield.on{display:flex}'
       + '#vg-wm{--vgw:340px;--vgh:190px;position:fixed;inset:0;z-index:9;pointer-events:none;background-repeat:repeat;background-size:var(--vgw) var(--vgh);animation:vgdrift 90s linear infinite}'
       // Haritalarda (ortofoto, DEM, karşılaştırma; sayfa body[data-view]'i yazar) filigran daha küçük ve saydam
       + 'body[data-view="ortho"] #vg-wm,body[data-view="dem2d"] #vg-wm,body[data-view="compare"] #vg-wm{--vgw:255px;--vgh:143px;opacity:.55}'
       + '@keyframes vgdrift{from{background-position:0 0}to{background-position:var(--vgw,340px) var(--vgh,190px)}}'
       + '@media (prefers-reduced-motion:reduce){#vg-wm{animation:none}}'
       + '#vg-legal{position:fixed;left:0;right:0;bottom:0;height:var(--vg-ftr);z-index:31;display:flex;align-items:center;gap:6px;padding:0 10px env(safe-area-inset-bottom,0px);'
-      + 'background:rgba(12,14,13,.97);border-top:1px solid rgba(236,233,225,.16);color:#A9ACA5;font:500 11px/1.5 Archivo,system-ui,-apple-system,"Segoe UI",sans-serif;white-space:nowrap;box-sizing:border-box}'
+      + 'background:rgba(12,14,13,.97);border-top:1px solid rgba(236,233,225,.16);color:#A9ACA5;font:500 .6875rem/1.5 Archivo,system-ui,-apple-system,"Segoe UI",sans-serif;white-space:nowrap;box-sizing:border-box}'
       + '#vg-legal .t{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;line-height:1.5}#vg-legal .t span{display:none}'
       + '#vg-legal .t .l{display:inline}@media (max-width:1179px){#vg-legal .t .l{display:none}#vg-legal .t .m{display:inline}}'
       + '@media (max-width:639px){#vg-legal .t .m{display:none}#vg-legal .t .s{display:inline}}'
-      + '#vg-legal button{flex:0 0 auto;background:none;border:0;padding:0;color:#FF6A3D;font:inherit;cursor:pointer;text-decoration:underline;text-underline-offset:2px}'
+      + '#vg-legal button{flex:0 0 auto;background:none;border:0;padding:0;color:var(--acct-night,#FF6A3D);font:inherit;cursor:pointer;text-decoration:underline;text-underline-offset:2px}'
       + '#vg-terms{position:fixed;inset:0;z-index:2147483646;display:flex;align-items:center;justify-content:center;padding:16px;'
       + 'background:rgba(6,7,7,.9);font-family:Archivo,system-ui,-apple-system,"Segoe UI",sans-serif}'
       + '#vg-terms[hidden]{display:none}'
-      + '#vg-terms .card{width:min(620px,100%);max-height:calc(100dvh - 32px);overflow:auto;background:#121413;border:1px solid rgba(236,233,225,.2);border-radius:0;'
+      + '#vg-terms .card{width:min(620px,100%);max-height:calc(100dvh - 32px);overflow:auto;background:var(--ink,#121413);border:1px solid rgba(236,233,225,.2);border-radius:0;'
       + 'padding:24px 24px 0;color:#D9D6CE}'
-      + '#vg-terms h2{margin:0 0 14px;font:400 23px/1.2 Newsreader,Georgia,serif;letter-spacing:-.015em;color:#ECE9E1;display:flex;gap:9px;align-items:center}'
-      + '#vg-terms p{margin:0 0 10px;font-size:13.5px;line-height:1.6}#vg-terms p.f{margin-top:14px;color:#FF8A5C;font-weight:600}'
+      + '#vg-terms h2{margin:0 0 14px;font:400 1.4375rem/1.2 Newsreader,Georgia,serif;letter-spacing:-.015em;color:var(--bone,#ECE9E1);display:flex;gap:9px;align-items:center}'
+      + '#vg-terms p{margin:0 0 10px;font-size:.8438rem;line-height:1.6}#vg-terms p.f{margin-top:14px;color:#FF8A5C;font-weight:600}'
       + '#vg-terms .acts{position:sticky;bottom:0;display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:4px;padding:12px 0 18px;'
-      + 'background:linear-gradient(rgba(18,20,19,0),#121413 14px)}'
-      + '#vg-terms .acts button{font:500 11.5px/1.2 Archivo,system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.11em;text-transform:uppercase;padding:13px 16px 12px;border-radius:0;cursor:pointer;border:1px solid rgba(236,233,225,.3);background:transparent;color:#ECE9E1}'
-      + '#vg-terms .acts button.ok{background:#E8491D;border-color:#E8491D;color:#121413;font-weight:600}'
-      + '@media (max-width:520px){#vg-terms{padding:10px}#vg-terms .card{padding:16px 15px 0;max-height:calc(100dvh - 20px)}#vg-terms h2{font-size:16px}'
-      + '#vg-terms p{font-size:12.8px;line-height:1.55}#vg-terms .acts{flex-wrap:nowrap}#vg-terms .acts button{flex:1 1 0;padding:12px 8px 11px;font-size:10.5px;letter-spacing:.06em}}');
+      + 'background:linear-gradient(rgba(18,20,19,0),var(--ink,#121413) 14px)}'
+      + '#vg-terms .acts button{font:500 .7188rem/1.2 Archivo,system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.11em;text-transform:uppercase;padding:13px 16px 12px;border-radius:0;cursor:pointer;border:1px solid rgba(236,233,225,.3);background:transparent;color:var(--bone,#ECE9E1)}'
+      + '#vg-terms .acts button.ok{background:var(--accent,#E8491D);border-color:var(--accent,#E8491D);color:var(--ink,#121413);font-weight:600}'
+      + '@media (max-width:520px){#vg-terms{padding:10px}#vg-terms .card{padding:16px 15px 0;max-height:calc(100dvh - 20px)}#vg-terms h2{font-size:1rem}'
+      + '#vg-terms p{font-size:.8rem;line-height:1.55}#vg-terms .acts{flex-wrap:nowrap}#vg-terms .acts button{flex:1 1 0;padding:12px 8px 11px;font-size:.6562rem;letter-spacing:.06em}}');
   document.head.appendChild(st);
 
   var isMedia = function (t) { return t && t.closest && t.closest('img,canvas,video,svg,.view,#stage'); };
@@ -230,7 +230,7 @@
   }
   setInterval(function () {
     var t = performance.now();
-    (new Function('debugger'))();
+    debugger;                                             // eslint-disable-line no-debugger
     if (performance.now() - t > 250) tamper();
   }, 1000);
   if (lite) return;
@@ -249,6 +249,7 @@
       shield.addEventListener('pointerdown', hide);
       document.body.appendChild(shield);
     }
+    try { document.querySelectorAll('dialog[open]').forEach(function (d) { d.close(); }); } catch (e) {}
     shield.textContent = shieldMsg(ms < 0); shield.classList.add('on');
     clearTimeout(timer); if (ms > 0) timer = setTimeout(hide, ms);
   }
@@ -325,7 +326,7 @@
     card.append(el('p', { class: 'f' }, [t('pf')]));
     var no = el('button', { type: 'button' }, [t('no')]), ok = el('button', { type: 'button', class: 'ok' }, [t('ok')]);
     no.onclick = function () { location.href = '/'; };
-    ok.onclick = function () { terms.hidden = true; };
+    ok.onclick = closeTerms;
     card.append(el('div', { class: 'acts' }, [no, ok]));
     if (!terms) {
       terms = el('div', { id: 'vg-terms', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'vg-terms-h' });
@@ -335,7 +336,25 @@
     terms.replaceChildren(card);
     return ok;
   }
-  function openTerms() { var ok = buildTerms(); terms.hidden = false; try { ok.focus({ preventScroll: true }); } catch (e) {} }
+  var termsInert = [], termsFrom = null;
+  function openTerms() {
+    var ok = buildTerms();
+    if (terms.hidden !== false || !termsInert.length) {
+      termsFrom = document.activeElement;
+      termsInert = Array.prototype.filter.call(document.body.children, function (n) {
+        return n !== terms && !/^(vg-ts|vg-shield|vg-wm|vg-legal)$/.test(n.id) && n.tagName !== 'SCRIPT' && !n.inert;
+      });
+      termsInert.forEach(function (n) { n.inert = true; });
+    }
+    terms.hidden = false; try { ok.focus({ preventScroll: true }); } catch (e) {}
+  }
+  function closeTerms() {
+    terms.hidden = true;
+    termsInert.forEach(function (n) { n.inert = false; }); termsInert = [];
+    var to = termsFrom && document.contains(termsFrom) && termsFrom !== document.body ? termsFrom : document.querySelector('.tab[aria-selected="true"], .tab, button');
+    termsFrom = null;
+    if (to && to.focus) { try { to.focus({ preventScroll: true }); } catch (e) {} }
+  }
   function buildBar() {
     if (!bar) { bar = el('div', { id: 'vg-legal', role: 'contentinfo' }); document.body.appendChild(bar); }
     var b = el('button', { type: 'button' }, [t('fb')]); b.onclick = openTerms;
@@ -349,7 +368,7 @@
   function start() {
     paintWM(); document.body.appendChild(wm); setInterval(paintWM, 30000);
     if (legalOn) {
-      document.documentElement.style.setProperty('--vg-ftr', 'calc(26px + env(safe-area-inset-bottom, 0px))');
+      document.documentElement.style.setProperty('--vg-ftr', 'calc(1.625rem + env(safe-area-inset-bottom, 0px))');
       buildBar(); openTerms();
     }
     window.addEventListener('langchange', relabel);

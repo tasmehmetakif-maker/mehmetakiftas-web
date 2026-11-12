@@ -2,6 +2,9 @@
 <html lang="tr">
 <head>
 <meta charset="utf-8" />
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'none'; form-action 'none'" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<meta name="text-scale" content="scale" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content="noindex, nofollow" />
 <meta name="color-scheme" content="light" />
@@ -10,10 +13,9 @@
 <!-- Eski yönetici paneli adresi (gizli.html / gizli-foto.html). 2026-11'den beri şifre kapısı yok: tüm modeller herkese
      açık model sayfalarında (yalnız görüntüleme ve ölçüm). Bu sayfa yalnız model listesine yönlendirir. -->
 <script src="/admin-models.js"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/doc.css?v=20261110" />
+<link rel="stylesheet" href="/fonts/fonts.css?v=20261112" />
+<link rel="stylesheet" href="/tokens.css?v=20261112" />
+<link rel="stylesheet" href="/doc.css?v=20261112" />
 <style>
   main { width:min(100% - 2 * var(--gut), 760px); margin:0 auto; padding:clamp(48px,9vw,110px) 0 64px; }
   h1 { font:300 clamp(2.4rem,7vw,4.4rem)/1 var(--serif); letter-spacing:-.032em; margin-bottom:16px; }
